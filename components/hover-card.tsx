@@ -88,7 +88,7 @@ export const MusicCard = ({
         {/* Play + Spotify Link */}
         <div className="flex gap-x-0.5 items-center">
           <button
-            className="bg-[#1DB954] hover:bg-[#1DB954]/80 transition text-gray-1 py-1 flex items-center justify-center rounded-sm w-1/4 self-stretch"
+            className="bg-[#01543f] hover:bg-[#01543f]/80 transition text-gray-1 py-1 flex items-center justify-center rounded-sm w-1/4 self-stretch"
             onClick={handlePlay}
             disabled={!previewUrl}
           >
@@ -120,7 +120,7 @@ export const MusicCard = ({
       step={0.01}
       value={volume}
       onChange={(e) => setVolume(parseFloat(e.target.value))}
-      className="w-full h-[2px] rounded-lg appearance-none cursor-pointer 
+      className="w-full h-[10px] rounded-lg appearance-none cursor-pointer 
         bg-gradient-to-r from-cyan-400 to-cyan-400
         [background-size:calc(var(--val)*100%)_100%]
         [background-repeat:no-repeat]
@@ -139,7 +139,7 @@ export const MusicCard = ({
         -webkit-appearance: none;
         appearance: none;
         width: 5px;
-        height: 5px;
+        height: 10px;
         background: cyan;
         
         cursor: pointer;
@@ -147,7 +147,7 @@ export const MusicCard = ({
       }
       input[type='range']::-moz-range-thumb {
         width: 5px;
-        height: 5px;
+        height: 10px;
         background: cyan;
         
         cursor: pointer;
