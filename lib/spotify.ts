@@ -48,52 +48,50 @@ const getNowPlaying = async () => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      next: {
-        revalidate: 60,
-      },
+      next: { revalidate: 60 },
     });
 
     if (response.status === 204) {
-      return getLastPlayed();
+      // No song currently playing → get last played
+      return await getLastPlayed();
     }
 
-    try {
-      const song = await response.json();
+    const song = await response.json();
 
-      if (song.is_playing) {
-        return {
-          status: response.status,
-          data: song,
-        };
-      }
-      return getLastPlayed();
-    } catch {
+    if (song.is_playing) {
+      return { status: response.status, data: song };
+    }
+
+    // Not playing → show last played
+    return await getLastPlayed();
+
+  } catch (error) {
+    console.error("Error fetching now playing:", error);
+
+    // Only fallback if creds missing
+    if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
       return {
-        status: response.status,
+        status: 200,
+        data: {
+          is_playing: false,
+          items: [{
+            track: {
+              name: "WILDFLOWER",
+              artists: [{ name: "Billie Eilish" }],
+              external_urls: { spotify: "https://open.spotify.com/search/wildflower#_=_" },
+              album: { images: [{ url: "/images/wildflower.jpg" }] },
+              preview_url: "/sounds/WILDFLOWER.MP3"
+            }
+          }]
+        }
       };
     }
-  } catch (error) {
-    // Return fallback music data when Spotify is not configured
-    console.log("Spotify not configured, using fallback music");
-    return {
-      status: 200,
-      data: {
-        is_playing: false,
-        items: [{
-          track: {
-            name: "WILDFLOWER",
-            artists: [{ name: "Billie Eilish" }],
-            external_urls: { spotify: "https://open.spotify.com/search/wildflower#_=_" },
-            album: {
-              images: [{ url: "/images/wildflower.jpg" }]
-            },
-            preview_url: "/sounds/WILDFLOWER.MP3"
-          }
-        }]
-      }
-    };
+
+    // Otherwise try last played as a safe fallback
+    return await getLastPlayed();
   }
 };
+
 
 const getLastPlayed = async () => {
   try {
