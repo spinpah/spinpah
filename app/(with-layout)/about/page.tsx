@@ -11,7 +11,7 @@ import Gallery from "@/components/gallery";
 export const metadata: Metadata = {
   title: "About",
   alternates: {
-    canonical: "https://mitul.ca/about",
+    canonical: "https://spinpah.vercel.app/about",
   },
 };
 
