@@ -72,9 +72,7 @@ export const MusicCard = ({
       audio.pause();
       setIsPlaying(false);
     } else {
-      const audioInstance = new Audio("/sounds/WILDFLOWER.mp3");
-      audioInstance.play();
-      setAudio(audioInstance);
+      audio.play()
       setIsPlaying(true);
     }
   };
