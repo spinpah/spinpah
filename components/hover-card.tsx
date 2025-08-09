@@ -49,29 +49,46 @@ export const MusicCard = ({
   const { title, artist, coverArt, previewUrl, songUrl } = props;
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [audio, setAudio] = React.useState<HTMLAudioElement | null>(null);
+  const [volume, setVolume] = React.useState(1); // Default 100%
+
   React.useEffect(() => {
-    const audio = new Audio(previewUrl);
-    setAudio(audio);
+    if (previewUrl) {
+      const audioInstance = new Audio(previewUrl);
+      audioInstance.volume = volume;
+      setAudio(audioInstance);
+    }
   }, [previewUrl]);
 
+  // Update volume on change
+  React.useEffect(() => {
+    if (audio) {
+      audio.volume = volume;
+    }
+  }, [volume, audio]);
+
   const handlePlay = () => {
+    if (!audio) return;
     if (isPlaying) {
-      audio?.pause();
+      audio.pause();
       setIsPlaying(false);
     } else {
-      audio?.play();
+      audio.play();
       setIsPlaying(true);
     }
   };
+
   return (
     <HoverCard>
       <HoverCardTrigger>{children}</HoverCardTrigger>
       <HoverCardContent>
         <HoverCardContentData src={coverArt} title={title} author={artist} />
+
+        {/* Play + Spotify Link */}
         <div className="flex gap-x-0.5 items-center">
           <button
             className="bg-[#1DB954] hover:bg-[#1DB954]/80 transition text-gray-1 py-1 flex items-center justify-center rounded-sm w-1/4 self-stretch"
             onClick={handlePlay}
+            disabled={!previewUrl}
           >
             {isPlaying ? (
               <Pause className="shrink-0" size={12} weight="fill" />
@@ -90,10 +107,58 @@ export const MusicCard = ({
             Listen on Spotify
           </a>
         </div>
+
+        {/* Volume Slider */}
+{previewUrl && (
+  <div className="mt-2 flex items-center w-full">
+    <input
+      type="range"
+      min={0}
+      max={1}
+      step={0.01}
+      value={volume}
+      onChange={(e) => setVolume(parseFloat(e.target.value))}
+      className="w-full h-[2px] rounded-lg appearance-none cursor-pointer 
+        bg-gradient-to-r from-cyan-400 to-cyan-400
+        [background-size:calc(var(--val)*100%)_100%]
+        [background-repeat:no-repeat]
+        bg-gray-700"
+      style={{
+        // This dynamically updates the fill length
+        // `--val` will be replaced with the current percentage
+        '--val': volume.toString(),
+      } as React.CSSProperties}
+    />
+    <style jsx>{`
+      input[type='range'] {
+        --val: 0;
+      }
+      input[type='range']::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 5px;
+        height: 5px;
+        background: cyan;
+        
+        cursor: pointer;
+        margin-top: -3px; /* centers the knob */
+      }
+      input[type='range']::-moz-range-thumb {
+        width: 5px;
+        height: 5px;
+        background: cyan;
+        
+        cursor: pointer;
+      }
+    `}</style>
+  </div>
+)}
+
       </HoverCardContent>
     </HoverCard>
   );
 };
+
 
 const HoverCardTrigger = ({ children }: { children: React.ReactNode }) => {
   return (
