@@ -66,7 +66,7 @@ const Items = () => {
         Boudjelida Aimen Mohamed Said
       </h1>
       <p className="mt-1 text-gray-9">
-        Cybersecurity Engineer
+        Cybersecurity Engineer - Gamer
       </p>
       <div className="flex flex-col mt-4 gap-y-2">
         <p>
