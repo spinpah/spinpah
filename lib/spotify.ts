@@ -87,7 +87,7 @@ const getNowPlaying = async () => {
             album: {
               images: [{ url: "/images/wildflower.jpg" }]
             },
-            preview_url: null
+            preview_url: "/sounds/WILDFLOWER.MP3"
           }
         }]
       }
