@@ -8,9 +8,9 @@ interface Game {
 export const getGame = async () => {
     return {
       playing: {
-        title: "League of Legends",
-        author: "Riot Games",
-        cover: "/images/league-of-legends.jpg",
+        title: "Alien isolation",
+        author: "Sega",
+        cover: "/images/game.png",
       },
     };
   
