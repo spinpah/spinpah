@@ -10,7 +10,7 @@ export const experiences = [
     company: "Tassili Airlines",
     role: "Internship",
     range: "Dec 2024 - July 2025",
-    description: "Design and optimization of firewall rules using meta-heuristic algorithms (Grey Wolf Optimizer) to enhancenetwork security while reducing configuration complexity.",
+    description: "Design and optimization of firewall rules using meta-heuristic algorithms (Grey Wolf Optimizer) to enhance network security while reducing configuration complexity.",
     skills: ["Analyzed existing rules to detect duplicates, inclusions, and redundancies.", "Developed a filtering module to preprocess and clean the rules before optimization.", "Evaluated results using network performance metrics and rule quality (security, efficiency, readability)", "Integrated the tool into a network policy management environment for IT teams."],
   }
   

@@ -128,8 +128,6 @@ const Projects = () => {
             </LinkPrimitive>{" "}
             is a Security audit of a vulnerable machine, identification and exploitation of vulnerabilities to simulate attacks and
             assess impact. Proposed remediation strategies to strengthen system security.
-            
-
           </p>
         </li>
         <li>
@@ -163,6 +161,19 @@ const Projects = () => {
             Directory integration and security policy enforcement.
           </p>
         </li>
+        <li>
+          <p>
+            <LinkPrimitive
+              href=""
+            >
+              Mobile Subscription Management App – Setram Algiers
+            </LinkPrimitive>{" "}
+            Developed a Flutter-based mobile application for Setram Algiers to enable
+            users to manage subscriptions and subscribe directly through the app,
+            improving accessibility and streamlining service usage.
+          </p>
+        </li>
+
       </ul>
     </Section>
   );
@@ -234,7 +245,7 @@ const Footer = () => {
 
 const FooterDate = async () => {
   const data = await fetch(
-    "https://api.github.com/repos/spinpah/spinpah.com/commits",
+    "https://api.github.com/repos/spinpah/spinpah/commits",
     {
       method: "GET",
       headers: {
@@ -243,23 +254,29 @@ const FooterDate = async () => {
     }
   ).then((res) => res.json());
 
-  // hack lazy way to bypass rate limit without going through auth
-  // to add proper stuff later!
-  const lastCommit = !data.message
-    ? data.map(
-        (commit: { commit: { committer: { date: string } } }) =>
-          commit.commit.committer.date
-      )[0]
-    : "";
-  const formatDate = lastCommit
-    ? new Date(lastCommit).toLocaleDateString()
-    : "2025/08/09";
+  if (data.message) {
+    // fallback if rate-limited or error
+    return (
+      <LinkPrimitive href="https://github.com/spinpah/spinpah" external>
+        2025/08/09
+      </LinkPrimitive>
+    );
+  }
+
+  const lastCommit = data[0];
+  const lastCommitDate = new Date(
+    lastCommit.commit.committer.date
+  ).toLocaleDateString();
+
+  const lastCommitUrl = lastCommit.html_url;
+
   return (
-    <LinkPrimitive href="https://github.com/spinpah/spinpah.com" external>
-      {formatDate}
+    <LinkPrimitive href={lastCommitUrl} external>
+      {lastCommitDate}
     </LinkPrimitive>
   );
 };
+
 
 export default function Home() {
   return (
