@@ -16,7 +16,7 @@ import { experiences, photos } from "@/content";
 import LinkPrimitive from "@/components/link-primitive";
 import { getShelves } from "@/lib/literal";
 import getLastPlayed from "@/lib/spotify";
-import { getGame } from "@/lib/league";
+import { getGame } from "@/lib/game";
 import Filter from "bad-words";
 import Gallery from "@/components/gallery";
 import Section from "@/components/section";
@@ -205,14 +205,14 @@ const Currently = async () => {
             {reading.title}
           </LinkPrimitive>
         </ReadingCard>{" "}
-        by {reading.author} While sitting in{" "}
+        by {reading.author} While playing {" "}
         <GamingCard {...playing}>
           <LinkPrimitive href={'https://www.leagueoflegends.com/en-gb'} external
             popover>
             {playing.title}
           </LinkPrimitive>
         </GamingCard>{" "}
-        lobby, waiting for a game to start.
+        .
       </p>
     </>
   );
