@@ -11,27 +11,33 @@ export const GamingCard = ({
 }: {
   children: React.ReactNode;
   title: string;
-  author : string;
+  author: string;
   cover: string;
+  gameUrl?: string; // Add this for the link
 }) => {
-  const { title, author ,  cover } = props;
+  const { title, author, cover, gameUrl } = props;
   return (
     <HoverCard>
       <HoverCardTrigger>{children}</HoverCardTrigger>
       <HoverCardContent>
         <HoverCardContentData src={cover} title={title} author={author} />
         <div className="flex gap-x-0.5 items-center">
-          <a
-            href={`https://www.leagueoflegends.com/en-gb`}
-            target="_blank"
-            className="flex items-center gap-x-1 text-sm bg-gray-12 justify-center w-full text-gray-5 py-1 rounded-sm font-medium hover:bg-gray-11 transition-colors duration-100 whitespace-nowrap"
-          >
-          </a>
+          {gameUrl && (
+            <a
+              href={gameUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-x-1 text-sm bg-gray-12 justify-center w-full text-gray-5 py-1 rounded-sm font-medium hover:bg-gray-11 transition-colors duration-100 whitespace-nowrap"
+            >
+              🎮 Play Game
+            </a>
+          )}
         </div>
       </HoverCardContent>
     </HoverCard>
   );
 };
+
 
 
 

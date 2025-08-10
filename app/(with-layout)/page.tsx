@@ -205,12 +205,13 @@ const Currently = async () => {
             {reading.title}
           </LinkPrimitive>
         </ReadingCard>{" "}
-        by {reading.author} While sitting in
+        by {reading.author} While sitting in{" "}
         <GamingCard {...playing}>
-          <LinkPrimitive href={'https://www.leagueoflegends.com/en-gb'}>
-            League of Legends
-          </LinkPrimitive>{" "}
-        </GamingCard>
+          <LinkPrimitive href={'https://www.leagueoflegends.com/en-gb'} external
+            popover>
+            {playing.title}
+          </LinkPrimitive>
+        </GamingCard>{" "}
         lobby, waiting for a game to start.
       </p>
     </>
