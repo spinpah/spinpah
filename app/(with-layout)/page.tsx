@@ -207,7 +207,7 @@ const Currently = async () => {
         </ReadingCard>{" "}
         by {reading.author} While playing {" "}
         <GamingCard {...playing}>
-          <LinkPrimitive href={'https://www.leagueoflegends.com/en-gb'} external
+          <LinkPrimitive href={'https://store.steampowered.com/app/214490/Alien_Isolation'} external
             popover>
             {playing.title}
           </LinkPrimitive>
