@@ -4,6 +4,37 @@ import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 import Image from "next/image";
 import React from "react";
 
+
+export const GamingCard = ({
+  children,
+  ...props
+}: {
+  children: React.ReactNode;
+  title: string;
+  author : string;
+  cover: string;
+}) => {
+  const { title, author ,  cover } = props;
+  return (
+    <HoverCard>
+      <HoverCardTrigger>{children}</HoverCardTrigger>
+      <HoverCardContent>
+        <HoverCardContentData src={cover} title={title} author={author} />
+        <div className="flex gap-x-0.5 items-center">
+          <a
+            href={`https://www.leagueoflegends.com/en-gb`}
+            target="_blank"
+            className="flex items-center gap-x-1 text-sm bg-gray-12 justify-center w-full text-gray-5 py-1 rounded-sm font-medium hover:bg-gray-11 transition-colors duration-100 whitespace-nowrap"
+          >
+          </a>
+        </div>
+      </HoverCardContent>
+    </HoverCard>
+  );
+};
+
+
+
 export const ReadingCard = ({
   children,
   ...props

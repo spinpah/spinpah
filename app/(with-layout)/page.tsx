@@ -7,7 +7,7 @@ import {
   ScribbleLoop,
 } from "@phosphor-icons/react/dist/ssr/index";
 import { Accordion, AccordionItem } from "@/components/collapsible";
-import { MusicCard, ReadingCard } from "@/components/hover-card";
+import { MusicCard, ReadingCard , GamingCard } from "@/components/hover-card";
 import Contact, {
   ContactCopyItem,
   ContactItem,
@@ -16,6 +16,7 @@ import { experiences, photos } from "@/content";
 import LinkPrimitive from "@/components/link-primitive";
 import { getShelves } from "@/lib/literal";
 import getLastPlayed from "@/lib/spotify";
+import { getGame } from "@/lib/league";
 import Filter from "bad-words";
 import Gallery from "@/components/gallery";
 import Section from "@/components/section";
@@ -172,6 +173,7 @@ const Currently = async () => {
   const { reading } = await getShelves();
   const { data: song } = await getLastPlayed();
   const filter = new Filter();
+  const { playing } = await getGame(); 
 
   const recent = song.is_playing ? song.item : song.items[0].track;
   const track = {
@@ -203,10 +205,13 @@ const Currently = async () => {
             {reading.title}
           </LinkPrimitive>
         </ReadingCard>{" "}
-        by {reading.author} While sitting in <LinkPrimitive href={'https://www.leagueoflegends.com/en-gb'} >
+        by {reading.author} While sitting in
+        <GamingCard {...playing}>
+          <LinkPrimitive href={'https://www.leagueoflegends.com/en-gb'}>
             League of Legends
-          </LinkPrimitive>
-          lobby, waiting for a game to start.
+          </LinkPrimitive>{" "}
+        </GamingCard>
+        lobby, waiting for a game to start.
       </p>
     </>
   );
