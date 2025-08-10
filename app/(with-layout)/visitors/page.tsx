@@ -70,9 +70,9 @@ export default function VisitorsPage() {
     if (!ctx) return;
 
     if (e.buttons !== 1) return; // Only draw on left click
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = "#ffffff";
     ctx.beginPath();
-    ctx.arc(e.nativeEvent.offsetX, e.nativeEvent.offsetY, 2, 0, Math.PI * 2);
+    ctx.arc(e.nativeEvent.offsetX, e.nativeEvent.offsetY, 5, 0, Math.PI * 2);
     ctx.fill();
   };
 
@@ -103,7 +103,7 @@ export default function VisitorsPage() {
 
       {/* Popup */}
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-100">
           <div className="bg-white p-4 rounded-lg shadow-lg w-80">
             <h2 className="text-lg font-bold mb-2">Add Your Sticker</h2>
 
