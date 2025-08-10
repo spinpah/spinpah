@@ -1,12 +1,21 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef , useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { saveSticker, getStickers } from "@/lib/stickers";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
+
+interface Sticker {
+  id: string;
+  type: "text" | "draw";
+  message?: string;
+  drawing?: string; // base64
+  created_at: string;
+}
 
 export default function VisitorsPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -14,6 +23,17 @@ export default function VisitorsPage() {
   const [name, setName] = useState("");
   const [text, setText] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [stickers, setStickers] = useState<Sticker[]>([]);
+
+  useEffect(() => {
+    loadStickers();
+  }, []);
+
+
+  async function loadStickers() {
+    const data = await getStickers();
+    setStickers(data);
+  }
 
   const saveSticker = async () => {
     let drawingData = null;
@@ -61,7 +81,16 @@ export default function VisitorsPage() {
       {/* Stickers board */}
       <div className="p-4">
         <h1 className="text-xl font-bold mb-4">Visitors Board</h1>
-        {/* TODO: Render saved stickers here */}
+        <div className="grid grid-cols-3 gap-4 mt-8">
+        {stickers.map((s) => (
+          <div key={s.id} className="border p-2 bg-yellow-100 rounded shadow">
+            {s.type === "text" && <p>{s.message}</p>}
+            {s.type === "draw" && s.drawing && (
+              <img src={s.drawing} alt="Drawing sticker" />
+            )}
+          </div>
+        ))}
+      </div>
       </div>
 
       {/* Add Sticker Button */}
