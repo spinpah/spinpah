@@ -119,10 +119,12 @@ export default function VisitorsPage() {
     if (!ctx) return;
 
     const rect = canvasRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const scaleX = canvasRef.current.width / rect.width;
+    const scaleY = canvasRef.current.height / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
 
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#ffffff";
     ctx.beginPath();
     ctx.arc(x, y, 3, 0, Math.PI * 2);
     ctx.fill();
@@ -137,8 +139,16 @@ export default function VisitorsPage() {
 
   return (
     <div className="relative min-h-screen bg-gray-100 p-4">
+      {/* Back to Main Page Button */}
+      <button
+        onClick={() => window.history.back()}
+        className="absolute top-4 left-4 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg shadow-md transition-colors duration-200 font-medium z-10"
+      >
+        ← Back to Main
+      </button>
+
       {/* Header */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 mt-12">
         <h1 className="text-3xl font-bold text-gray-800">Visitors Board</h1>
         <p className="text-gray-600 mt-2">Leave your mark for others to see!</p>
       </div>
@@ -208,7 +218,7 @@ export default function VisitorsPage() {
 
       {/* Popup Modal */}
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 z-50 p-4">
           <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4 text-center text-gray-800">
               Add Your Sticker
@@ -280,7 +290,8 @@ export default function VisitorsPage() {
                     ref={canvasRef}
                     width={280}
                     height={200}
-                    className="border border-gray-300 rounded bg-white cursor-crosshair w-full"
+                    className="border border-gray-300 rounded bg-black cursor-crosshair w-full"
+                    style={{ width: '100%', height: '200px' }}
                     onMouseDown={startDrawing}
                     onMouseMove={draw}
                     onMouseUp={stopDrawing}
