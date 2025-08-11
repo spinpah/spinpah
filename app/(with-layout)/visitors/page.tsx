@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
+import Link from "next/link";
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -140,12 +142,14 @@ export default function VisitorsPage() {
   return (
     <div className="p-4 py-10 md:p-12 bg min-h-screen">
       {/* Back to Main Page Button */}
-      <button
-        onClick={() => window.history.back()}
-        className="absolute top-4 left-4 px-4 py-2 bg-gray-11 hover:bg-gray-12 text-gray-1 rounded-md transition-colors duration-200 font-medium z-10 text-sm"
-      >
-        ← Back to Main
-      </button>
+      <Link
+          href="/"
+          className="flex gap-x-1 bg-accent text-gray-12 w-fit rounded-sm pl-0.5 pr-1 py-0.5 leading-none items-center hover:bg-accent/50 transition duration-100 mx-1 md:mx-4"
+          aria-label="Back"
+        >
+          <ArrowLeft size={16} className="shrink-0" />
+          <span className="text-sm font-medium">Index</span>
+      </Link>
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
