@@ -158,24 +158,25 @@ export default function VisitorsPage() {
         </div>
 
         {/* Stickers Display */}
-        <div className="flex flex-wrap gap-6 justify-center mb-24">
-          {stickers.length === 0 ? (
-            <div className="text-center text-gray-9 mt-16">
-              <p className="text-base mb-1">No messages yet</p>
-              <p className="text-sm">Be the first to leave a message</p>
-            </div>
-          ) : (
-            stickers.map((sticker) => (
-              <div
-                key={sticker.id}
-                className="bg-gray-3 border border-gray-6 rounded-md p-3 hover:bg-gray-4 transition-colors duration-200 flex flex-col"
-                style={{
-                  minWidth: "180px",
-                  maxWidth: sticker.type === "text" ? "320px" : "280px",
-                  width: "fit-content",
-                  minHeight: "120px"
-                }}
-              >
+        <div className="bg-gray-2 border-2 border-accent rounded-md p-8 mb-24">
+          <div className="flex flex-wrap gap-6 justify-center">
+            {stickers.length === 0 ? (
+              <div className="text-center text-gray-9 mt-16">
+                <p className="text-base mb-1">No messages yet</p>
+                <p className="text-sm">Be the first to leave a message</p>
+              </div>
+            ) : (
+              stickers.map((sticker) => (
+                <div
+                  key={sticker.id}
+                  className="bg-gray-3 border border-gray-6 rounded-md p-3 hover:bg-gray-4 transition-colors duration-200 flex flex-col"
+                  style={{
+                    minWidth: "180px",
+                    maxWidth: sticker.type === "text" ? "320px" : "280px",
+                    width: "fit-content",
+                    minHeight: "120px"
+                  }}
+                >
                 {/* Name at the top */}
                 <div className="text-center mb-3">
                   <p className="font-medium text-sm text-gray-11 truncate">
@@ -211,6 +212,7 @@ export default function VisitorsPage() {
               </div>
             ))
           )}
+        </div>
         </div>
 
         {/* Add Sticker Button */}
