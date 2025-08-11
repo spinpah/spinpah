@@ -1,170 +1,171 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { useState, useRef , useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
+import { saveSticker, getStickers } from "@/lib/stickers";
 
-type Sticker = {
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+interface Sticker {
   id: string;
-  name: string;
-  message: string;
-  drawing: string | null;
+  type: "text" | "draw";
+  message?: string;
+  drawing?: string; // base64
   created_at: string;
-};
+}
 
 export default function VisitorsPage() {
-  const [stickers, setStickers] = useState<Sticker[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [mode, setMode] = useState<"text" | "draw">("text");
   const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-
+  const [text, setText] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const drawing = useRef(false);
+  const [stickers, setStickers] = useState<Sticker[]>([]);
 
-  // Fetch existing stickers
   useEffect(() => {
-    const fetchStickers = async () => {
-      const { data, error } = await supabase
-        .from("stickers")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (!error && data) setStickers(data);
-      setLoading(false);
-    };
-
-    fetchStickers();
-
-    // Subscribe to realtime updates
-    const channel = supabase
-      .channel("stickers-changes")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "stickers" },
-        (payload) => {
-          if (payload.eventType === "INSERT") {
-            setStickers((prev) => [payload.new as Sticker, ...prev]);
-          }
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    loadStickers();
   }, []);
 
-  // Canvas drawing handlers
-  const startDraw = (e: React.MouseEvent) => {
-    drawing.current = true;
-    draw(e);
-  };
-  const endDraw = () => {
-    drawing.current = false;
-    if (canvasRef.current) {
-      canvasRef.current.getContext("2d")?.beginPath();
+
+  async function loadStickers() {
+    const data = await getStickers();
+    setStickers(data);
+  }
+
+  const saveSticker = async () => {
+    let drawingData = null;
+
+    if (mode === "draw" && canvasRef.current) {
+      drawingData = canvasRef.current.toDataURL("image/png");
+    }
+
+    const { error } = await supabase.from("stickers").insert([
+      {
+        name,
+        type: mode,
+        message: mode === "text" ? text : null,
+        drawing: mode === "draw" ? drawingData : null,
+      },
+    ]);
+
+    if (error) {
+      console.error("Error saving sticker:", error);
+    } else {
+      setShowPopup(false);
+      setText("");
+      setName("");
+      if (canvasRef.current) {
+        const ctx = canvasRef.current.getContext("2d");
+        ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+      }
     }
   };
-  const draw = (e: React.MouseEvent) => {
-    if (!drawing.current || !canvasRef.current) return;
+
+  const handleCanvasDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!canvasRef.current) return;
     const ctx = canvasRef.current.getContext("2d");
     if (!ctx) return;
-    const rect = canvasRef.current.getBoundingClientRect();
-    ctx.lineWidth = 2;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "#000";
-    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-    ctx.stroke();
+
+    if (e.buttons !== 1) return; // Only draw on left click
+    ctx.fillStyle = "#ffffff";
     ctx.beginPath();
-    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    ctx.arc(e.nativeEvent.offsetX, e.nativeEvent.offsetY, 5, 0, Math.PI * 2);
+    ctx.fill();
   };
-
-  // Save to Supabase
-  const saveSticker = async () => {
-    if (!name.trim() || !message.trim()) return;
-    let drawingData = null;
-    if (canvasRef.current) {
-      drawingData = canvasRef.current.toDataURL();
-    }
-    await supabase.from("stickers").insert({
-      name,
-      message,
-      drawing: drawingData,
-    });
-    setName("");
-    setMessage("");
-    if (canvasRef.current) {
-      const ctx = canvasRef.current.getContext("2d");
-      ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    }
-    setShowForm(false);
-  };
-
-  if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-xl font-bold mb-4">Visitors Stickers</h1>
-
-      {/* List of stickers */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="relative h-screen bg-gray-100">
+      {/* Stickers board */}
+      <div className="p-4">
+        <h1 className="text-xl font-bold mb-4">Visitors Board</h1>
+        <div className="grid grid-cols-3 gap-4 mt-8">
         {stickers.map((s) => (
-          <div
-            key={s.id}
-            className="p-4 border rounded-md shadow-sm bg-white flex flex-col items-center"
-          >
-            {s.drawing && (
-              <img src={s.drawing} alt="drawing" className="mb-2 w-40 h-40" />
+          <div key={s.id} className="border p-2 bg-yellow-100 rounded shadow">
+            {s.type === "text" && <p>{s.message}</p>}
+            {s.type === "draw" && s.drawing && (
+              <img src={s.drawing} alt="Drawing sticker" />
             )}
-            <p className="font-semibold">{s.name}</p>
-            <p className="text-gray-500 text-sm">{s.message}</p>
-            <p className="text-xs text-gray-400">
-              {new Date(s.created_at).toLocaleString()}
-            </p>
           </div>
         ))}
       </div>
+      </div>
 
-      {/* Bottom center button */}
+      {/* Add Sticker Button */}
       <button
-        onClick={() => setShowForm((prev) => !prev)}
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-2 rounded-full shadow-md"
+        onClick={() => setShowPopup(true)}
+        className="fixed bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-blue-500 text-white rounded-full shadow-lg"
       >
-        {showForm ? "Cancel" : "Add Sticker"}
+        Add Sticker
       </button>
 
-      {/* Sticker creation form */}
-      {showForm && (
-        <div className="fixed bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center bg-white p-4 rounded-lg shadow-lg">
-          <canvas
-            ref={canvasRef}
-            width={200}
-            height={200}
-            className="border mb-2"
-            onMouseDown={startDraw}
-            onMouseUp={endDraw}
-            onMouseMove={draw}
-          />
-          <input
-            type="text"
-            placeholder="Your name"
-            className="border p-2 w-[200px] mb-2"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Your message"
-            className="border p-2 w-[200px] mb-2"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button
-            onClick={saveSticker}
-            className="bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Save
-          </button>
+      {/* Popup */}
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-100">
+          <div className="bg-white p-4 rounded-lg shadow-lg w-80">
+            <h2 className="text-lg font-bold mb-2">Add Your Sticker</h2>
+
+            <input
+              type="text"
+              placeholder="Your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full border p-2 rounded mb-2"
+            />
+
+            <div className="flex gap-2 mb-2">
+              <button
+                onClick={() => setMode("text")}
+                className={`flex-1 p-2 rounded ${
+                  mode === "text" ? "bg-blue-500 text-white" : "bg-gray-200"
+                }`}
+              >
+                Text
+              </button>
+              <button
+                onClick={() => setMode("draw")}
+                className={`flex-1 p-2 rounded ${
+                  mode === "draw" ? "bg-blue-500 text-white" : "bg-gray-200"
+                }`}
+              >
+                Draw
+              </button>
+            </div>
+
+            {mode === "text" ? (
+              <textarea
+                placeholder="Type your message..."
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                className="w-full h-40 border p-2 rounded"
+              />
+            ) : (
+              <canvas
+                ref={canvasRef}
+                width={300}
+                height={300}
+                className="border rounded bg-white"
+                onMouseMove={handleCanvasDraw}
+              />
+            )}
+
+            <div className="flex justify-end gap-2 mt-3">
+              <button
+                onClick={() => setShowPopup(false)}
+                className="px-4 py-2 bg-gray-300 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={saveSticker}
+                className="px-4 py-2 bg-green-500 text-white rounded"
+              >
+                Save
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
