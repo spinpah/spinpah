@@ -181,7 +181,7 @@ export default function VisitorsPage() {
               {/* Content */}
               <div className="p-3">
                 {sticker.type === "text" && sticker.message && (
-                  <p className="text-gray-800 whitespace-pre-wrap break-words text-sm">
+                  <p className="text-gray-800 whitespace-pre-wrap break-words text-sm text-center">
                     {sticker.message}
                   </p>
                 )}
@@ -218,7 +218,7 @@ export default function VisitorsPage() {
 
       {/* Popup Modal */}
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 z-50 p-4">
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-4" style={{ backgroundColor: '#1f2937' }}>
           <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4 text-center text-gray-800">
               Add Your Sticker
