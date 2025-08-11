@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
+import Section from "@/components/section";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -126,9 +127,9 @@ export default function VisitorsPage() {
     const x = (e.clientX - rect.left) * scaleX;
     const y = (e.clientY - rect.top) * scaleY;
 
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#000000";
     ctx.beginPath();
-    ctx.arc(x, y, 3, 0, Math.PI * 2);
+    ctx.arc(x, y, 5, 0, Math.PI * 2);
     ctx.fill();
   };
 
@@ -140,7 +141,7 @@ export default function VisitorsPage() {
   };
 
   return (
-    <div className="p-4 py-10 md:p-12 bg min-h-screen">
+    <div className="justify-between  animate-in fade-in duration-500">
       {/* Back to Main Page Button */}
       <Link
           href="/"
@@ -153,20 +154,22 @@ export default function VisitorsPage() {
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12 mt-8">
-          <h1 className="text-2xl font-medium text-gray-12 mb-2">
+        <div className="mb-12 mt-8">
+          <h1 className="text-2xl font-medium  ">
             <span className="inline-block w-2 h-2 rounded-full bg-accent mr-2" />
             Visitors Board
           </h1>
-          <p className="text-gray-9 text-sm">Leave your mark for others to see</p>
+          <Section heading="Leave your mark for others to see">
+            <p></p>
+          </Section>
         </div>
 
         {/* Stickers Display */}
         <div className="flex flex-wrap gap-6 justify-center mb-24">
           {stickers.length === 0 ? (
-            <div className="text-center text-gray-9 mt-16">
-              <p className="text-base mb-1">No messages yet</p>
-              <p className="text-sm">Be the first to leave a message</p>
+            <div className="text-center  mt-16">
+              <p className="text-white " >No messages yet</p>
+              <p className="text-white " >Be the first to leave a message</p>
             </div>
           ) : (
             stickers.map((sticker) => (
@@ -190,9 +193,10 @@ export default function VisitorsPage() {
                 {/* Content - vertically centered */}
                 <div className="flex-1 flex items-center justify-center">
                   {sticker.type === "text" && sticker.message && (
-                    <p className="text-gray-12 whitespace-pre-wrap break-words text-sm text-center">
+                    <p className="text-gray-12 font-bold whitespace-pre-wrap break-words text-xl text-center max-w-full break-all">
                       {sticker.message}
                     </p>
+
                   )}
                   {sticker.type === "draw" && sticker.drawing && (
                     <div className="text-center">
@@ -247,7 +251,7 @@ export default function VisitorsPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full bg-gray-3 border border-gray-6 text-gray-12 p-3 rounded-sm focus:ring-1 focus:ring-accent focus:border-accent text-sm transition-colors"
-                  maxLength={50}
+                  maxLength={15}
                 />
               </div>
 
