@@ -8,7 +8,7 @@ interface Game {
 export const getGame = async () => {
     return {
       playing: {
-        title: "Alien isolation",
+        title: "Alien: isolation",
         author: "Sega",
         cover: "/images/game.png",
       },

@@ -123,6 +123,14 @@ const Projects = () => {
       <ul className="flex flex-col gap-y-6">
         <li>
           <p>
+            <LinkPrimitive href="https://sgameshelf.vercel.app" >
+            GAMESHELF   
+            </LinkPrimitive>{" "}
+             designed for gamers to discover, rate, and review their favorite games. Think of it as your personal gaming shelf — where every title you've played or plan to play has a place.
+          </p>
+        </li>
+        <li>
+          <p>
             <LinkPrimitive href="" >
             Penetration Testing and Security Audit Report   
             </LinkPrimitive>{" "}
