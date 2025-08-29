@@ -1,0 +1,197 @@
+{
+  "projects": [
+    {
+      "id": "gameshelf",
+      "name": "GAMESHELF",
+      "shortDescription": "designed for gamers to discover, rate, and review their favorite games. Think of it as your personal gaming shelf — where every title you've played or plan to play has a place.",
+      "description": "GAMESHELF is a comprehensive gaming platform designed for gamers to discover, rate, and review their favorite games. Built with modern web technologies, it serves as your personal gaming shelf where every title you've played or plan to play has a dedicated place. The platform features user authentication, game search functionality, personal collections, and a review system that helps the gaming community make informed decisions about their next gaming experience.",
+      "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Prisma", "PostgreSQL"],
+      "category": "Web Development",
+      "status": "In Progress",
+      "featured": false,
+      "images": [
+        "/projects/gameshelf/home.png",
+        "/projects/gameshelf/games.png"
+        
+      ],
+      "links": {
+        "live": "https://sgameshelf.vercel.app",
+        "github": "https://github.com/spinpah/gameshelf"
+      },
+      "features": [
+        "User authentication and profiles",
+        "Game discovery and search",
+        "Personal game collections",
+        "Rating and review system",
+        "Responsive design",
+        "Real-time updates"
+      ],
+      "challenges": [
+        "Implementing efficient search algorithms",
+        "Managing large datasets of games",
+        "Creating intuitive user experience"
+      ],
+      "dateCompleted": "2025-08-29"
+    },
+    {
+      "id": "penetration-testing-audit",
+      "name": "Penetration Testing and Security Audit Report",
+      "shortDescription": "Security audit of a vulnerable machine, identification and exploitation of vulnerabilities to simulate attacks and assess impact. Proposed remediation strategies to strengthen system security.",
+      "description": "Comprehensive penetration testing project involving security audit of a vulnerable machine environment. The project focused on systematic identification and exploitation of security vulnerabilities to simulate real-world attack scenarios and assess their potential impact on system security. Through methodical reconnaissance, scanning, enumeration, and exploitation phases, various security weaknesses were discovered and documented. The project concluded with detailed remediation strategies and security hardening recommendations to strengthen overall system security posture.",
+      "technologies": ["Kali Linux", "Metasploit", "Nmap", "Burp Suite", "Wireshark", "OWASP ZAP"],
+      "category": "Cybersecurity",
+      "status": "Completed",
+      "featured": true,
+      "images": [
+        "/projects/pentest/methodology.png",
+        "/projects/pentest/findings.png",
+        "/projects/pentest/report.png"
+      ],
+      "links": {
+        "report": "/projects/pentest-report.pdf"
+      },
+      "features": [
+        "Vulnerability assessment and scanning",
+        "Network penetration testing",
+        "Web application security testing",
+        "Social engineering simulation",
+        "Detailed reporting and documentation",
+        "Remediation recommendations"
+      ],
+      "challenges": [
+        "Identifying complex multi-stage attack vectors",
+        "Balancing thoroughness with time constraints",
+        "Creating actionable remediation strategies"
+      ],
+      "dateCompleted": "2024-01-20"
+    },
+    {
+      "id": "secure-social-network",
+      "name": "Implementation of a Secure Social Network Web Application",
+      "shortDescription": "A secure social networking platform built with modern web technologies, implementing advanced security measures and best practices.",
+      "description": "Development of a comprehensive social networking web application with a strong emphasis on security implementation. The project involved creating a full-featured social platform while integrating advanced security measures including secure authentication, data encryption, input validation, and protection against common web vulnerabilities. The application features user profiles, post sharing, messaging systems, and social interactions, all built with security-first architecture and following industry best practices for web application security.",
+      "technologies": ["Node.js", "Express.js", "MongoDB", "React", "JWT", "bcrypt", "Helmet.js"],
+      "category": "Web Development & Security",
+      "status": "Completed",
+      "featured": false,
+      "images": [
+        "/projects/social-network/architecture.png",
+        "/projects/social-network/security.png",
+        "/projects/social-network/interface.png"
+      ],
+      "links": {
+        "github": "https://github.com/spinpah/secure-social-network"
+      },
+      "features": [
+        "Secure user authentication system",
+        "End-to-end encrypted messaging",
+        "Input sanitization and validation",
+        "XSS and CSRF protection",
+        "Rate limiting and DDoS protection",
+        "Secure session management"
+      ],
+      "challenges": [
+        "Implementing secure authentication flows",
+        "Balancing security with user experience",
+        "Managing encrypted data efficiently"
+      ],
+      "dateCompleted": "2023-12-10"
+    },
+    {
+      "id": "three-tier-network",
+      "name": "Design and Security of a Three-Tier Network",
+      "shortDescription": "Designed and secured a Three-Tier network using GNS3, with dynamic routing, VLANs, firewalls, and penetration testing to assess resistance to DDoS attacks.",
+      "description": "Comprehensive network design and security implementation project involving the creation of a robust three-tier network architecture using GNS3 simulation environment. The project encompassed complete network topology design, implementation of dynamic routing protocols, VLAN configuration for network segmentation, and deployment of multiple security layers including firewalls and intrusion detection systems. The network's security posture was rigorously tested through simulated penetration testing scenarios, with particular focus on assessing resistance to Distributed Denial of Service (DDoS) attacks and other network-based threats.",
+      "technologies": ["GNS3", "Cisco IOS", "OSPF", "BGP", "VLANs", "pfSense", "Wireshark"],
+      "category": "Network Security",
+      "status": "Completed",
+      "featured": true,
+      "images": [
+        "/projects/network/topology.png",
+        "/projects/network/security-config.png",
+        "/projects/network/monitoring.png"
+      ],
+      "links": {
+        "documentation": "/projects/network-design-doc.pdf"
+      },
+      "features": [
+        "Three-tier network architecture",
+        "Dynamic routing implementation",
+        "VLAN segmentation",
+        "Firewall configuration",
+        "DDoS protection mechanisms",
+        "Network monitoring and logging"
+      ],
+      "challenges": [
+        "Optimizing routing protocols for performance",
+        "Implementing effective DDoS mitigation",
+        "Balancing security with network performance"
+      ],
+      "dateCompleted": "2023-11-25"
+    },
+    {
+      "id": "radius-wifi-security",
+      "name": "Secure Wi-Fi Access with RADIUS",
+      "shortDescription": "Configured RADIUS authentication on Windows Server 2012 R2 to secure 802.1X Wi-Fi access, with Active Directory integration and security policy enforcement.",
+      "description": "Implementation of enterprise-grade Wi-Fi security solution using RADIUS (Remote Authentication Dial-In User Service) authentication on Windows Server 2012 R2 infrastructure. The project involved configuring Network Policy Server (NPS) to provide centralized authentication, authorization, and accounting for wireless network access. Integration with Active Directory enabled seamless user management and policy enforcement, while 802.1X protocol implementation ensured secure wireless communications. The solution included certificate-based authentication, network access policies, and comprehensive logging for security monitoring and compliance.",
+      "technologies": ["Windows Server 2012 R2", "NPS", "Active Directory", "802.1X", "EAP", "PKI"],
+      "category": "Network Security",
+      "status": "Completed",
+      "featured": false,
+      "images": [
+        "/projects/radius/server-config.png",
+        "/projects/radius/policies.png",
+        "/projects/radius/certificates.png"
+      ],
+      "links": {
+        "guide": "/projects/radius-implementation-guide.pdf"
+      },
+      "features": [
+        "RADIUS server configuration",
+        "802.1X authentication",
+        "Active Directory integration",
+        "Certificate-based security",
+        "Network access policies",
+        "Comprehensive audit logging"
+      ],
+      "challenges": [
+        "Certificate management complexity",
+        "Policy configuration optimization",
+        "Troubleshooting authentication issues"
+      ],
+      "dateCompleted": "2023-10-15"
+    },
+    {
+      "id": "setram-mobile-app",
+      "name": "Mobile Subscription Management App – Setram Algiers",
+      "shortDescription": "Developed a Flutter-based mobile application for Setram Algiers to enable users to manage subscriptions and subscribe directly through the app, improving accessibility and streamlining service usage.",
+      "description": "Development of a comprehensive mobile application for Setram Algiers (public transportation company) using Flutter framework. The application was designed to modernize and streamline the subscription management process for public transportation services. Users can easily manage their existing subscriptions, purchase new ones, track usage, and access real-time information about transportation services. The app features a user-friendly interface, secure payment integration, and offline functionality for essential features. The project significantly improved customer accessibility to Setram services and reduced administrative overhead through digital transformation.",
+      "technologies": ["Flutter", "Dart", "Firebase", "REST APIs", "SQLite", "Payment Gateway"],
+      "category": "Mobile Development",
+      "status": "Completed",
+      "featured": false,
+      "images": [
+        "/projects/setram/app-screens.png",
+        "/projects/setram/payment-flow.png",
+        "/projects/setram/dashboard.png"
+      ],
+      "links": {
+        "playstore": "https://play.google.com/store/apps/setram-algiers"
+      },
+      "features": [
+        "Subscription management",
+        "Secure payment processing",
+        "Real-time service information",
+        "Offline functionality",
+        "Multi-language support",
+        "Push notifications"
+      ],
+      "challenges": [
+        "Integrating with legacy systems",
+        "Ensuring payment security",
+        "Optimizing for various device sizes"
+      ],
+      "dateCompleted": "2024-02-28"
+    }
+  ]
+} 

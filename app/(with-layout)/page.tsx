@@ -1,4 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache";
+import { projects } from '@/data/projects.json';
+
 import React, { Suspense } from "react";
 import {
   ArrowRight,
@@ -118,71 +120,37 @@ const Experience = () => {
 };
 
 const Projects = () => {
+  // You can choose to show all projects or just featured ones
+  const displayProjects = projects.slice(0, 6); // Show first 6 projects
+  
   return (
     <Section heading="Projects">
       <ul className="flex flex-col gap-y-6">
-        <li>
-          <p>
-            <LinkPrimitive href="https://sgameshelf.vercel.app" external >
-            GAMESHELF   
-            </LinkPrimitive>{" "}
-             designed for gamers to discover, rate, and review their favorite games. Think of it as your personal gaming shelf — where every title you've played or plan to play has a place.
-          </p>
-        </li>
-        <li>
-          <p>
-            <LinkPrimitive href="" >
-            Penetration Testing and Security Audit Report   
-            </LinkPrimitive>{" "}
-            is a Security audit of a vulnerable machine, identification and exploitation of vulnerabilities to simulate attacks and
-            assess impact. Proposed remediation strategies to strengthen system security.
-          </p>
-        </li>
-        <li>
-          <p>
-            <LinkPrimitive
-              href=""
-               >
-              Implementation of a Secure Social Network Web Application  
-            </LinkPrimitive>{" "}
-          </p>
-        </li>
-        <li>
-          <p>
-            <LinkPrimitive
-              href=""
-               >
-              Design and Security of a Three-Tier Network  
-            </LinkPrimitive>{" "}
-            is a Designed and secured a Three-Tier network using GNS3, with dynamic routing, VLANs, firewalls, and penetration
-            testing to assess resistance to DDoS attacks.
-          </p>
-        </li>
-        <li>
-          <p>
-            <LinkPrimitive
-              href=""
-               >
-              Secure Wi-Fi Access with RADIUS   
-            </LinkPrimitive>{" "}
-            Configured RADIUS authentication on Windows Server 2012 R2 to secure 802.1X Wi-Fi access, with Active
-            Directory integration and security policy enforcement.
-          </p>
-        </li>
-        <li>
-          <p>
-            <LinkPrimitive
-              href=""
-            >
-              Mobile Subscription Management App – Setram Algiers
-            </LinkPrimitive>{" "}
-            Developed a Flutter-based mobile application for Setram Algiers to enable
-            users to manage subscriptions and subscribe directly through the app,
-            improving accessibility and streamlining service usage.
-          </p>
-        </li>
-
+        {displayProjects.map((project) => (
+          <li key={project.id}>
+            <p>
+              <LinkPrimitive href={`/projects/${project.id}`} variant="route">
+                {project.name}
+              </LinkPrimitive>{" "}
+              {project.shortDescription}
+            </p>
+          </li>
+        ))}
       </ul>
+      
+      {/* Optional: Add a "View All Projects" link if you have many projects */}
+      {projects.length > 6 && (
+        <div className="mt-6">
+          <LinkPrimitive 
+            href="/projects" 
+            variant="route" 
+            className="text-sm text-gray-11 hover:text-gray-12 flex items-center gap-x-1"
+          >
+            View all {projects.length} projects
+            <ArrowRight size={12} />
+          </LinkPrimitive>
+        </div>
+      )}
     </Section>
   );
 };
