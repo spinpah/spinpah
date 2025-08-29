@@ -121,7 +121,7 @@ const Experience = () => {
 
 const Projects = () => {
   // You can choose to show all projects or just featured ones
-  const displayProjects = projects.slice(0, 6); // Show first 6 projects
+  const displayProjects = projects.slice(0, 3); // Show first 6 projects
   
   return (
     <Section heading="Projects">
@@ -129,7 +129,7 @@ const Projects = () => {
         {displayProjects.map((project) => (
           <li key={project.id}>
             <p>
-              <LinkPrimitive href={`/projects/${project.id}`} variant="route">
+              <LinkPrimitive href={`/projects/${project.id}`} variant="route" className="mb-2">
                 {project.name}
               </LinkPrimitive>{" "}
               {project.shortDescription}
@@ -139,7 +139,7 @@ const Projects = () => {
       </ul>
       
       {/* Optional: Add a "View All Projects" link if you have many projects */}
-      {projects.length > 6 && (
+      {projects.length > 3 && (
         <div className="mt-6">
           <LinkPrimitive 
             href="/projects" 

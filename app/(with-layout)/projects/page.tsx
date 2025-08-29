@@ -49,7 +49,7 @@ export default function ProjectsPage() {
 
       {/* All Projects */}
       <Section heading={featuredProjects.length > 0 ? "All Projects" : "Projects"}>
-        <div className="space-y-6">
+        <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           {sortedProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
@@ -64,7 +64,7 @@ function ProjectCard({ project, featured = false }: {
   featured?: boolean 
 }) {
   return (
-    <div className="group p-4 rounded-md border border-gray-6 hover:border-gray-7 transition-colors">
+    <div className="group p-4 rounded-md hover:border-gray-7 transition-colors">
       <div className="flex flex-col gap-y-3">
         {/* Project Header */}
         <div className="flex items-start justify-between gap-x-4">
@@ -73,7 +73,7 @@ function ProjectCard({ project, featured = false }: {
               <LinkPrimitive 
                 href={`/projects/${project.id}`} 
                 variant="route"
-                className="text-lg font-medium text-gray-12 group-hover:text-accent transition-colors"
+                className="text-lg font-medium text-white group-hover:text-accent transition-colors"
               >
                 {project.name}
               </LinkPrimitive>
@@ -116,7 +116,7 @@ function ProjectCard({ project, featured = false }: {
           {project.technologies.slice(0, 4).map((tech) => (
             <span
               key={tech}
-              className="px-2 py-1 text-xs bg-gray-3 text-gray-11 rounded font-medium"
+              className="px-2 py-1 text-xs bg-gray-3 text-gray-11 rounded font-small"
             >
               {tech}
             </span>

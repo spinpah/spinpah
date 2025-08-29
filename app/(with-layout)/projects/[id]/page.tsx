@@ -1,4 +1,3 @@
-// STEP 5: Create app/projects/[id]/page.tsx with SEO optimizations
 import { notFound } from 'next/navigation';
 import { projects } from '@/data/projects.json';
 import LinkPrimitive from "@/components/link-primitive";
@@ -7,6 +6,8 @@ import { ArrowLeft, ArrowUpRight, Calendar, Tag, CheckCircle } from "@phosphor-i
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import type { Project } from '@/types/project';
+
+import Gallery2 from '@/components/gallery';
 
 type Props = {
   params: { id: string }
@@ -291,7 +292,11 @@ export default function ProjectPage({ params }: Props) {
               ))}
             </div>
           </Section>
+
+          
         )}
+
+        
 
         {/* Navigation to other projects */}
         <Section>

@@ -11,8 +11,8 @@
       "featured": false,
       "images": [
         "/projects/gameshelf/home.png",
-        "/projects/gameshelf/games.png"
-        
+        "/projects/gameshelf/games.png",
+        "/projects/gameshelf/login.png"
       ],
       "links": {
         "live": "https://sgameshelf.vercel.app",
