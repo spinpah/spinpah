@@ -28,24 +28,7 @@ export default function ProjectsPage() {
         </LinkPrimitive>
       </div>
 
-      {/* Header */}
-      <Section>
-        <h1 className="text-2xl font-medium text-gray-12 mb-2">Projects</h1>
-        <p className="text-gray-11">
-          A collection of my cybersecurity, web development, and mobile development projects.
-        </p>
-      </Section>
-
-      {/* Featured Projects */}
-      {featuredProjects.length > 0 && (
-        <Section heading="Featured Projects">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {featuredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} featured />
-            ))}
-          </div>
-        </Section>
-      )}
+      
 
       {/* All Projects */}
       <Section heading={featuredProjects.length > 0 ? "All Projects" : "Projects"}>
@@ -64,7 +47,7 @@ function ProjectCard({ project, featured = false }: {
   featured?: boolean 
 }) {
   return (
-    <div className="group p-4 rounded-md hover:border-gray-7 transition-colors">
+    <div className="group p-8 rounded-md hover:border-gray-7 transition-colors">
       <div className="flex flex-col gap-y-3">
         {/* Project Header */}
         <div className="flex items-start justify-between gap-x-4">
@@ -112,20 +95,16 @@ function ProjectCard({ project, featured = false }: {
         </p>
 
         {/* Technologies */}
-        <div className="flex flex-wrap gap-1.5">
-          {project.technologies.slice(0, 4).map((tech) => (
+        <div className="flex flex-wrap bg-accent/5  gap-1.5">
+          {project.technologies.slice(0, 20).map((tech) => (
             <span
               key={tech}
-              className="px-2 py-1 text-xs bg-gray-3 text-gray-11 rounded font-small"
+              className="px-2 py-1 text-xs text-white rounded cursor-pointer font-medium"
             >
               {tech}
             </span>
           ))}
-          {project.technologies.length > 4 && (
-            <span className="px-2 py-1 text-xs bg-gray-3 text-gray-11 rounded font-medium">
-              +{project.technologies.length - 4} more
-            </span>
-          )}
+          
         </div>
       </div>
     </div>

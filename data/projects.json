@@ -8,7 +8,7 @@
       "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Prisma", "PostgreSQL"],
       "category": "Web Development",
       "status": "In Progress",
-      "featured": false,
+      "featured": true,
       "images": [
         "/projects/gameshelf/home.png",
         "/projects/gameshelf/games.png",
@@ -31,7 +31,7 @@
         "Managing large datasets of games",
         "Creating intuitive user experience"
       ],
-      "dateCompleted": "2025-08-29"
+      "dateCompleted": ""
     },
     {
       "id": "penetration-testing-audit",
@@ -41,11 +41,8 @@
       "technologies": ["Kali Linux", "Metasploit", "Nmap", "Burp Suite", "Wireshark", "OWASP ZAP"],
       "category": "Cybersecurity",
       "status": "Completed",
-      "featured": true,
+      "featured": false,
       "images": [
-        "/projects/pentest/methodology.png",
-        "/projects/pentest/findings.png",
-        "/projects/pentest/report.png"
       ],
       "links": {
         "report": "/projects/pentest-report.pdf"
@@ -63,24 +60,21 @@
         "Balancing thoroughness with time constraints",
         "Creating actionable remediation strategies"
       ],
-      "dateCompleted": "2024-01-20"
+      "dateCompleted": "2025-01-20"
     },
     {
       "id": "secure-social-network",
       "name": "Implementation of a Secure Social Network Web Application",
       "shortDescription": "A secure social networking platform built with modern web technologies, implementing advanced security measures and best practices.",
       "description": "Development of a comprehensive social networking web application with a strong emphasis on security implementation. The project involved creating a full-featured social platform while integrating advanced security measures including secure authentication, data encryption, input validation, and protection against common web vulnerabilities. The application features user profiles, post sharing, messaging systems, and social interactions, all built with security-first architecture and following industry best practices for web application security.",
-      "technologies": ["Node.js", "Express.js", "MongoDB", "React", "JWT", "bcrypt", "Helmet.js"],
+      "technologies": ["Node.js", "Express.js", "MongoDB", "React", "JWT", "bcrypt", "Helmet.js" , "WebSocket"],
       "category": "Web Development & Security",
       "status": "Completed",
       "featured": false,
       "images": [
-        "/projects/social-network/architecture.png",
-        "/projects/social-network/security.png",
-        "/projects/social-network/interface.png"
       ],
       "links": {
-        "github": "https://github.com/spinpah/secure-social-network"
+        "github": ""
       },
       "features": [
         "Secure user authentication system",
@@ -95,7 +89,7 @@
         "Balancing security with user experience",
         "Managing encrypted data efficiently"
       ],
-      "dateCompleted": "2023-12-10"
+      "dateCompleted": "2024-03-10"
     },
     {
       "id": "three-tier-network",
@@ -105,14 +99,12 @@
       "technologies": ["GNS3", "Cisco IOS", "OSPF", "BGP", "VLANs", "pfSense", "Wireshark"],
       "category": "Network Security",
       "status": "Completed",
-      "featured": true,
+      "featured": false,
       "images": [
-        "/projects/network/topology.png",
-        "/projects/network/security-config.png",
-        "/projects/network/monitoring.png"
+
       ],
       "links": {
-        "documentation": "/projects/network-design-doc.pdf"
+        "documentation": ""
       },
       "features": [
         "Three-tier network architecture",
@@ -127,7 +119,7 @@
         "Implementing effective DDoS mitigation",
         "Balancing security with network performance"
       ],
-      "dateCompleted": "2023-11-25"
+      "dateCompleted": "2024-03-10"
     },
     {
       "id": "radius-wifi-security",
@@ -139,12 +131,10 @@
       "status": "Completed",
       "featured": false,
       "images": [
-        "/projects/radius/server-config.png",
-        "/projects/radius/policies.png",
-        "/projects/radius/certificates.png"
+
       ],
       "links": {
-        "guide": "/projects/radius-implementation-guide.pdf"
+        "guide": ""
       },
       "features": [
         "RADIUS server configuration",
@@ -159,24 +149,22 @@
         "Policy configuration optimization",
         "Troubleshooting authentication issues"
       ],
-      "dateCompleted": "2023-10-15"
+      "dateCompleted": "2023-12-15"
     },
     {
       "id": "setram-mobile-app",
       "name": "Mobile Subscription Management App – Setram Algiers",
       "shortDescription": "Developed a Flutter-based mobile application for Setram Algiers to enable users to manage subscriptions and subscribe directly through the app, improving accessibility and streamlining service usage.",
       "description": "Development of a comprehensive mobile application for Setram Algiers (public transportation company) using Flutter framework. The application was designed to modernize and streamline the subscription management process for public transportation services. Users can easily manage their existing subscriptions, purchase new ones, track usage, and access real-time information about transportation services. The app features a user-friendly interface, secure payment integration, and offline functionality for essential features. The project significantly improved customer accessibility to Setram services and reduced administrative overhead through digital transformation.",
-      "technologies": ["Flutter", "Dart", "Firebase", "REST APIs", "SQLite", "Payment Gateway"],
+      "technologies": ["Flutter", "Dart", "Firebase", "REST APIs"],
       "category": "Mobile Development",
       "status": "Completed",
       "featured": false,
       "images": [
-        "/projects/setram/app-screens.png",
-        "/projects/setram/payment-flow.png",
-        "/projects/setram/dashboard.png"
+        
       ],
       "links": {
-        "playstore": "https://play.google.com/store/apps/setram-algiers"
+        "playstore": ""
       },
       "features": [
         "Subscription management",
@@ -191,7 +179,7 @@
         "Ensuring payment security",
         "Optimizing for various device sizes"
       ],
-      "dateCompleted": "2024-02-28"
+      "dateCompleted": "2023-07-02"
     }
   ]
 } 

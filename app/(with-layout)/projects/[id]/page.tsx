@@ -252,7 +252,7 @@ export default function ProjectPage({ params }: Props) {
           <ul className="space-y-2">
             {project.features.map((feature, index) => (
               <li key={index} className="flex items-start gap-x-2">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0 hover:bg-[#00ffbf80]" />
                 <span className="text-gray-11">{feature}</span>
               </li>
             ))}
@@ -301,7 +301,7 @@ export default function ProjectPage({ params }: Props) {
         {/* Navigation to other projects */}
         <Section>
           <div className="pt-8 border-t border-gray-6">
-            <LinkPrimitive href="/" variant="route" className="text-gray-11 hover:text-gray-12 transition-colors">
+            <LinkPrimitive href="/projects" variant="route" className="text-gray-11 hover:text-gray-12 transition-colors">
               ← Back to all projects
             </LinkPrimitive>
           </div>
