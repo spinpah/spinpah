@@ -29,33 +29,33 @@ import Skeleton from "@/components/skeleton";
 const SecurityWork = () => {
   return (
     <>
-      <Section heading="Security Research" className="shrink-0">
-        <div className="flex flex-col gap-y-1.5">
-          <p>
-            I specialize in ethical hacking, endpoint security, and network defense,
-            with a focus on practical cybersecurity applications and research.
-          </p>
-          <span>
-            <span className="font-medium">Key areas of expertise include</span>
-            <ul>
-              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
-                penetration testing and vulnerability assessment
-              </li>
-              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
-                cryptographic mechanisms and security protocols
-              </li>
-              <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
-                firewall technologies and network defense
-              </li>
-            </ul>
-          </span>
-          <p>
-            My research focuses on developing innovative solutions for digital security
-            challenges and contributing to the cybersecurity community through open-source projects.
-          </p>
-          
-        </div>
-      </Section>
+      <Section heading="Software Engineering" className="shrink-0">
+  <div className="flex flex-col gap-y-1.5">
+    <p>
+      I specialize in building modern, scalable, and user-focused applications,
+      with a strong emphasis on clean architecture, performance, and reliability.
+    </p>
+    <span>
+      <span className="font-medium">Key areas of expertise include</span>
+      <ul>
+        <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+          full-stack web and mobile development
+        </li>
+        <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+          API design, integration, and cloud services
+        </li>
+        <li className="relative flex items-center before:w-1 before:h-1 before:bg-accent before:rounded-full before:leading-none gap-x-2 ">
+          software architecture, testing, and deployment
+        </li>
+      </ul>
+    </span>
+    <p>
+      My work focuses on creating impactful applications that solve real-world problems
+      and contributing to the developer community through open-source projects and
+      continuous learning.
+    </p>
+  </div>
+</Section>
       <Gallery photos={photos} />
     </>
   );
@@ -69,14 +69,16 @@ const Items = () => {
         Boudjelida Aimen Mohamed Said
       </h1>
       <p className="mt-1 text-gray-9">
-        Cybersecurity Engineer - Gamer
+        Software Engineer - Gamer
       </p>
       <div className="flex flex-col mt-4 gap-y-2">
         <p>
-        Passionate cybersecurity engineer with a solid foundation and hands-on experience gained through projects and
-        solving CTFs (TryHackMe, HackTheBox, RootMe, etc.). Curious, proactive, and detail-oriented, applying
-        penetration tests to detect vulnerabilities, propose effective solutions, and collaborate efficiently within a team.
-        </p>
+  Passionate software engineer with a solid foundation and hands-on experience 
+  gained through academic projects, internships, and personal application development. 
+  Curious, proactive, and detail-oriented, with a strong focus on building 
+  scalable applications, designing clean architectures, and delivering 
+  high-quality code while collaborating efficiently within a team.
+</p>
         
         <div className="flex gap-x-6 mt-2 items-center">
           <LinkPrimitive href="/about" variant="route">

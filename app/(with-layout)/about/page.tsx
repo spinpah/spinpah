@@ -70,36 +70,32 @@ const About = () => {
             ]}
           />
         </div>
-        <Section heading="Cybersecurity Enthusiast">
-          <div className="space-y-4">
-            <p>
-              Hey, my name is Aimen and welcome to my website. I'm
-              a{" "}
-              <LinkPrimitive
-                href=""
-              >
-                Cybersecurity Engineer
-              </LinkPrimitive>{" "}
-              based in Algeria, specializing in ethical hacking and security analysis.
-
-            </p>
-            <p>
-              My passion for cybersecurity started with a curiosity about how systems work
-              and how they can be secured. I believe in the power of ethical hacking to
-              make the digital world safer for everyone.
-            </p>
-            <p>
-              Finished my Master's in Information Systems Security at Université
-              Houari Boumediene, I focus on practical applications of security concepts,
-              from penetration testing to cryptographic analysis.
-
-            </p>
-            <p>
-              I'm committed to continuous learning and contributing to the cybersecurity
-              community through research, open-source projects, and knowledge sharing.
-            </p>
-          </div>
-        </Section>
+        <Section heading="Software Engineer">
+  <div className="space-y-4">
+    <p>
+      Hey, my name is Aimen and welcome to my website. I'm a{" "}
+      <LinkPrimitive href="">
+        Software Engineer
+      </LinkPrimitive>{" "}
+      based in Algeria, specializing in designing and building modern applications.
+    </p>
+    <p>
+      My passion for software development started with a curiosity about how 
+      applications are built and optimized to provide great user experiences. 
+      I believe in the power of technology to create impactful solutions that 
+      improve everyday life.
+    </p>
+    <p>
+      Having completed my Master's in Information Systems Security at Université
+      Houari Boumediene, I now focus on practical applications of software engineering, 
+      from full-stack web and mobile development to API design and cloud integration.
+    </p>
+    <p>
+      I'm committed to continuous learning and contributing to the developer 
+      community through open-source projects, research, and knowledge sharing.
+    </p>
+  </div>
+</Section>
 
         <Section heading="Beliefs">
           <ul className="flex flex-col gap-y-1">

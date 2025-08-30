@@ -85,7 +85,11 @@ export const bucketList = [
 
 export const beliefs = [
   "Security through obscurity is not security",
-  "Continuous learning is essential in cybersecurity",
-  "Ethical hacking makes the digital world safer",
-  "Knowledge sharing strengthens the security community",
+  "Continuous learning is essential in technology",
+  "Clean and maintainable code is more valuable than quick fixes",
+  "User experience should guide software design",
+  "Collaboration and code reviews make stronger products",
+  "Scalable architecture is key to long-term success",
+  "Open-source contributions push the industry forward"
 ];
+
