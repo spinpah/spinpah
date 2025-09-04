@@ -1,5 +1,43 @@
 {
-  "projects": [
+  "projects": [{
+  "id": "vane-solutions",
+  "name": "Vane Solutions",
+  "shortDescription": "Corporate website for Vane Solutions, an IT services company specializing in web, mobile, and cloud solutions.",
+  "description": "The Vane Solutions website is a professional WordPress-based platform designed to present the company's services, expertise, and portfolio. It highlights the company's capabilities in IT solutions, including web development, mobile apps, cloud infrastructure, and cybersecurity. The site features a clean and modern design, optimized for performance and responsiveness, providing potential clients with a clear overview of the company's offerings and easy ways to get in touch.",
+  "technologies": [
+    "WordPress",
+    "Html",
+    "CSS",
+    "JavaScript"
+  ],
+  "category": "Corporate Website",
+  "status": "Completed",
+  "featured": true,
+  "images": [
+    "/projects/vane/home.png",
+    "/projects/vane/1.png",
+    "/projects/vane/2.png",
+    "/projects/vane/3.png"
+  ],
+  "links": {
+    "live": "https://vane-solutions.com",
+    "github": ""
+  },
+  "features": [
+    "Company presentation and branding",
+    "Services showcase with clear structure",
+    "Responsive design for all devices",
+    "Contact forms and client inquiry system",
+    "SEO-friendly structure"
+  ],
+  "challenges": [
+    "Ensuring modern and professional design",
+    "Optimizing performance on WordPress",
+    "Customizing WordPress to match brand identity"
+  ],
+  "dateCompleted": "2025-07-20"
+}
+,
     {
       "id": "gameshelf",
       "name": "GAMESHELF",
