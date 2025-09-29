@@ -9,6 +9,7 @@ import { ArrowUpRight, Copy } from "@phosphor-icons/react/dist/ssr/index";
 //@ts-ignore
 import useSound from "use-sound";
 import Link from "next/link";
+import ThemeSwitcher from "@/components/theme-switcher";
 
 export const ContactCopyItem = ({
   title,
@@ -90,6 +91,9 @@ const Contact = () => {
             CV
           </a>
         </ContactItem>
+      </div>
+      <div className="md:text-right mt-4">
+        <ThemeSwitcher />
       </div>
     </Section>
   );

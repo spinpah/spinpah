@@ -139,8 +139,22 @@
 
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 214, 219, 220;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+/* Light/Dark themes (controlled via <html data-theme="...">) */
+[data-theme="dark"] {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+[data-theme="light"] {
+  --foreground-rgb: 17, 24, 28;
+  --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
+  --color-accent: #f2bdca;
 }
 
 .select ::-moz-selection {
@@ -151,11 +165,20 @@
   @apply text-accent bg-accent/10;
 }
 
+/* Optional fallback to system on first paint before hydration */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --foreground-rgb: 17, 24, 28;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 255, 255, 255;
   }
 }
 
@@ -179,6 +202,22 @@ body {
     rgb(var(--background-start-rgb)); */
 }
 
+/* Hide native cursor and show custom inverted circle */
+html, body { cursor: none }
+.inverted-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 9999px;
+  border: 3px solid rgb(255,255,255);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  background: rgba(255,255,255,1);
+}
+
 .bg {
   min-height: 100vh;
   background-image: linear-gradient(to right, #101010, rgba(0, 12, 12, 0.83)),
@@ -186,6 +225,14 @@ body {
     linear-gradient(to right, #00ffbf 1px, #000 1px);
   background-size: auto, auto, 20px 20px, 20px 20px;
 }
+
+[data-theme="light"] .bg {
+  background-image: linear-gradient(to right, #f6f7f8, rgba(240, 245, 246, 0.9)),
+    url(/noise.svg), linear-gradient(#000000 1px, transparent 1px),
+    linear-gradient(to right, #000000 1px, #fff 1px);
+}
+
+/* Removed wipe animation */
 
 .accordion-grid-cols {
   grid-template-columns: min-content 125px 1fr min-content min-content;

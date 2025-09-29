@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import InvertedCursor from "@/components/inverted-cursor";
 
 const monument = localFont({
   src: [
@@ -45,9 +46,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(monument.className)}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(){
+                try {
+                  var stored = localStorage.getItem('theme');
+                  var theme = stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         {children}
         <Analytics />
         <SpeedInsights />
+        <InvertedCursor />
       </body>
     </html>
   );
