@@ -40,17 +40,18 @@ export default function ThemeSwitcher({ className }: { className?: string }) {
       type="button"
       onClick={toggle}
       className={cn(
-        "mt-4 inline-flex items-center justify-center rounded-sm p-2",
-        "bg-gray-3 hover:bg-gray-4 text-gray-11 transition-colors duration-200",
+        "mt-4 inline-flex items-center justify-center rounded-sm p-2 transition-colors duration-200",
+        "bg-gray-3 hover:bg-gray-4 text-gray-11 cursor-pointer",
+        
         className
       )}
       aria-label="Toggle theme"
       title={theme === "dark" ? "Switch to light" : "Switch to dark"}
     >
       {theme === "dark" ? (
-        <Sun size={16} />
+        <Sun size={16} className="text-white"/>
       ) : (
-        <Moon size={16} />
+        <Moon size={16} className="text-black"/>
       )}
     </button>
   );

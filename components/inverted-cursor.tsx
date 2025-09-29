@@ -9,7 +9,7 @@ export default function InvertedCursor() {
     const el = cursorRef.current;
     if (!el) return;
     const move = (e: MouseEvent) => {
-      el.style.transform = `translate(${e.clientX - 25}px, ${e.clientY - 25}px)`;
+      el.style.transform = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;
     };
     window.addEventListener("mousemove", move, { passive: true });
     return () => window.removeEventListener("mousemove", move as any);
@@ -17,5 +17,6 @@ export default function InvertedCursor() {
 
   return <div ref={cursorRef} className="inverted-cursor" aria-hidden />;
 }
+
 
 

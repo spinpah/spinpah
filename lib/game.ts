@@ -8,9 +8,9 @@ interface Game {
 export const getGame = async () => {
     return {
       playing: {
-        title: "Alien: isolation",
-        author: "Sega",
-        cover: "/images/game.png",
+        title: "Silent Hill ƒ",
+        author: "KONAMI",
+        cover: "/images/game.jpg",
       },
     };
   

@@ -154,8 +154,17 @@
   --foreground-rgb: 17, 24, 28;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
-  --color-accent: #f2bdca;
+  --color-accent: #ff0040;
 }
+
+[data-theme="light"] .group:hover {
+  color: rgb(0, 0, 0); /* black */
+}
+
+[data-theme="light"] .group:hover .group-hover\:text-black {
+  color: rgb(0, 0, 0); /* black for nested icon/text if needed */
+}
+
 
 .select ::-moz-selection {
   @apply text-accent bg-accent/10;
@@ -202,21 +211,6 @@ body {
     rgb(var(--background-start-rgb)); */
 }
 
-/* Hide native cursor and show custom inverted circle */
-html, body { cursor: none }
-.inverted-cursor {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 50px;
-  height: 50px;
-  border-radius: 9999px;
-  border: 3px solid rgb(255,255,255);
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-  background: rgba(255,255,255,1);
-}
 
 .bg {
   min-height: 100vh;
