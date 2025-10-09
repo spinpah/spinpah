@@ -1,5 +1,43 @@
 {
-  "projects": [{
+  "projects": [
+  {
+  "id": "Spinrates",
+  "name": "SPINRATES.com",
+  "shortDescription": "A personal review platform where I write reviews on anything and users can read and comment.",
+  "description": "MyGameCritics is a personal web platform designed to share my reviews on a variety of topics, from games and tech to movies and more. Users can browse my reviews, leave comments, and engage in discussions. The site is built with a focus on readability, responsive design, and smooth navigation. It features a clean, modern interface that makes it easy for visitors to explore content and interact with the reviews.",
+  "technologies": [
+    "Next.js",
+    "Supabase",
+    "Tailwind CSS",
+    "TypeScript"
+  ],
+  "category": "Personal Website",
+  "status": "In Progress",
+  "featured": true,
+  "images": [
+    "/projects/spinrates/spinrates-home.png",
+    "/projects/spinrates/spinrates-featured.png",
+    "/projects/spinrates/spinrates-allreviews.png"
+  ],
+  "links": {
+    "live": "https://spinrates.vercel.app/"
+  },
+  "features": [
+    "Write and publish personal reviews on any topic",
+    "Users can read, comment, and engage with reviews",
+    "Responsive design for desktop and mobile",
+    "Search and filter reviews by topic",
+    "Clean and modern UI with smooth animations"
+  ],
+  "challenges": [
+    "Creating an intuitive platform for reading and writing reviews",
+    "Implementing comment functionality and user interaction",
+    "Ensuring responsive performance across devices"
+  ],
+  "dateCompleted": "2025-10-09"
+}
+
+    ,{
   "id": "vane-solutions",
   "name": "Vane Solutions",
   "shortDescription": "Corporate website for Vane Solutions, an IT services company specializing in web, mobile, and cloud solutions.",
