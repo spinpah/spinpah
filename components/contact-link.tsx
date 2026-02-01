@@ -67,12 +67,6 @@ const Contact = () => {
           <ContactCopyItem title="Email" copy="aymene16boudjelida@gmail.com" />
         </ContactItem>
       
-
-        <ContactItem icon={<ArrowUpRight />}>
-          <a href="https://twitter.com/spinpah" target="_blank">
-            Twitter
-          </a>
-        </ContactItem>
         <ContactItem icon={<ArrowUpRight />}>
           <a href="https://instagram.com/spinpah" target="_blank">
             Instagram

@@ -64,13 +64,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'Boudjelida Aimen Mohamed Said Portfolio',
       locale: 'en_US',
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: project.name,
-      description: project.shortDescription,
-      images: project.images?.[0] ? [project.images[0]] : [],
-      creator: '@spinpah',
-    },
+    
     alternates: {
       canonical: `https://spinpah.com/projects/${project.id}`,
     },
