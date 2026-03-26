@@ -1,9 +1,10 @@
 import projectsData from "@/data/projects.json";
-const projects = projectsData.projects;
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+const projects = projectsData.projects;
 
 export const metadata: Metadata = {
   title: "Projects",

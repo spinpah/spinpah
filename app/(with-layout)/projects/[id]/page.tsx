@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import projectsData from "@/data/projects.json";
-const projects = projectsData.projects;
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import type { Project } from "@/types/project";
+
+const projects = projectsData.projects;
 
 type Props = { params: { id: string } };
 

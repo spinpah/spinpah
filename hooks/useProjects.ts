@@ -2,8 +2,9 @@
 
 import { useState, useMemo } from 'react';
 import projectsData from '@/data/projects.json';
-const projects = projectsData.projects;
 import type { Project } from '@/types/project';
+
+const projects = projectsData.projects;
 
 export function useProjects() {
   const [searchTerm, setSearchTerm] = useState('');

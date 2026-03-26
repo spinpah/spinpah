@@ -1,6 +1,5 @@
 import { unstable_noStore as noStore } from "next/cache";
 import projectsData from "@/data/projects.json";
-const projects = projectsData.projects;
 import React, { Suspense } from "react";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import StarField from "@/components/star-field";
@@ -14,6 +13,8 @@ import Filter from "bad-words";
 import Skeleton from "@/components/skeleton";
 import Image from "next/image";
 import Link from "next/link";
+
+const projects = projectsData.projects;
 
 /* ─── helpers ────────────────────────────────────────── */
 
@@ -392,22 +393,26 @@ const Currently = () => (
 
 /* ─── Footer ─────────────────────────────────────────── */
 const FooterDate = async () => {
-  const data = await fetch(
-    "https://api.github.com/repos/spinpah/spinpah/commits",
-    { method: "GET", headers: { Accept: "application/vnd.github.v3+json" } }
-  ).then((r) => r.json());
+  try {
+    const data = await fetch(
+      "https://api.github.com/repos/spinpah/spinpah/commits",
+      { method: "GET", headers: { Accept: "application/vnd.github.v3+json" } }
+    ).then((r) => r.json());
 
-  if (data.message) return <span>2025</span>;
+    if (data.message || !data[0]) return <span>2025</span>;
 
-  return (
-    <a
-      href={data[0].html_url}
-      target="_blank"
-      className="underline underline-offset-2"
-    >
-      {new Date(data[0].commit.committer.date).toLocaleDateString()}
-    </a>
-  );
+    return (
+      <a
+        href={data[0].html_url}
+        target="_blank"
+        className="underline underline-offset-2"
+      >
+        {new Date(data[0].commit.committer.date).toLocaleDateString()}
+      </a>
+    );
+  } catch (err) {
+    return <span>2025</span>;
+  }
 };
 
 const Footer = () => (

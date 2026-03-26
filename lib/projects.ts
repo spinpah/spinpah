@@ -1,6 +1,7 @@
 import projectsData from '@/data/projects.json';
-const projects = projectsData.projects;
 import type { Project } from '@/types/project';
+
+const projects = projectsData.projects;
 
 export function getProjectById(id: string): Project | undefined {
   const project = projects.find(project => project.id === id);
