@@ -1,5 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache";
-import { projects } from "@/data/projects.json";
+import projectsData from "@/data/projects.json";
+const projects = projectsData.projects;
 import React, { Suspense } from "react";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import StarField from "@/components/star-field";

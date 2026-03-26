@@ -14,6 +14,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://spinpah.com"),
   title: {
     template: "%s / Boudjelida Aimen Mohamed Said",
     default: "Boudjelida Aimen Mohamed Said / @spinpah",

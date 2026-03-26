@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { projects } from '@/data/projects.json';
+import projectsData from '@/data/projects.json';
+const projects = projectsData.projects;
 import type { Project } from '@/types/project';
 
 export function useProjects() {

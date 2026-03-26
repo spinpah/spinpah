@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { projects } from "@/data/projects.json";
+import projectsData from "@/data/projects.json";
+const projects = projectsData.projects;
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import Image from "next/image";
 import Link from "next/link";
