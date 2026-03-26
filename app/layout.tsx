@@ -1,24 +1,16 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import InvertedCursor from "@/components/inverted-cursor";
 
-const monument = localFont({
-  src: [
-    {
-      path: "../public/font/ABCMonumentGrotesk-Medium-Trial.otf",
-      weight: "500",
-      style: "medium",
-    },
-    {
-      path: "../public/font/ABCMonumentGrotesk-Regular-Trial.otf",
-      weight: "400",
-      style: "regular",
-    },
-  ],
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-jakarta",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,10 +18,12 @@ export const metadata: Metadata = {
     template: "%s / Boudjelida Aimen Mohamed Said",
     default: "Boudjelida Aimen Mohamed Said / @spinpah",
   },
-  description: "As a Master's student specializing in Computer Systems Security at Université Houari Boumediene, I am deeply interested in ethical hacking, endpoint security, and network defense. My academic projects and coursework have equipped me with a strong foundation in cybersecurity concepts and practical skills, including vulnerability assessment, cryptographic mechanisms, and firewall technologies. I am eager to contribute to innovative solutions for digital security challenges",
+  description:
+    "Software Engineer based in Algeria, specializing in building modern, scalable, and secure applications. Full-stack web and mobile development with a focus on clean architecture.",
   openGraph: {
     title: "Boudjelida Aimen Mohamed Said",
-    description: "As a Master's student specializing in Computer Systems Security at Université Houari Boumediene, I am deeply interested in ethical hacking, endpoint security, and network defense. My academic projects and coursework have equipped me with a strong foundation in cybersecurity concepts and practical skills, including vulnerability assessment, cryptographic mechanisms, and firewall technologies. I am eager to contribute to innovative solutions for digital security challenges",
+    description:
+      "Software Engineer based in Algeria, specializing in building modern, scalable, and secure applications.",
     images: "/og-2.png",
     url: "https://spinpah.com",
   },
@@ -45,7 +39,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(monument.className)}>
+      <body className={cn(jakarta.variable, jakarta.className)}>
         <script
           dangerouslySetInnerHTML={{
             __html: `

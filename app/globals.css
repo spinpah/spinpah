@@ -30,204 +30,210 @@
   --color-gray-a11: var(--grayA-11);
   --color-gray-a12: var(--grayA-12);
 
-  --color-blue-1: var(--blue-1);
-  --color-blue-2: var(--blue-2);
-  --color-blue-3: var(--blue-3);
-  --color-blue-4: var(--blue-4);
-  --color-blue-5: var(--blue-5);
-  --color-blue-6: var(--blue-6);
-  --color-blue-7: var(--blue-7);
-  --color-blue-8: var(--blue-8);
   --color-blue-9: var(--blue-9);
-  --color-blue-10: var(--blue-10);
-  --color-blue-11: var(--blue-11);
-  --color-blue-12: var(--blue-12);
-  --color-blue-a1: var(--blueA-1);
-  --color-blue-a2: var(--blueA-2);
-  --color-blue-a3: var(--blueA-3);
-  --color-blue-a4: var(--blueA-4);
-  --color-blue-a5: var(--blueA-5);
-  --color-blue-a6: var(--blueA-6);
-  --color-blue-a7: var(--blueA-7);
-  --color-blue-a8: var(--blueA-8);
-  --color-blue-a9: var(--blueA-9);
-  --color-blue-a10: var(--blueA-10);
-  --color-blue-a11: var(--blueA-11);
-  --color-blue-a12: var(--blueA-12);
 
-  --color-accent: #00ffbf;
+  /* Design tokens */
+  --color-page-bg:      var(--ds-page-bg);
+  --color-surface:      var(--ds-surface);
+  --color-surface-2:    var(--ds-surface-2);
+  --color-text:         var(--ds-text);
+  --color-text-muted:   var(--ds-text-muted);
+  --color-border:       var(--ds-border);
+  --color-accent:       var(--ds-accent);
+  --color-accent-fg:    var(--ds-accent-fg);
 
   --text-*: initial;
-  --text-sm: 0.75rem;
-  --text-base: 0.875rem;
+  --text-xs:   0.72rem;
+  --text-sm:   0.825rem;
+  --text-base: 0.9375rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.3rem;
+  --text-2xl:  1.6rem;
+  --text-3xl:  2rem;
+  --text-4xl:  2.5rem;
+  --text-5xl:  3.25rem;
+  --text-6xl:  4rem;
+  --text-7xl:  5rem;
 
   --radius-*: initial;
-  --radius-4: 4px;
-  --radius-6: 6px;
-  --radius-sm: 1px;
-  --radius-md: 2px;
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
   --radius-full: 9999px;
 
-  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
-  --background-image-gradient-conic: conic-gradient(
-    from 180deg at 50% 50%,
-    var(--tw-gradient-stops)
-  );
-
   --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-  --animate-slide-up-and-fade: slide-up-and-fade 0.25s
-    cubic-bezier(0.16, 0, 0.13, 1);
-  --animate-slide-down-and-fade: slide-down-and-fade 0.25s
-    cubic-bezier(0.16, 0, 0.13, 1);
+  --animate-accordion-up:   accordion-up 0.2s ease-out;
+  --animate-fade-up:        fade-up 0.55s cubic-bezier(0.16, 0, 0.13, 1);
 
   @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
+    from { height: 0; }
+    to   { height: var(--radix-accordion-content-height); }
   }
   @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
+    from { height: var(--radix-accordion-content-height); }
+    to   { height: 0; }
   }
-  @keyframes slide-up-and-fade {
-    0% {
-      opacity: 0;
-      transform: translateY(1rem);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-  @keyframes slide-down-and-fade {
-    0% {
-      opacity: 0;
-      transform: translateY(-1rem);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  @keyframes twinkle {
+    from { opacity: 0.15; transform: scale(0.85); }
+    to   { opacity: 1;    transform: scale(1.15); }
   }
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-:root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
-}
-
-/* Light/Dark themes (controlled via <html data-theme="...">) */
-[data-theme="dark"] {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
-}
-
+/* ── Design tokens ──────────────────────────────── */
+:root,
 [data-theme="light"] {
-  --foreground-rgb: 17, 24, 28;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
-  --color-accent: #ff0040;
+  --ds-page-bg:    #FFFFFF;
+  --ds-surface:    #F5F5F2;
+  --ds-surface-2:  #EBEBЕ7;
+  --ds-text:       #111111;
+  --ds-text-muted: #777777;
+  --ds-border:     #E8E8E4;
+  --ds-accent:     #111111;
+  --ds-accent-fg:  #FFFFFF;
 }
 
-[data-theme="light"] .group:hover {
-  color: rgb(0, 0, 0); /* black */
+[data-theme="dark"] {
+  --ds-page-bg:    #0A0A0A;
+  --ds-surface:    #161616;
+  --ds-surface-2:  #222222;
+  --ds-text:       #F0F0EE;
+  --ds-text-muted: #888888;
+  --ds-border:     #2C2C2C;
+  --ds-accent:     #F5E642;
+  --ds-accent-fg:  #0A0A0A;
 }
 
-[data-theme="light"] .group:hover .group-hover\:text-black {
-  color: rgb(0, 0, 0); /* black for nested icon/text if needed */
-}
-
-
-.select ::-moz-selection {
-  @apply text-accent bg-accent/10;
-}
-
-.select ::selection {
-  @apply text-accent bg-accent/10;
-}
-
-/* Optional fallback to system on first paint before hydration */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* ── Base ───────────────────────────────────────── */
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--ds-border, currentColor);
   }
 }
 
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme]) {
-    --foreground-rgb: 17, 24, 28;
-    --background-start-rgb: 255, 255, 255;
-    --background-end-rgb: 255, 255, 255;
-  }
-}
-
-a,
-button {
-  touch-action: manipulation;
-}
+a, button { touch-action: manipulation; }
 
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricPrecision;
-  font-family: "Monument Grotesk", sans-serif;
-  font-size: 14px;
-  color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
+  font-family: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-size: var(--text-base);
+  background-color: var(--ds-page-bg);
+  color: var(--ds-text);
 }
 
-
+/* ── Page background ────────────────────────────── */
 .bg {
   min-height: 100vh;
-  background-image: linear-gradient(to right, #101010, rgba(0, 12, 12, 0.83)),
-    url(/noise.svg), linear-gradient(#00ffbf 1px, transparent 1px),
-    linear-gradient(to right, #00ffbf 1px, #000 1px);
-  background-size: auto, auto, 20px 20px, 20px 20px;
+  background-color: var(--ds-page-bg);
 }
 
-[data-theme="light"] .bg {
-  background-image: linear-gradient(to right, #f6f7f8, rgba(240, 245, 246, 0.9)),
-    url(/noise.svg), linear-gradient(#000000 1px, transparent 1px),
-    linear-gradient(to right, #000000 1px, #fff 1px);
+/* ── Floating pill nav ──────────────────────────── */
+.nav-pill {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid #E8E8E4;
 }
 
-/* Removed wipe animation */
+[data-theme="dark"] .nav-pill {
+  background: rgba(10, 10, 10, 0.88);
+  border-color: #2C2C2C;
+}
 
+/* ── Cards ──────────────────────────────────────── */
+.card {
+  background: var(--ds-surface);
+  border-radius: var(--radius-xl);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Buttons ────────────────────────────────────── */
+.btn-primary {
+  background: var(--ds-accent);
+  color: var(--ds-accent-fg);
+  border-radius: var(--radius-full);
+  padding: 0.65rem 1.4rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--ds-surface);
+  color: var(--ds-text);
+  border-radius: var(--radius-full);
+  padding: 0.65rem 1.4rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: background 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-secondary:hover {
+  background: var(--ds-surface-2);
+  transform: translateY(-1px);
+}
+
+/* ── Skill tags ─────────────────────────────────── */
+.skill-tag {
+  background: var(--ds-surface);
+  color: var(--ds-text-muted);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.9rem;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.skill-tag:hover {
+  background: var(--ds-accent);
+  color: var(--ds-accent-fg);
+  border-color: var(--ds-accent);
+}
+
+/* ── Section heading ────────────────────────────── */
+.section-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ds-text-muted);
+}
+
+/* ── Text selection ─────────────────────────────── */
+.select ::-moz-selection { background: rgba(17,17,17,0.1); color: var(--ds-text); }
+.select ::selection       { background: rgba(17,17,17,0.1); color: var(--ds-text); }
+
+[data-theme="dark"] .select ::-moz-selection { background: rgba(240,240,238,0.15); color: var(--ds-text); }
+[data-theme="dark"] .select ::selection       { background: rgba(240,240,238,0.15); color: var(--ds-text); }
+
+/* ── Accordion grid ─────────────────────────────── */
 .accordion-grid-cols {
   grid-template-columns: min-content 125px 1fr min-content min-content;
 }

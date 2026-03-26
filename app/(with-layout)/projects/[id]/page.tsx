@@ -1,305 +1,278 @@
-import { notFound } from 'next/navigation';
-import { projects } from '@/data/projects.json';
-import LinkPrimitive from "@/components/link-primitive";
-import Section from "@/components/section";
-import { ArrowLeft, ArrowUpRight, Calendar, Tag, CheckCircle } from "@phosphor-icons/react/dist/ssr/index";
-import Image from 'next/image';
-import type { Metadata } from 'next';
-import type { Project } from '@/types/project';
+import { notFound } from "next/navigation";
+import { projects } from "@/data/projects.json";
+import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
+import Image from "next/image";
+import Link from "next/link";
+import type { Metadata } from "next";
+import type { Project } from "@/types/project";
 
-import Gallery2 from '@/components/gallery';
+type Props = { params: { id: string } };
 
-type Props = {
-  params: { id: string }
-}
-
-// Generate static params for all projects (PERFORMANCE OPTIMIZATION)
 export async function generateStaticParams() {
-  return projects.map((project) => ({
-    id: project.id,
-  }))
+  return projects.map((p) => ({ id: p.id }));
 }
 
-// Enhanced SEO metadata generation
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = projects.find((p) => p.id === params.id);
-  
-  if (!project) {
-    return {
-      title: 'Project Not Found',
-      description: 'The requested project could not be found.',
-    }
-  }
-
-  const technologies = project.technologies.join(', ');
-  
+  if (!project) return { title: "Not Found" };
   return {
-    title: `${project.name} - ${project.category} | Boudjelida Aimen`,
-    description: project.description.length > 160 
-      ? `${project.description.substring(0, 157)}...`
-      : project.description,
-    keywords: [
-      ...project.technologies,
-      project.category,
-      'cybersecurity',
-      'web development',
-      'Boudjelida Aimen',
-      'portfolio',
-      'project'
-    ].join(', '),
-    authors: [{ name: 'Boudjelida Aimen Mohamed Said' }],
-    creator: 'Boudjelida Aimen Mohamed Said',
-    openGraph: {
-      title: `${project.name} - ${project.category}`,
-      description: project.shortDescription,
-      type: 'article',
-      images: project.images?.[0] ? [
-        {
-          url: project.images[0],
-          width: 1200,
-          height: 630,
-          alt: `${project.name} screenshot`,
-        }
-      ] : [],
-      siteName: 'Boudjelida Aimen Mohamed Said Portfolio',
-      locale: 'en_US',
-    },
-    
-    alternates: {
-      canonical: `https://spinpah.com/projects/${project.id}`,
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-  }
+    title: `${project.name} — Boudjelida Aimen`,
+    description: project.shortDescription,
+    alternates: { canonical: `https://spinpah.com/projects/${project.id}` },
+  };
 }
 
-// Generate structured data for SEO
 function generateStructuredData(project: Project) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
     name: project.name,
     description: project.description,
-    author: {
-      '@type': 'Person',
-      name: 'Boudjelida Aimen Mohamed Said',
-      url: 'https://spinpah.com',
-      jobTitle: 'Cybersecurity Engineer',
-    },
+    author: { "@type": "Person", name: "Boudjelida Aimen Mohamed Said", url: "https://spinpah.com" },
     dateCreated: project.dateCompleted,
-    keywords: project.technologies.join(', '),
     url: `https://spinpah.com/projects/${project.id}`,
-    image: project.images?.[0] || '',
-    inLanguage: 'en',
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://spinpah.com/projects/${project.id}`,
-    },
-    isPartOf: {
-      '@type': 'Website',
-      name: 'Boudjelida Aimen Mohamed Said Portfolio',
-      url: 'https://spinpah.com',
-    },
   };
 }
 
 export default function ProjectPage({ params }: Props) {
   const project = projects.find((p) => p.id === params.id);
+  if (!project) notFound();
 
-  if (!project) {
-    notFound();
-  }
-
-  // Ensure status is of the correct type for Project
-  const projectForStructuredData: Project = {
+  const structuredData = generateStructuredData({
     ...project,
     status: project.status as "Completed" | "In Progress" | "Planned",
-  };
+  });
 
-  const structuredData = generateStructuredData(projectForStructuredData);
+  const links = [
+    { label: "Live Demo", href: project.links.live },
+    { label: "GitHub", href: project.links.github },
+    { label: "Report", href: project.links.report },
+    { label: "Documentation", href: project.links.documentation },
+    { label: "Guide", href: project.links.guide },
+    { label: "Play Store", href: project.links.playstore },
+  ].filter((l) => l.href);
 
   return (
     <>
-      {/* Structured Data for SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      
-      <div className="animate-in fade-in duration-500">
-        {/* Back Navigation */}
-        <div className="mb-8">
-          <LinkPrimitive href="/" variant="route" className="flex items-center gap-x-2 text-gray-11 hover:text-gray-12 transition-colors">
-            <ArrowLeft size={16} />
-            Back to Home
-          </LinkPrimitive>
+
+      <div>
+        {/* Back */}
+        <div className="mb-10">
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity"
+            style={{ color: "var(--ds-text-muted)" }}
+          >
+            <ArrowLeft size={15} /> All Projects
+          </Link>
         </div>
 
-        {/* Project Header */}
-        <Section heading='Project'>
-          <div className="flex flex-col gap-y-4">
-            <div className="flex items-center gap-x-3">
-              <h1 className="text-4xl font-medium text-white">
-                {project.name}
-              </h1>
-              {project.featured && (
-                <span className="px-2 py-1 text-xs bg-accent/10 text-accent rounded-md font-medium">
-                  Featured
-                </span>
-              )}
-            </div>
-            
-            {/* Status and Category */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-11">
-              <div className="flex items-center gap-x-1.5">
-                <CheckCircle size={14} />
-                <span>{project.status}</span>
-              </div>
-              <div className="flex items-center gap-x-1.5">
-                <Tag size={14} />
-                <span>{project.category}</span>
-              </div>
-              <div className="flex items-center gap-x-1.5">
-                <Calendar size={14} />
-                <time dateTime={project.dateCompleted}>
-                  {new Date(project.dateCompleted).toLocaleDateString()}
-                </time>
-              </div>
-            </div>
+        {/* Header */}
+        <div className="mb-10 pb-10 border-b" style={{ borderColor: "var(--ds-border)" }}>
+          <p
+            className="text-xs font-semibold uppercase tracking-widest mb-3"
+            style={{ color: "var(--ds-text-muted)" }}
+          >
+            {project.category} ·{" "}
+            {new Date(project.dateCompleted).getFullYear()}
+          </p>
+          <div className="flex flex-col md:flex-row md:items-end gap-6 justify-between">
+            <h1
+              className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight"
+              style={{ color: "var(--ds-text)" }}
+            >
+              {project.name}
+            </h1>
 
-            {/* Project Links */}
-            {(project.links.live || project.links.github || project.links.report || project.links.documentation || project.links.guide || project.links.playstore) && (
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                {project.links.live && (
-                  <LinkPrimitive href={project.links.live} external className="flex items-center gap-x-1">
-                    Live Demo <ArrowUpRight size={14} />
-                  </LinkPrimitive>
-                )}
-                {project.links.github && (
-                  <LinkPrimitive href={project.links.github} external className="flex items-center gap-x-1">
-                    GitHub <ArrowUpRight size={14} />
-                  </LinkPrimitive>
-                )}
-                {project.links.report && (
-                  <LinkPrimitive href={project.links.report} external className="flex items-center gap-x-1">
-                    View Report <ArrowUpRight size={14} />
-                  </LinkPrimitive>
-                )}
-                {project.links.documentation && (
-                  <LinkPrimitive href={project.links.documentation} external className="flex items-center gap-x-1">
-                    Documentation <ArrowUpRight size={14} />
-                  </LinkPrimitive>
-                )}
-                {project.links.guide && (
-                  <LinkPrimitive href={project.links.guide} external className="flex items-center gap-x-1">
-                    Implementation Guide <ArrowUpRight size={14} />
-                  </LinkPrimitive>
-                )}
-                {project.links.playstore && (
-                  <LinkPrimitive href={project.links.playstore} external className="flex items-center gap-x-1">
-                    Play Store <ArrowUpRight size={14} />
-                  </LinkPrimitive>
-                )}
+            {/* Links */}
+            {links.length > 0 && (
+              <div className="flex flex-wrap gap-3">
+                {links.map(({ label, href }) => (
+                  <a
+                    key={label}
+                    href={href!}
+                    target="_blank"
+                    className={
+                      label === "Live Demo"
+                        ? "btn-primary"
+                        : "btn-secondary"
+                    }
+                  >
+                    {label} <ArrowUpRight size={13} />
+                  </a>
+                ))}
               </div>
             )}
           </div>
-        </Section>
 
-        <Section heading="About">
-          <p className="text-gray-11 leading-relaxed">
-            {project.description}
-          </p>
-        </Section>
-
-        
-
-        {/* Rest of your component stays the same... */}
-        {/* Project Description */}
-        
-
-        {/* Technologies Used */}
-        <Section heading="Technologies">
-          <div className="flex flex-wrap gap-2">
-            {project.technologies.map((tech) => (
+          {/* Status + tags */}
+          <div className="flex flex-wrap items-center gap-2 mt-4">
+            <span
+              className="text-xs px-3 py-1 rounded-full font-semibold"
+              style={{
+                background:
+                  project.status === "In Progress" ? "#ECFDF5" : "var(--ds-surface)",
+                color:
+                  project.status === "In Progress" ? "#065F46" : "var(--ds-text-muted)",
+              }}
+            >
+              {project.status}
+            </span>
+            {project.featured && (
               <span
-                key={tech}
-                className="px-2 py-1 text-sm bg-gray-5 text-gray-12 rounded-md font-medium cursor-pointer hover:bg-yellow hover:text-white"
+                className="text-xs px-3 py-1 rounded-full font-semibold"
+                style={{ background: "var(--ds-surface)", color: "var(--ds-text-muted)" }}
               >
-                {tech}
+                Featured
               </span>
-            ))}
+            )}
           </div>
-        </Section>
 
-        {/* Key Features */}
-        <div className='flex  gap-20'>
-        <Section heading="Key Features">
-          <ul className="space-y-2">
-            {project.features.map((feature, index) => (
-              <li key={index} className="flex items-start gap-x-2">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0 hover:bg-[#00ffbf80]" />
-                <span className="text-gray-11">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        {/* Challenges */}
-        <Section heading="Challenges & Solutions">
-          <ul className="space-y-2">
-            {project.challenges.map((challenge, index) => (
-              <li key={index} className="flex items-start gap-x-2">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-gray-6 mt-2 flex-shrink-0" />
-                <span className="text-gray-11">{challenge}</span>
-              </li>
-            ))}
-          </ul>
-        </Section>
+          <p
+            className="mt-5 text-lg leading-relaxed max-w-2xl"
+            style={{ color: "var(--ds-text-muted)" }}
+          >
+            {project.shortDescription}
+          </p>
         </div>
 
-        {/* Project Images */}
+        {/* Images */}
         {project.images && project.images.length > 0 && (
-          <Section>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {project.images.map((image, index) => (
-                <div key={index} className="aspect-video bg-gray-3 rounded-md overflow-hidden">
-                  <Image
-                    src={image}
-                    alt={`${project.name} screenshot ${index + 1}`}
-                    width={20000}
-                    height={10000}
-                    className="w-full h-full object-cover"
-                    placeholder="blur"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                    priority={index === 0}
-                  />
-                </div>
-              ))}
-            </div>
-          </Section>
-
-          
+          <div className="mb-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+            {project.images.map((img, i) => (
+              <div
+                key={i}
+                className={`rounded-2xl overflow-hidden ${i === 0 && project.images!.length > 1 ? "md:col-span-2" : ""}`}
+                style={{
+                  background: "var(--ds-surface)",
+                  aspectRatio: i === 0 ? "16/7" : "16/9",
+                }}
+              >
+                <Image
+                  src={img}
+                  alt={`${project.name} screenshot ${i + 1}`}
+                  width={1200}
+                  height={600}
+                  className="w-full h-full object-cover"
+                  priority={i === 0}
+                />
+              </div>
+            ))}
+          </div>
         )}
 
-        
-
-        {/* Navigation to other projects */}
-        <Section>
-          <div className="pt-8 border-t border-gray-6">
-            <LinkPrimitive href="/projects" variant="route" className="text-gray-11 hover:text-gray-12 transition-colors">
-              ← Back to all projects
-            </LinkPrimitive>
+        {/* Content grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+          {/* Overview */}
+          <div
+            className="rounded-2xl p-8"
+            style={{ background: "var(--ds-surface)" }}
+          >
+            <h2
+              className="text-base font-bold mb-4"
+              style={{ color: "var(--ds-text)" }}
+            >
+              Overview
+            </h2>
+            <p
+              className="text-sm leading-relaxed"
+              style={{ color: "var(--ds-text-muted)" }}
+            >
+              {project.description}
+            </p>
           </div>
-        </Section>
+
+          {/* Technologies */}
+          <div
+            className="rounded-2xl p-8"
+            style={{ background: "var(--ds-surface)" }}
+          >
+            <h2
+              className="text-base font-bold mb-4"
+              style={{ color: "var(--ds-text)" }}
+            >
+              Technologies
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {project.technologies.map((tech) => (
+                <span key={tech} className="skill-tag">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Features */}
+          <div
+            className="rounded-2xl p-8"
+            style={{ background: "var(--ds-surface)" }}
+          >
+            <h2
+              className="text-base font-bold mb-4"
+              style={{ color: "var(--ds-text)" }}
+            >
+              Key Features
+            </h2>
+            <ul className="space-y-2.5">
+              {project.features.map((f, i) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-3 text-sm leading-relaxed"
+                  style={{ color: "var(--ds-text-muted)" }}
+                >
+                  <span
+                    className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
+                    style={{ background: "var(--ds-text)" }}
+                  />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Challenges */}
+          <div
+            className="rounded-2xl p-8"
+            style={{ background: "var(--ds-surface)" }}
+          >
+            <h2
+              className="text-base font-bold mb-4"
+              style={{ color: "var(--ds-text)" }}
+            >
+              Challenges
+            </h2>
+            <ul className="space-y-2.5">
+              {project.challenges.map((c, i) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-3 text-sm leading-relaxed"
+                  style={{ color: "var(--ds-text-muted)" }}
+                >
+                  <span
+                    className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 opacity-40"
+                    style={{ background: "var(--ds-text)" }}
+                  />
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Back */}
+        <div className="pt-4 border-t" style={{ borderColor: "var(--ds-border)" }}>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity"
+            style={{ color: "var(--ds-text-muted)" }}
+          >
+            <ArrowLeft size={15} /> All Projects
+          </Link>
+        </div>
       </div>
     </>
   );

@@ -1,111 +1,134 @@
-import { projects } from '@/data/projects.json';
-import LinkPrimitive from "@/components/link-primitive";
-import Section from "@/components/section";
-import { ArrowLeft, ArrowRight, Calendar, Tag } from "@phosphor-icons/react/dist/ssr/index";
-import type { Metadata } from 'next';
+import { projects } from "@/data/projects.json";
+import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: 'Projects',
-  description: 'A collection of my cybersecurity, web development, and mobile development projects.',
+  title: "Projects",
+  description:
+    "A collection of my web development, cybersecurity, and mobile development projects.",
 };
 
 export default function ProjectsPage() {
-  // Sort projects by date (newest first) and separate featured projects
-  const sortedProjects = [...projects].sort((a, b) => 
-    new Date(b.dateCompleted).getTime() - new Date(a.dateCompleted).getTime()
+  const sorted = [...projects].sort(
+    (a, b) =>
+      new Date(b.dateCompleted).getTime() - new Date(a.dateCompleted).getTime()
   );
-  
-  const featuredProjects = sortedProjects.filter(p => p.featured);
-  const otherProjects = sortedProjects.filter(p => !p.featured);
 
   return (
-    <div className="animate-in fade-in duration-500">
-      {/* Back Navigation */}
-      <div className="mb-8">
-        <LinkPrimitive href="/" variant="route" className="flex items-center gap-x-2 text-gray-11 hover:text-gray-12 transition-colors">
-          <ArrowLeft size={16} />
-          Back to Home
-        </LinkPrimitive>
+    <div>
+      {/* Header */}
+      <div className="mb-10">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity"
+          style={{ color: "var(--ds-text-muted)" }}
+        >
+          <ArrowLeft size={15} /> Back
+        </Link>
       </div>
 
-      
+      <div className="mb-12">
+        <span
+          className="text-xs font-semibold uppercase tracking-widest block mb-3"
+          style={{ color: "var(--ds-text-muted)" }}
+        >
+          Portfolio
+        </span>
+        <h1
+          className="text-4xl md:text-5xl font-extrabold tracking-tight"
+          style={{ color: "var(--ds-text)" }}
+        >
+          All Projects
+        </h1>
+      </div>
 
-      {/* All Projects */}
-      <Section heading={featuredProjects.length > 0 ? "All Projects" : "Projects"}>
-        <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {sortedProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      </Section>
-    </div>
-  );
-}
-
-function ProjectCard({ project, featured = false }: { 
-  project: typeof projects[0], 
-  featured?: boolean 
-}) {
-  return (
-    <div className="group p-8 rounded-md hover:border-gray-7 transition-colors">
-      <div className="flex flex-col gap-y-3">
-        {/* Project Header */}
-        <div className="flex items-start justify-between gap-x-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-x-3 mb-2">
-              <LinkPrimitive 
-                href={`/projects/${project.id}`} 
-                variant="route"
-                className="text-lg font-medium text-white group-hover:text-accent transition-colors"
-              >
-                {project.name}
-              </LinkPrimitive>
-              {project.featured && (
-                <span className="px-2 py-1 text-xs bg-accent/10 text-accent rounded-md font-medium">
-                  Featured
-                </span>
+      {/* Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {sorted.map((project) => (
+          <Link
+            key={project.id}
+            href={`/projects/${project.id}`}
+            className="card group block overflow-hidden"
+          >
+            {/* Image */}
+            <div
+              className="w-full h-52 overflow-hidden"
+              style={{ background: "var(--ds-surface-2)" }}
+            >
+              {project.images && project.images[0] ? (
+                <Image
+                  src={project.images[0]}
+                  alt={project.name}
+                  width={700}
+                  height={350}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              ) : (
+                <div
+                  className="w-full h-full flex items-center justify-center text-5xl font-black opacity-10"
+                  style={{ color: "var(--ds-text)" }}
+                >
+                  {project.name[0]}
+                </div>
               )}
             </div>
-            
-            {/* Metadata */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-11 mb-3">
-              <div className="flex items-center gap-x-1.5">
-                <Tag size={12} />
-                <span>{project.category}</span>
+
+            {/* Content */}
+            <div className="p-6">
+              <div className="flex items-start justify-between gap-3 mb-2">
+                <div>
+                  <p
+                    className="text-xs font-semibold uppercase tracking-widest mb-1"
+                    style={{ color: "var(--ds-text-muted)" }}
+                  >
+                    {project.category} · {new Date(project.dateCompleted).getFullYear()}
+                  </p>
+                  <h3
+                    className="text-base font-bold leading-snug group-hover:opacity-60 transition-opacity"
+                    style={{ color: "var(--ds-text)" }}
+                  >
+                    {project.name}
+                  </h3>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {project.featured && (
+                    <span
+                      className="text-xs px-2.5 py-1 rounded-full font-semibold"
+                      style={{
+                        background: "#ECFDF5",
+                        color: "#065F46",
+                      }}
+                    >
+                      Featured
+                    </span>
+                  )}
+                  <ArrowUpRight
+                    size={16}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ color: "var(--ds-text-muted)" }}
+                  />
+                </div>
               </div>
-              <div className="flex items-center gap-x-1.5">
-                <Calendar size={12} />
-                <span>{new Date(project.dateCompleted).toLocaleDateString()}</span>
+
+              <p
+                className="text-sm leading-relaxed mb-4"
+                style={{ color: "var(--ds-text-muted)" }}
+              >
+                {project.shortDescription}
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.slice(0, 4).map((tech) => (
+                  <span key={tech} className="skill-tag">
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
-          </div>
-          
-          <LinkPrimitive 
-            href={`/projects/${project.id}`} 
-            variant="route"
-            className="opacity-0 group-hover:opacity-100 transition-opacity"
-          >
-            <ArrowRight size={16} />
-          </LinkPrimitive>
-        </div>
-
-        {/* Description */}
-        <p className="text-gray-11 text-sm leading-relaxed">
-          {project.shortDescription}
-        </p>
-
-        {/* Technologies */}
-        <div className="flex flex-wrap bg-accent/5  gap-1.5">
-          {project.technologies.slice(0, 20).map((tech) => (
-            <span
-              key={tech}
-              className="px-2 py-1 text-xs text-white rounded cursor-pointer font-medium"
-            >
-              {tech}
-            </span>
-          ))}
-          
-        </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
