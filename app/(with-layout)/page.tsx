@@ -3,12 +3,10 @@ import projectsData from "@/data/projects.json";
 import React, { Suspense } from "react";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
 import StarField from "@/components/star-field";
-import { MusicCard, ReadingCard, GamingCard } from "@/components/hover-card";
+import { MusicCard } from "@/components/hover-card";
 import { experiences } from "@/content";
 import LinkPrimitive from "@/components/link-primitive";
-import { getShelves } from "@/lib/literal";
-import getLastPlayed from "@/lib/spotify";
-import { getGame } from "@/lib/game";
+import getNowPlaying from "@/lib/spotify";
 import Filter from "bad-words";
 import Skeleton from "@/components/skeleton";
 import Image from "next/image";
@@ -324,21 +322,15 @@ const Experience = () => (
 );
 
 /* ─── Currently ──────────────────────────────────────── */
-const CurrentlyContent = async () => {
+const SpotifyCard = async () => {
   noStore();
-
   try {
-    const [{ reading }, songResult, { playing }] = await Promise.all([
-      getShelves(),
-      getLastPlayed(),
-      getGame(),
-    ]);
-
-    const song = songResult?.data;
-    if (!song) throw new Error("no song data");
+    const result = await getNowPlaying();
+    const song = result?.data;
+    if (!song) throw new Error("no data");
 
     const recent = song.is_playing ? song.item : song.items?.[0]?.track;
-    if (!recent) throw new Error("no recent track");
+    if (!recent) throw new Error("no track");
 
     const filter = new Filter();
     const track = {
@@ -347,53 +339,122 @@ const CurrentlyContent = async () => {
       songUrl: recent.external_urls?.spotify ?? "#",
       coverArt: recent.album?.images?.[0]?.url ?? "",
       previewUrl: recent.preview_url ?? null,
+      isLive: !!song.is_playing,
     };
 
     return (
-      <p className="text-sm leading-relaxed" style={{ color: "var(--ds-text-muted)" }}>
-        Listening to{" "}
+      <div className="card p-5 flex flex-col gap-4">
+        <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: "1/1" }}>
+          {track.coverArt ? (
+            <Image src={track.coverArt} alt={track.title} fill className="object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center" style={{ background: "var(--ds-surface-2)" }}>
+              <span className="text-3xl">🎵</span>
+            </div>
+          )}
+        </div>
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>
+              {track.isLive ? (
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse inline-block" />
+                  Now Playing
+                </span>
+              ) : "Last Played"}
+            </span>
+          </div>
+          <p className="font-bold text-base leading-snug" style={{ color: "var(--ds-text)" }}>{track.title}</p>
+          <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>{track.artist}</p>
+        </div>
         <MusicCard {...track}>
           <LinkPrimitive href={track.songUrl} external popover>
-            {track.title}
+            <span className="btn-secondary w-full justify-center text-xs">
+              Open in Spotify
+            </span>
           </LinkPrimitive>
-        </MusicCard>{" "}
-        by {track.artist} · reading{" "}
-        <ReadingCard {...reading}>
-          <LinkPrimitive href="https://literal.club/book/tokyo-ghoul-nlnfh" external popover>
-            {reading.title}
-          </LinkPrimitive>
-        </ReadingCard>{" "}
-        by {reading.author} · playing{" "}
-        <GamingCard {...playing}>
-          <LinkPrimitive href="https://store.steampowered.com/app/214490/Alien_Isolation" external popover>
-            {playing.title}
-          </LinkPrimitive>
-        </GamingCard>
-      </p>
+        </MusicCard>
+      </div>
     );
   } catch {
     return (
-      <p className="text-sm" style={{ color: "var(--ds-text-muted)" }}>
-        Listening to music, reading manga, and gaming in Algeria.
-      </p>
+      <div className="card p-5 flex flex-col gap-4">
+        <div className="relative w-full rounded-xl overflow-hidden flex items-center justify-center" style={{ aspectRatio: "1/1", background: "var(--ds-surface-2)" }}>
+          <span className="text-4xl">🎵</span>
+        </div>
+        <div>
+          <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>Listening</span>
+          <p className="font-bold text-base mt-1" style={{ color: "var(--ds-text)" }}>Something good</p>
+          <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>on Spotify</p>
+        </div>
+      </div>
     );
   }
 };
 
-const Currently = () => (
-  <section className="py-12 border-t" style={{ borderColor: "var(--ds-border)" }}>
-    <SectionHeading>Currently</SectionHeading>
-    <Suspense
-      fallback={
-        <div className="flex flex-wrap items-center gap-2 text-sm" style={{ color: "var(--ds-text-muted)" }}>
-          Listening to <Skeleton className="inline-flex w-24 h-4 rounded-full" />
-          by <Skeleton className="inline-flex w-16 h-4 rounded-full" /> · reading{" "}
-          <Skeleton className="inline-flex w-24 h-4 rounded-full" />
-        </div>
-      }
+const WatchingCard = () => (
+  <div className="card p-5 flex flex-col gap-4">
+    <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: "1/1" }}>
+      <Image src="/images/bcs.jpg" alt="Better Call Saul" fill className="object-cover object-top" />
+    </div>
+    <div>
+      <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>Watching</span>
+      <p className="font-bold text-base mt-1" style={{ color: "var(--ds-text)" }}>Better Call Saul</p>
+      <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>Vince Gilligan</p>
+    </div>
+    <a
+      href="https://www.imdb.com/title/tt3032476/"
+      target="_blank"
+      className="btn-secondary w-full justify-center text-xs"
     >
-      <CurrentlyContent />
-    </Suspense>
+      View on IMDb
+    </a>
+  </div>
+);
+
+const PlayingCard = () => (
+  <div className="card p-5 flex flex-col gap-4">
+    <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: "1/1" }}>
+      <Image src="/images/witcher3.jpg" alt="The Witcher 3" fill className="object-cover object-center" />
+    </div>
+    <div>
+      <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>Playing</span>
+      <p className="font-bold text-base mt-1" style={{ color: "var(--ds-text)" }}>The Witcher 3</p>
+      <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>CD Projekt Red</p>
+    </div>
+    <a
+      href="https://store.steampowered.com/app/292030"
+      target="_blank"
+      className="btn-secondary w-full justify-center text-xs"
+    >
+      View on Steam
+    </a>
+  </div>
+);
+
+const Currently = () => (
+  <section className="py-16 border-t" style={{ borderColor: "var(--ds-border)" }}>
+    <div className="mb-10">
+      <SectionHeading>Currently</SectionHeading>
+      <p className="text-sm -mt-4" style={{ color: "var(--ds-text-muted)" }}>
+        What I&apos;m into right now
+      </p>
+    </div>
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <Suspense
+        fallback={
+          <div className="card p-5 flex flex-col gap-4">
+            <Skeleton className="w-full rounded-xl" style={{ aspectRatio: "1/1" }} />
+            <Skeleton className="w-3/4 h-4 rounded-full" />
+            <Skeleton className="w-1/2 h-3 rounded-full" />
+          </div>
+        }
+      >
+        <SpotifyCard />
+      </Suspense>
+      <WatchingCard />
+      <PlayingCard />
+    </div>
   </section>
 );
 

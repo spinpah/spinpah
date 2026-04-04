@@ -6,12 +6,11 @@ interface Game {
 
 
 export const getGame = async () => {
-    return {
-      playing: {
-        title: "Silent Hill ƒ",
-        author: "KONAMI",
-        cover: "/images/game.jpg",
-      },
-    };
-  
+  return {
+    playing: {
+      title: "The Witcher 3",
+      author: "CD Projekt Red",
+      cover: "/images/witcher3.jpg",
+    },
+  };
 };

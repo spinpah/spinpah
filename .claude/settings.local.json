@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:oussama-mekhaldi.framer.website)",
-      "Bash(node -e \"const d = require\\('./data/projects.json'\\); d.projects.forEach\\(p => console.log\\(p.id, JSON.stringify\\(p.images\\)\\)\\)\")"
+      "Bash(node -e \"const d = require\\('./data/projects.json'\\); d.projects.forEach\\(p => console.log\\(p.id, JSON.stringify\\(p.images\\)\\)\\)\")",
+      "Bash(curl -L \"https://cdn.akamai.steamstatic.com/steam/apps/292030/library_600x900.jpg\" -o \"public/images/witcher3.jpg\" --silent --show-error)",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/Better_Call_Saul\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d.get\\('thumbnail',{}\\).get\\('source',''\\)\\)\")",
+      "Bash(curl -s \"https://en.wikipedia.org/api/rest_v1/page/summary/Better_Call_Saul_season_6\")",
+      "Bash(curl -L \"https://upload.wikimedia.org/wikipedia/en/0/04/Better_Call_Saul_season_6.jpg\" -o \"public/images/bcs.jpg\" --silent --show-error)"
     ]
   }
 }
