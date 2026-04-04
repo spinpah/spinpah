@@ -148,7 +148,7 @@ export default function ProjectPage({ params }: Props) {
             {project.images.map((img, i) => (
               <div
                 key={i}
-                className={`rounded-2xl overflow-hidden ${i === 0 && project.images!.length > 1 ? "md:col-span-2" : ""}`}
+                className={`rounded-2xl overflow-hidden relative ${i === 0 && project.images!.length > 1 ? "md:col-span-2" : ""}`}
                 style={{
                   background: "var(--ds-surface)",
                   aspectRatio: i === 0 ? "16/7" : "16/9",
@@ -157,9 +157,9 @@ export default function ProjectPage({ params }: Props) {
                 <Image
                   src={img}
                   alt={`${project.name} screenshot ${i + 1}`}
-                  width={1200}
-                  height={600}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 80vw"
+                  className="object-cover"
                   priority={i === 0}
                 />
               </div>

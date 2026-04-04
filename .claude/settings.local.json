@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:oussama-mekhaldi.framer.website)"
+      "WebFetch(domain:oussama-mekhaldi.framer.website)",
+      "Bash(node -e \"const d = require\\('./data/projects.json'\\); d.projects.forEach\\(p => console.log\\(p.id, JSON.stringify\\(p.images\\)\\)\\)\")"
     ]
   }
 }

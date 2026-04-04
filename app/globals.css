@@ -104,8 +104,8 @@
   --ds-text:       #F0F0EE;
   --ds-text-muted: #888888;
   --ds-border:     #2C2C2C;
-  --ds-accent:     #F5E642;
-  --ds-accent-fg:  #0A0A0A;
+  --ds-accent:     #F0F0EE;
+  --ds-accent-fg:  #111111;
 }
 
 /* ── Base ───────────────────────────────────────── */

@@ -56,16 +56,16 @@ export default function ProjectsPage() {
           >
             {/* Image */}
             <div
-              className="w-full h-52 overflow-hidden"
+              className="w-full h-52 overflow-hidden relative"
               style={{ background: "var(--ds-surface-2)" }}
             >
               {project.images && project.images[0] ? (
                 <Image
                   src={project.images[0]}
                   alt={project.name}
-                  width={700}
-                  height={350}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               ) : (
                 <div

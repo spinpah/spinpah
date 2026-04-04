@@ -124,7 +124,7 @@ const FeaturedWork = () => {
           >
             {/* Image */}
             <div
-              className="w-full overflow-hidden"
+              className="w-full overflow-hidden relative"
               style={{
                 height: i === 0 ? "280px" : "200px",
                 background: "var(--ds-surface-2)",
@@ -134,9 +134,9 @@ const FeaturedWork = () => {
                 <Image
                   src={project.images[0]}
                   alt={project.name}
-                  width={900}
-                  height={400}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               ) : (
                 <div
