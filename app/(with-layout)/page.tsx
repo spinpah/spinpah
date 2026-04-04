@@ -326,52 +326,58 @@ const Experience = () => (
 /* ─── Currently ──────────────────────────────────────── */
 const CurrentlyContent = async () => {
   noStore();
-  const { reading } = await getShelves();
-  const { data: song } = await getLastPlayed();
-  const filter = new Filter();
-  const { playing } = await getGame();
 
-  const recent = song.is_playing ? song.item : song.items[0].track;
-  const track = {
-    title: filter.clean(recent.name),
-    artist: recent.artists
-      .map((_a: { name: string }) => _a.name)
-      .shift(),
-    songUrl: recent.external_urls.spotify,
-    coverArt: recent.album.images[0].url,
-    previewUrl: recent.preview_url,
-  };
+  try {
+    const [{ reading }, songResult, { playing }] = await Promise.all([
+      getShelves(),
+      getLastPlayed(),
+      getGame(),
+    ]);
 
-  return (
-    <p className="text-sm leading-relaxed" style={{ color: "var(--ds-text-muted)" }}>
-      Listening to{" "}
-      <MusicCard {...track}>
-        <LinkPrimitive href={track.songUrl} external popover>
-          {track.title}
-        </LinkPrimitive>
-      </MusicCard>{" "}
-      by {track.artist} · reading{" "}
-      <ReadingCard {...reading}>
-        <LinkPrimitive
-          href="https://literal.club/book/tokyo-ghoul-nlnfh"
-          external
-          popover
-        >
-          {reading.title}
-        </LinkPrimitive>
-      </ReadingCard>{" "}
-      by {reading.author} · playing{" "}
-      <GamingCard {...playing}>
-        <LinkPrimitive
-          href="https://store.steampowered.com/app/214490/Alien_Isolation"
-          external
-          popover
-        >
-          {playing.title}
-        </LinkPrimitive>
-      </GamingCard>
-    </p>
-  );
+    const song = songResult?.data;
+    if (!song) throw new Error("no song data");
+
+    const recent = song.is_playing ? song.item : song.items?.[0]?.track;
+    if (!recent) throw new Error("no recent track");
+
+    const filter = new Filter();
+    const track = {
+      title: filter.clean(recent.name ?? "Unknown"),
+      artist: recent.artists?.map((_a: { name: string }) => _a.name).shift() ?? "Unknown",
+      songUrl: recent.external_urls?.spotify ?? "#",
+      coverArt: recent.album?.images?.[0]?.url ?? "",
+      previewUrl: recent.preview_url ?? null,
+    };
+
+    return (
+      <p className="text-sm leading-relaxed" style={{ color: "var(--ds-text-muted)" }}>
+        Listening to{" "}
+        <MusicCard {...track}>
+          <LinkPrimitive href={track.songUrl} external popover>
+            {track.title}
+          </LinkPrimitive>
+        </MusicCard>{" "}
+        by {track.artist} · reading{" "}
+        <ReadingCard {...reading}>
+          <LinkPrimitive href="https://literal.club/book/tokyo-ghoul-nlnfh" external popover>
+            {reading.title}
+          </LinkPrimitive>
+        </ReadingCard>{" "}
+        by {reading.author} · playing{" "}
+        <GamingCard {...playing}>
+          <LinkPrimitive href="https://store.steampowered.com/app/214490/Alien_Isolation" external popover>
+            {playing.title}
+          </LinkPrimitive>
+        </GamingCard>
+      </p>
+    );
+  } catch {
+    return (
+      <p className="text-sm" style={{ color: "var(--ds-text-muted)" }}>
+        Listening to music, reading manga, and gaming in Algeria.
+      </p>
+    );
+  }
 };
 
 const Currently = () => (
