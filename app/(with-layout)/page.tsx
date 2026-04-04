@@ -1,4 +1,4 @@
-import { unstable_noStore as noStore } from "next/cache";
+export const dynamic = "force-dynamic";
 import projectsData from "@/data/projects.json";
 import React, { Suspense } from "react";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
@@ -323,7 +323,6 @@ const Experience = () => (
 
 /* ─── Currently ──────────────────────────────────────── */
 const SpotifyCard = async () => {
-  noStore();
   const { data: song } = await getNowPlaying();
 
   const recent = (song.is_playing && song.item) ? song.item : song.items?.[0]?.track;
