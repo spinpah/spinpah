@@ -325,16 +325,18 @@ const Experience = () => (
 const SpotifyCard = async () => {
   noStore();
   const { data: song } = await getNowPlaying();
-  const filter = new Filter();
 
-  const recent = song.is_playing ? song.item : song.items[0].track;
+  const recent = (song.is_playing && song.item) ? song.item : song.items?.[0]?.track;
+  if (!recent) return null;
+
+  const filter = new Filter();
   const track = {
-    title: filter.clean(recent.name),
-    artist: recent.artists.map((_a: { name: string }) => _a.name).shift() as string,
-    songUrl: recent.external_urls.spotify as string,
-    coverArt: recent.album.images[0].url as string,
-    previewUrl: (recent.preview_url ?? undefined) as string | undefined,
-    isLive: !!song.is_playing,
+    title: (() => { try { return filter.clean(recent.name); } catch { return recent.name; } })(),
+    artist: recent.artists?.map((_a: { name: string }) => _a.name).shift() as string,
+    songUrl: recent.external_urls?.spotify as string,
+    coverArt: recent.album?.images?.[0]?.url as string,
+    previewUrl: recent.preview_url as string | undefined,
+    isLive: !!(song.is_playing && song.item),
   };
 
   return (

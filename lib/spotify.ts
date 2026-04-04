@@ -40,111 +40,55 @@ const getAccessToken = async () => {
   return data.access_token as string;
 };
 
-const getNowPlaying = async () => {
-  try {
-    const accessToken = await getAccessToken();
-
-    const response = await fetch(NOW_PLAYING_ENDPOINT, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      next: {
-        revalidate: 60,
-      },
-    });
-
-    if (response.status === 204) {
-      return getLastPlayed();
-    }
-
-    try {
-      const song = await response.json();
-
-      if (song.is_playing) {
-        return {
-          status: response.status,
-          data: song,
-        };
-      }
-      return getLastPlayed();
-    } catch {
-      return {
-        status: response.status,
-      };
-    }
-  } catch (error) {
-    // Return fallback music data when Spotify is not configured
-    console.log("Spotify not configured, using fallback music");
-    return {
-      status: 200,
-      data: {
-        is_playing: false,
-        items: [{
-          track: {
-            name: "WILDFLOWER",
-            artists: [{ name: "Billie Eilish" }],
-            external_urls: { spotify: "https://open.spotify.com/search/wildflower#_=_" },
-            album: {
-              images: [{ url: "/images/wildflower.jpg" }]
-            },
-            preview_url: "/sounds/WILDFLOWER.MP3"
-          }
-        }]
-      }
-    };
-  }
+const FALLBACK = {
+  is_playing: false,
+  items: [{
+    track: {
+      name: "WILDFLOWER",
+      artists: [{ name: "Billie Eilish" }],
+      external_urls: { spotify: "https://open.spotify.com/search/wildflower" },
+      album: { images: [{ url: "/images/wildflower.jpg" }] },
+      preview_url: "/sounds/WILDFLOWER.MP3",
+    },
+  }],
 };
 
 const getLastPlayed = async () => {
   try {
     const accessToken = await getAccessToken();
-
     const response = await fetch(RECENTLY_PLAYED_ENDPOINT, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      next: {
-        revalidate: 60,
-      },
+      headers: { Authorization: `Bearer ${accessToken}` },
+      cache: "no-store",
+    });
+    if (!response.ok) return { data: FALLBACK };
+    const data = await response.json();
+    return { data };
+  } catch {
+    return { data: FALLBACK };
+  }
+};
+
+const getNowPlaying = async () => {
+  try {
+    const accessToken = await getAccessToken();
+    const response = await fetch(NOW_PLAYING_ENDPOINT, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      cache: "no-store",
     });
 
-    if (response.status === 204) {
-      return {
-        status: response.status,
-      };
+    if (response.status === 204 || !response.ok) {
+      return getLastPlayed();
     }
 
-    try {
-      const song = await response.json();
+    const song = await response.json();
 
-      return {
-        status: response.status,
-        data: song,
-      };
-    } catch {
-      return {
-        status: response.status,
-      };
+    if (song?.is_playing && song?.item) {
+      return { data: song };
     }
-  } catch (error) {
-    // Return fallback data when Spotify is not configured
-    console.log("Spotify not configured, using fallback music");
-    return {
-      status: 200,
-      data: {
-        items: [{
-          track: {
-            name: "Security First",
-            artists: [{ name: "Cybersecurity Podcast" }],
-            external_urls: { spotify: "#" },
-            album: {
-              images: [{ url: "/images/music-placeholder.jpg" }]
-            },
-            preview_url: null
-          }
-        }]
-      }
-    };
+
+    return getLastPlayed();
+  } catch {
+    return { data: FALLBACK };
   }
 };
 
