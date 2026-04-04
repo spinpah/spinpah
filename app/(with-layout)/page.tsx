@@ -324,72 +324,54 @@ const Experience = () => (
 /* ─── Currently ──────────────────────────────────────── */
 const SpotifyCard = async () => {
   noStore();
-  try {
-    const result = await getNowPlaying();
-    const song = result?.data;
-    if (!song) throw new Error("no data");
+  const { data: song } = await getNowPlaying();
+  const filter = new Filter();
 
-    const recent = song.is_playing ? song.item : song.items?.[0]?.track;
-    if (!recent) throw new Error("no track");
+  const recent = song.is_playing ? song.item : song.items[0].track;
+  const track = {
+    title: filter.clean(recent.name),
+    artist: recent.artists.map((_a: { name: string }) => _a.name).shift() as string,
+    songUrl: recent.external_urls.spotify as string,
+    coverArt: recent.album.images[0].url as string,
+    previewUrl: (recent.preview_url ?? undefined) as string | undefined,
+    isLive: !!song.is_playing,
+  };
 
-    const filter = new Filter();
-    const track = {
-      title: filter.clean(recent.name ?? "Unknown"),
-      artist: recent.artists?.map((_a: { name: string }) => _a.name).shift() ?? "Unknown",
-      songUrl: recent.external_urls?.spotify ?? "#",
-      coverArt: recent.album?.images?.[0]?.url ?? "",
-      previewUrl: recent.preview_url ?? null,
-      isLive: !!song.is_playing,
-    };
-
-    return (
-      <div className="card p-5 flex flex-col gap-4">
-        <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: "1/1" }}>
-          {track.coverArt ? (
-            <Image src={track.coverArt} alt={track.title} fill className="object-cover" />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center" style={{ background: "var(--ds-surface-2)" }}>
-              <span className="text-3xl">🎵</span>
-            </div>
-          )}
-        </div>
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>
-              {track.isLive ? (
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse inline-block" />
-                  Now Playing
-                </span>
-              ) : "Last Played"}
-            </span>
+  return (
+    <div className="card p-5 flex flex-col gap-4">
+      <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: "1/1" }}>
+        {track.coverArt ? (
+          <Image src={track.coverArt} alt={track.title} fill className="object-cover" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center" style={{ background: "var(--ds-surface-2)" }}>
+            <span className="text-3xl">🎵</span>
           </div>
-          <p className="font-bold text-base leading-snug" style={{ color: "var(--ds-text)" }}>{track.title}</p>
-          <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>{track.artist}</p>
-        </div>
-        <MusicCard {...track}>
-          <LinkPrimitive href={track.songUrl} external popover>
-            <span className="btn-secondary w-full justify-center text-xs">
-              Open in Spotify
-            </span>
-          </LinkPrimitive>
-        </MusicCard>
+        )}
       </div>
-    );
-  } catch {
-    return (
-      <div className="card p-5 flex flex-col gap-4">
-        <div className="relative w-full rounded-xl overflow-hidden flex items-center justify-center" style={{ aspectRatio: "1/1", background: "var(--ds-surface-2)" }}>
-          <span className="text-4xl">🎵</span>
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>
+            {track.isLive ? (
+              <span className="flex items-center gap-1.5">
+                <span
+                  className="w-1.5 h-1.5 rounded-full animate-pulse inline-block"
+                  style={{ background: "#22c55e" }}
+                />
+                Now Playing
+              </span>
+            ) : "Last Played"}
+          </span>
         </div>
-        <div>
-          <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>Listening</span>
-          <p className="font-bold text-base mt-1" style={{ color: "var(--ds-text)" }}>Something good</p>
-          <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>on Spotify</p>
-        </div>
+        <p className="font-bold text-base leading-snug" style={{ color: "var(--ds-text)" }}>{track.title}</p>
+        <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>{track.artist}</p>
       </div>
-    );
-  }
+      <MusicCard {...track}>
+        <LinkPrimitive href={track.songUrl} external popover>
+          {track.title}
+        </LinkPrimitive>
+      </MusicCard>
+    </div>
+  );
 };
 
 const WatchingCard = () => (
@@ -445,8 +427,11 @@ const Currently = () => (
         fallback={
           <div className="card p-5 flex flex-col gap-4">
             <Skeleton className="w-full rounded-xl" style={{ aspectRatio: "1/1" }} />
-            <Skeleton className="w-3/4 h-4 rounded-full" />
-            <Skeleton className="w-1/2 h-3 rounded-full" />
+            <div className="space-y-2 mt-1">
+              <Skeleton className="w-1/2 h-3 rounded-full" />
+              <Skeleton className="w-3/4 h-4 rounded-full" />
+              <Skeleton className="w-1/2 h-3 rounded-full" />
+            </div>
           </div>
         }
       >
