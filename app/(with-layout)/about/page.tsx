@@ -68,7 +68,7 @@ export default function About() {
       </div>
 
       {/* Hero */}
-      <section className="pb-16 flex flex-col md:flex-row md:items-end gap-10 md:gap-16">
+      <section className="pb-10 md:pb-16 flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
         <div className="flex-1 space-y-5">
           <span
             className="text-xs font-semibold uppercase tracking-widest"
@@ -77,7 +77,7 @@ export default function About() {
             About Me
           </span>
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.06] tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.06] tracking-tight"
             style={{ color: "var(--ds-text)" }}
           >
             Software
@@ -86,7 +86,7 @@ export default function About() {
             <span style={{ color: "var(--ds-text-muted)" }}>Gamer.</span>
           </h1>
           <p
-            className="text-lg leading-relaxed max-w-lg"
+            className="text-base md:text-lg leading-relaxed max-w-lg"
             style={{ color: "var(--ds-text-muted)" }}
           >
             Hey, I&apos;m Aimen — a software engineer based in Algeria,
@@ -96,7 +96,7 @@ export default function About() {
 
         <div className="shrink-0">
           <div
-            className="w-52 h-64 rounded-3xl overflow-hidden"
+            className="w-40 h-48 sm:w-52 sm:h-64 rounded-3xl overflow-hidden"
             style={{ background: "var(--ds-surface)" }}
           >
             <Image
@@ -208,12 +208,12 @@ export default function About() {
         style={{ borderColor: "var(--ds-border)" }}
       >
         <div
-          className="rounded-3xl p-10 md:p-14 flex flex-col md:flex-row md:items-center justify-between gap-8"
+          className="rounded-3xl p-6 sm:p-10 md:p-14 flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8"
           style={{ background: "var(--ds-surface)" }}
         >
           <div>
             <h3
-              className="text-2xl font-extrabold mb-2"
+              className="text-xl sm:text-2xl font-extrabold mb-2"
               style={{ color: "var(--ds-text)" }}
             >
               Want to work together?

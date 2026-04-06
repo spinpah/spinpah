@@ -39,7 +39,7 @@ export default function ProjectsPage() {
           Portfolio
         </span>
         <h1
-          className="text-4xl md:text-5xl font-extrabold tracking-tight"
+          className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight"
           style={{ color: "var(--ds-text)" }}
         >
           All Projects

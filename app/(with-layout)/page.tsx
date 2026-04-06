@@ -27,59 +27,12 @@ const SectionHeading = ({ children }: { children: React.ReactNode }) => (
 
 /* ─── Hero ───────────────────────────────────────────── */
 const Hero = () => (
-  <section className="py-16 md:py-20">
-    <div className="flex flex-col md:flex-row md:items-center gap-10 md:gap-16">
-      {/* Text */}
-      <div className="flex-1 space-y-6">
-        {/* Available badge */}
+  <section className="py-10 md:py-20">
+    <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
+      {/* Photo — above text on mobile */}
+      <div className="shrink-0 md:order-last">
         <div
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-medium"
-          style={{
-            background: "#ECFDF5",
-            borderColor: "#A7F3D0",
-            color: "#065F46",
-          }}
-        >
-          <span
-            className="w-2 h-2 rounded-full animate-pulse"
-            style={{ background: "#10B981" }}
-          />
-          Accepting New Clients
-        </div>
-
-        <h1
-          className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight"
-          style={{ color: "var(--ds-text)" }}
-        >
-          I Build Products That Users Will{" "}
-          <span style={{ color: "var(--ds-text-muted)" }}>
-            Love and Remember.
-          </span>
-        </h1>
-
-        <p className="text-lg leading-relaxed max-w-lg" style={{ color: "var(--ds-text-muted)" }}>
-          Over two years of crafting scalable applications with startups and
-          companies. Based in Algeria — focused on clean architecture and great
-          user experiences.
-        </p>
-
-        <div className="flex flex-wrap gap-3 pt-1">
-          <a
-            href="mailto:aymene16boudjelida@gmail.com"
-            className="btn-primary"
-          >
-            Start a Project
-          </a>
-          <Link href="/about" className="btn-secondary">
-            About Me
-          </Link>
-        </div>
-      </div>
-
-      {/* Photo */}
-      <div className="shrink-0">
-        <div
-          className="w-64 h-72 rounded-3xl overflow-hidden"
+          className="w-44 h-52 sm:w-52 sm:h-60 md:w-64 md:h-72 rounded-3xl overflow-hidden"
           style={{ background: "var(--ds-surface)" }}
         >
           <Image
@@ -87,9 +40,42 @@ const Hero = () => (
             alt="Aimen Boudjelida"
             width={256}
             height={288}
+            sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, 256px"
             className="w-full h-full object-cover"
             priority
           />
+        </div>
+      </div>
+
+      {/* Text */}
+      <div className="flex-1 space-y-5">
+        <div
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium"
+          style={{ background: "#ECFDF5", borderColor: "#A7F3D0", color: "#065F46" }}
+        >
+          <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#10B981" }} />
+          Accepting New Clients
+        </div>
+
+        <h1
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight"
+          style={{ color: "var(--ds-text)" }}
+        >
+          I Build Products That Users Will{" "}
+          <span style={{ color: "var(--ds-text-muted)" }}>Love and Remember.</span>
+        </h1>
+
+        <p className="text-base md:text-lg leading-relaxed max-w-lg" style={{ color: "var(--ds-text-muted)" }}>
+          Over two years of crafting scalable applications with startups and
+          companies. Based in Algeria — focused on clean architecture and great
+          user experiences.
+        </p>
+
+        <div className="flex flex-wrap gap-3 pt-1">
+          <a href="mailto:aymene16boudjelida@gmail.com" className="btn-primary">
+            Start a Project
+          </a>
+          <Link href="/about" className="btn-secondary">About Me</Link>
         </div>
       </div>
     </div>
@@ -423,7 +409,7 @@ const Currently = () => (
         What I&apos;m into right now
       </p>
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       <Suspense
         fallback={
           <div className="card p-5 flex flex-col gap-4">
@@ -492,7 +478,7 @@ const Footer = () => (
     />
 
     {/* Animated stars */}
-    <StarField count={130} />
+    <StarField count={80} />
 
     {/* Content */}
     <div className="relative z-10 max-w-2xl mx-auto px-6 space-y-7">
@@ -500,7 +486,7 @@ const Footer = () => (
         Get in touch
       </p>
 
-      <h2 className="text-3xl md:text-5xl font-extrabold leading-[1.1] tracking-tight">
+      <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold leading-[1.1] tracking-tight">
         Let&apos;s create something
         <br />
         <span
