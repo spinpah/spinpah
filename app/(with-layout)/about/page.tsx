@@ -1,244 +1,174 @@
-import { beliefs, bucketList, Status } from "@/content";
-import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
-import { cva } from "class-variance-authority";
-import Link from "next/link";
+import { beliefs, bucketList, photos, Status } from "@/content";
 import type { Metadata } from "next/types";
-import Gallery from "@/components/gallery";
 import Image from "next/image";
+import Link from "next/link";
+import PhotoRail from "@/components/portfolio/photo-rail";
 
 export const metadata: Metadata = {
   title: "About",
-  alternates: { canonical: "https://spinpah.vercel.app/about" },
+  alternates: { canonical: "https://spinpah.com/about" },
 };
 
-const bucketItemStyles = cva(
-  ["text-sm", "leading-relaxed", "flex", "items-center", "gap-x-2"],
-  {
-    variants: {
-      status: {
-        none:      [],
-        completed: ["line-through", "opacity-40"],
-        progress:  [
-          "before:content-['']",
-          "before:w-2",
-          "before:h-2",
-          "before:rounded-full",
-          "before:animate-pulse",
-          "before:shrink-0",
-          "before:bg-[#10B981]",
-        ],
-      },
-    },
-  }
-);
+const CV_LINK =
+  "https://drive.google.com/file/d/1gh1p-ekzjdjCEayBVRA5BpMiOiEpNMss/view?usp=sharing";
 
-const BucketItem = ({
+const BucketRow = ({
   item,
   status,
 }: {
   item: string;
   status: keyof typeof Status;
-}) => (
-  <li
-    className={bucketItemStyles({ status: Status[status] })}
-    style={{ color: "var(--ds-text-muted)" }}
-  >
-    {item}
-  </li>
-);
+}) => {
+  const s = Status[status];
+  const dot =
+    s === "progress" ? "var(--teal)" : "transparent";
+  const textStyle: React.CSSProperties =
+    s === "completed"
+      ? { color: "var(--soft)", textDecoration: "line-through" }
+      : s === "progress"
+      ? { fontWeight: 600 }
+      : { color: "var(--muted)" };
 
-const SectionHeading = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-2xl font-bold mb-8" style={{ color: "var(--ds-text)" }}>
-    {children}
-  </h2>
-);
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <span style={{ width: 8, height: 8, borderRadius: "50%", background: dot, flexShrink: 0 }} />
+      <span style={{ fontSize: 16, ...textStyle }}>{item}</span>
+    </div>
+  );
+};
 
 export default function About() {
   return (
-    <div>
-      {/* Back */}
-      <div className="mb-10">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity"
-          style={{ color: "var(--ds-text-muted)" }}
-        >
-          <ArrowLeft size={15} /> Back
-        </Link>
-      </div>
-
-      {/* Hero */}
-      <section className="pb-10 md:pb-16 flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
-        <div className="flex-1 space-y-5">
-          <span
-            className="text-xs font-semibold uppercase tracking-widest"
-            style={{ color: "var(--ds-text-muted)" }}
-          >
-            About Me
-          </span>
+    <>
+      {/* Header */}
+      <section className="pf-section pf-about-grid" style={{ padding: "32px 40px 56px" }}>
+        <div>
+          <div className="pf-mono" style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.14em", color: "var(--teal-ink)" }}>
+            ABOUT ME
+          </div>
           <h1
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.06] tracking-tight"
-            style={{ color: "var(--ds-text)" }}
+            style={{
+              fontSize: "clamp(40px, 5.5vw, 72px)",
+              fontWeight: 800,
+              letterSpacing: "-0.04em",
+              lineHeight: 1.02,
+              margin: "14px 0 0",
+            }}
           >
-            Software
-            <br />
-            Engineer &amp;{" "}
-            <span style={{ color: "var(--ds-text-muted)" }}>Gamer.</span>
+            Developer by day, curious human the rest of the time
           </h1>
-          <p
-            className="text-base md:text-lg leading-relaxed max-w-lg"
-            style={{ color: "var(--ds-text-muted)" }}
-          >
-            Hey, I&apos;m Aimen — a software engineer based in Algeria,
-            passionate about building modern, impactful applications.
+          <p style={{ fontSize: 17, color: "var(--muted)", lineHeight: 1.65, margin: "24px 0 0", maxWidth: 540 }}>
+            I&apos;m Aimen Boudjelida, a software engineer based in Algeria. After
+            a Master&apos;s in Information Systems Security at Université Houari
+            Boumediene, I focus on full-stack web and mobile development, API
+            design, and cloud integration.
           </p>
+          <p style={{ fontSize: 17, color: "var(--muted)", lineHeight: 1.65, margin: "14px 0 0", maxWidth: 540 }}>
+            Off the keyboard you&apos;ll find me gaming, watching shows, and slowly
+            working through the bucket list below.
+          </p>
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 28 }}>
+            <a href="mailto:aymene16boudjelida@gmail.com" className="pf-btn" style={{ fontSize: 14, padding: "13px 26px" }}>
+              Start a project
+            </a>
+            <a href={CV_LINK} target="_blank" className="pf-btn-outline" style={{ fontSize: 14, padding: "13px 26px" }}>
+              View CV ↗
+            </a>
+          </div>
         </div>
-
-        <div className="shrink-0">
-          <div
-            className="w-40 h-48 sm:w-52 sm:h-64 rounded-3xl overflow-hidden"
-            style={{ background: "var(--ds-surface)" }}
-          >
+        <div style={{ background: "var(--surface)", borderRadius: 12, padding: 12 }}>
+          <div style={{ position: "relative", width: "100%", height: 380, borderRadius: 8, overflow: "hidden" }}>
             <Image
-              src="/images/me-1.jpg"
-              alt="Aimen Boudjelida"
-              width={208}
-              height={256}
-              className="w-full h-full object-cover"
+              src="/images/portrait.png"
+              alt="Portrait of Aimen Boudjelida"
+              fill
+              sizes="(max-width: 900px) 100vw, 360px"
               priority
+              style={{ objectFit: "cover", objectPosition: "50% 24%", filter: "grayscale(1) contrast(1.06)" }}
             />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 6px 4px" }}>
+            <div style={{ fontWeight: 700, fontSize: 14 }}>Aimen Boudjelida</div>
+            <div className="pf-mono" style={{ fontSize: 11, color: "var(--soft)", letterSpacing: "0.08em" }}>
+              ALGIERS, DZ
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Bio */}
-      <section
-        className="py-12 border-t space-y-4"
-        style={{ borderColor: "var(--ds-border)" }}
-      >
-        <SectionHeading>Biography</SectionHeading>
-        <div
-          className="max-w-2xl space-y-4 text-base leading-relaxed"
-          style={{ color: "var(--ds-text-muted)" }}
-        >
-          <p>
-            My passion for software development started with a curiosity about
-            how applications are built and optimized to provide great user
-            experiences. I believe in the power of technology to create
-            impactful solutions that improve everyday life.
-          </p>
-          <p>
-            Having completed my Master&apos;s in Information Systems Security
-            at Université Houari Boumediene, I focus on full-stack web and
-            mobile development, API design, and cloud integration.
-          </p>
-          <p>
-            Committed to continuous learning and contributing to the developer
-            community through open-source projects, research, and knowledge
-            sharing.
-          </p>
+      {/* Bucket list */}
+      <section className="pf-section" style={{ padding: "0 40px 56px" }}>
+        <div className="pf-reveal" style={{ borderTop: "1px solid var(--border)", paddingTop: 48 }}>
+          <h2 style={{ fontSize: "clamp(30px, 3.5vw, 44px)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 28px" }}>
+            Bucket list
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 560 }}>
+            {bucketList.map((b) => (
+              <BucketRow key={b.item} item={b.item} status={b.status} />
+            ))}
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 18, marginTop: 28 }}>
+            <span className="pf-mono" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 11, letterSpacing: "0.1em", color: "var(--soft)" }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--teal)", display: "inline-block" }} />
+              IN PROGRESS
+            </span>
+            <span className="pf-mono" style={{ fontSize: 11, letterSpacing: "0.1em", color: "var(--soft)", textDecoration: "line-through" }}>
+              DONE
+            </span>
+          </div>
         </div>
       </section>
 
       {/* Beliefs */}
-      <section
-        className="py-12 border-t"
-        style={{ borderColor: "var(--ds-border)" }}
-      >
-        <SectionHeading>Beliefs</SectionHeading>
-        <ul className="max-w-2xl space-y-5">
-          {beliefs.map((belief, i) => (
-            <li
-              key={belief}
-              className="flex items-start gap-4 group"
-            >
-              <span
-                className="text-xs font-bold tabular-nums mt-0.5 w-5 shrink-0 opacity-30"
-                style={{ color: "var(--ds-text)" }}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span
-                className="text-base leading-relaxed group-hover:opacity-100 transition-opacity"
-                style={{ color: "var(--ds-text-muted)" }}
-              >
-                {belief}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Bucket List */}
-      <section
-        className="py-12 border-t"
-        style={{ borderColor: "var(--ds-border)" }}
-      >
-        <SectionHeading>Bucket List</SectionHeading>
-        <ul className="max-w-sm space-y-3">
-          {bucketList.map((item) => (
-            <BucketItem
-              key={item.item}
-              item={item.item}
-              status={item.status}
-            />
-          ))}
-        </ul>
+      <section className="pf-section" style={{ padding: "0 40px 56px" }}>
+        <div className="pf-reveal" style={{ borderTop: "1px solid var(--border)", paddingTop: 48 }}>
+          <h2 style={{ fontSize: "clamp(30px, 3.5vw, 44px)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 28px" }}>
+            Beliefs
+          </h2>
+          <ul style={{ listStyle: "none", margin: 0, padding: 0, maxWidth: 640, display: "flex", flexDirection: "column", gap: 18 }}>
+            {beliefs.map((belief, i) => (
+              <li key={belief} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <span className="pf-mono" style={{ fontSize: 12, fontWeight: 700, color: "var(--teal-ink)", marginTop: 3, width: 22, flexShrink: 0 }}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span style={{ fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>{belief}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* Photos */}
-      <section
-        className="py-12 border-t"
-        style={{ borderColor: "var(--ds-border)" }}
-      >
-        <SectionHeading>Photos</SectionHeading>
-        <Gallery
-          photos={[
-            { src: "/images/861.png", alt: "Aimen working on projects" },
-            { src: "/images/862.png", alt: "Aimen working on projects" },
-            { src: "/images/863.png", alt: "Aimen in a professional environment" },
-            { src: "/images/864.png", alt: "Aimen in a professional environment" },
-          ]}
-        />
-      </section>
-
-      {/* CTA */}
-      <section
-        className="py-12 border-t"
-        style={{ borderColor: "var(--ds-border)" }}
-      >
-        <div
-          className="rounded-3xl p-6 sm:p-10 md:p-14 flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8"
-          style={{ background: "var(--ds-surface)" }}
-        >
-          <div>
-            <h3
-              className="text-xl sm:text-2xl font-extrabold mb-2"
-              style={{ color: "var(--ds-text)" }}
-            >
-              Want to work together?
-            </h3>
-            <p className="text-sm" style={{ color: "var(--ds-text-muted)" }}>
-              I&apos;m available for freelance projects and collaborations.
-            </p>
-          </div>
-          <div className="flex gap-3 flex-wrap">
-            <a
-              href="mailto:aymene16boudjelida@gmail.com"
-              className="btn-primary"
-            >
-              Start a Project
-            </a>
-            <a
-              href="https://drive.google.com/file/d/1gh1p-ekzjdjCEayBVRA5BpMiOiEpNMss/view?usp=sharing"
-              target="_blank"
-              className="btn-secondary flex items-center gap-1"
-            >
-              View CV <ArrowUpRight size={13} />
-            </a>
-          </div>
+      <section className="pf-section" style={{ padding: "0 40px 56px" }}>
+        <div className="pf-reveal" style={{ borderTop: "1px solid var(--border)", paddingTop: 48 }}>
+          <PhotoRail photos={photos} />
         </div>
       </section>
-    </div>
+
+      {/* Footer bar */}
+      <footer className="pf-section" style={{ padding: "0 40px 40px" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderTop: "1px solid var(--border)",
+            paddingTop: 28,
+            gap: 16,
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <Image src="/favicon.ico" alt="Logo" width={34} height={34} style={{ borderRadius: 8, display: "block" }} />
+            <span className="pf-mono" style={{ fontSize: 12, color: "var(--soft)" }}>
+              ©&apos;19 — 2026 · AIMEN BOUDJELIDA
+            </span>
+          </div>
+          <Link href="/" className="pf-btn" style={{ fontSize: 13, padding: "11px 22px" }}>
+            ← Back home
+          </Link>
+        </div>
+      </footer>
+    </>
   );
 }

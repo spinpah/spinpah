@@ -85,16 +85,28 @@
 }
 
 /* ── Design tokens ──────────────────────────────── */
+/* Legacy --ds-* tokens are kept for components still using them
+   (gallery, skeleton, hover-card, visitors page). */
 :root,
 [data-theme="light"] {
   --ds-page-bg:    #FFFFFF;
   --ds-surface:    #F5F5F2;
-  --ds-surface-2:  #EBEBЕ7;
+  --ds-surface-2:  #EBEBE7;
   --ds-text:       #111111;
   --ds-text-muted: #777777;
   --ds-border:     #E8E8E4;
   --ds-accent:     #111111;
   --ds-accent-fg:  #FFFFFF;
+
+  /* New portfolio design tokens */
+  --page: #ECECEC; --card: #FFFFFF; --surface: #F7F7F7; --chip: #F2F2F2;
+  --ink: #141414; --muted: #6E6E6E; --soft: #8A8A8A;
+  --border: #ECECEC; --border2: #DDDDDD;
+  --inv: #FFFFFF; --btn: #141414; --btn-h: #2B2B2B; --num: #DCDCDC;
+  --stripe1: #F3F3F3; --stripe2: #EAEAEA;
+  --band: #12B5AE; --teal: #12B5AE; --teal-tint: #E7F8F6; --teal-ink: #0B8F88;
+  --lav1: #FFFFFF; --lav2: #E6DEF7; --input-bg: #FFFFFF;
+  --shadowc: rgba(0,0,0,0.10);
 }
 
 [data-theme="dark"] {
@@ -106,6 +118,16 @@
   --ds-border:     #2C2C2C;
   --ds-accent:     #F0F0EE;
   --ds-accent-fg:  #111111;
+
+  /* New portfolio design tokens — dark */
+  --page: #0F0F0F; --card: #191919; --surface: #222222; --chip: #2A2A2A;
+  --ink: #F2EFE9; --muted: #A39E94; --soft: #7E7A72;
+  --border: #2B2B2B; --border2: #3A3A3A;
+  --inv: #141414; --btn: #F2EFE9; --btn-h: #FFFFFF; --num: #3A3A3A;
+  --stripe1: #242424; --stripe2: #2B2B2B;
+  --band: #0E8C86; --teal: #1FD7C0; --teal-tint: rgba(31,215,192,0.14); --teal-ink: #1FD7C0;
+  --lav1: #191919; --lav2: #3A3458; --input-bg: #242424;
+  --shadowc: rgba(0,0,0,0.50);
 }
 
 /* ── Base ───────────────────────────────────────── */
@@ -121,16 +143,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricPrecision;
-  font-family: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+  font-family: var(--font-archivo), "Archivo", "Helvetica Neue", sans-serif;
   font-size: var(--text-base);
-  background-color: var(--ds-page-bg);
-  color: var(--ds-text);
+  background-color: var(--page);
+  color: var(--ink);
+  transition: background 0.35s;
 }
+
+input::placeholder, textarea::placeholder { color: var(--soft); }
 
 /* ── Page background ────────────────────────────── */
 .bg {
   min-height: 100vh;
-  background-color: var(--ds-page-bg);
+  background-color: var(--page);
 }
 
 /* ── Floating pill nav ──────────────────────────── */
@@ -236,4 +261,133 @@ body {
 /* ── Accordion grid ─────────────────────────────── */
 .accordion-grid-cols {
   grid-template-columns: min-content 125px 1fr min-content min-content;
+}
+
+/* ════════════════════════════════════════════════════
+   New portfolio design — animations & helpers
+   ════════════════════════════════════════════════════ */
+@keyframes pfFadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pfPop { 0% { opacity: 0; scale: 0.5; } 70% { scale: 1.08; } 100% { opacity: 1; scale: 1; } }
+@keyframes pfFloat { from { translate: 0 0; } to { translate: 0 -9px; } }
+
+/* Outer page padding wrapper + centered card */
+.pf-page {
+  min-height: 100vh;
+  background: var(--page);
+  padding: 24px 24px 48px;
+  color: var(--ink);
+  transition: background 0.35s;
+}
+.pf-card {
+  max-width: 1480px;
+  margin: 0 auto;
+  background: var(--card);
+  border-radius: 24px;
+  box-shadow: 0 24px 80px var(--shadowc);
+  overflow: hidden;
+  transition: background 0.35s;
+}
+
+/* Reveal-on-scroll: hidden until JS adds .pf-in (no-JS keeps it visible) */
+.pf-reveal {
+  opacity: 0;
+  transform: translateY(30px) scale(0.985);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.pf-reveal.pf-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+.pf-mono { font-family: var(--font-mono), "JetBrains Mono", monospace; }
+.pf-display { font-family: var(--font-anton), "Anton", "Archivo", sans-serif; }
+
+/* Generic hover lift used across cards (replaces inline style-hover) */
+.pf-lift { transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
+.pf-lift:hover { transform: translateY(-4px); box-shadow: 0 16px 44px var(--shadowc); }
+
+/* Pill nav links */
+.pf-navlink {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+.pf-navlink:hover { background: var(--chip); color: var(--ink); }
+.pf-navlink[data-active="true"] { color: var(--ink); background: var(--chip); font-weight: 700; }
+
+/* Solid dark button */
+.pf-btn {
+  text-decoration: none;
+  background: var(--btn);
+  color: var(--inv);
+  font-weight: 700;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pf-btn:hover { background: var(--btn-h); transform: translateY(-2px); }
+
+/* Outline button */
+.pf-btn-outline {
+  text-decoration: none;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  font-weight: 700;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pf-btn-outline:hover { background: var(--btn); color: var(--inv); }
+
+/* Tech / skill chip */
+.pf-chip {
+  background: var(--chip);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 6px 13px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Responsive grids (collapse on small screens) */
+.pf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.pf-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pf-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+/* Custom two-column grids that collapse to one column on narrow screens */
+.pf-hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; }
+.pf-exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+.pf-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.pf-footer-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: stretch; }
+.pf-about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: center; }
+
+@media (max-width: 900px) {
+  .pf-grid-3, .pf-grid-4 { grid-template-columns: 1fr 1fr; }
+  .pf-hero-grid, .pf-exp-grid, .pf-contact-grid, .pf-footer-grid, .pf-about-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+@media (max-width: 640px) {
+  .pf-page { padding: 12px 12px 32px; }
+  .pf-card { border-radius: 18px; }
+  .pf-grid-2, .pf-grid-3, .pf-grid-4 { grid-template-columns: 1fr; }
+  .pf-section { padding-left: 20px !important; padding-right: 20px !important; }
+  nav { padding-left: 20px !important; padding-right: 20px !important; }
 }

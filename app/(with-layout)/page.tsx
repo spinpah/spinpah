@@ -1,544 +1,898 @@
 export const dynamic = "force-dynamic";
-import projectsData from "@/data/projects.json";
+
 import React, { Suspense } from "react";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/index";
-import StarField from "@/components/star-field";
-import { MusicCard } from "@/components/hover-card";
+import Image from "next/image";
+import Link from "next/link";
+import projectsData from "@/data/projects.json";
 import { experiences } from "@/content";
-import LinkPrimitive from "@/components/link-primitive";
 import getNowPlaying from "@/lib/spotify";
 import Filter from "bad-words";
 import Skeleton from "@/components/skeleton";
-import Image from "next/image";
-import Link from "next/link";
+import StatsBand from "@/components/portfolio/stats-band";
+import ContactForm from "@/components/portfolio/contact-form";
+import SocialPills from "@/components/portfolio/social-pills";
 
 const projects = projectsData.projects;
+const CV_LINK =
+  "https://drive.google.com/file/d/1gh1p-ekzjdjCEayBVRA5BpMiOiEpNMss/view?usp=sharing";
 
-/* ─── helpers ────────────────────────────────────────── */
-
-const SectionHeading = ({ children }: { children: React.ReactNode }) => (
-  <h2
-    className="text-2xl font-bold mb-8"
-    style={{ color: "var(--ds-text)" }}
-  >
+/* ─── Section shell ──────────────────────────────────── */
+const Section = ({
+  id,
+  children,
+  style,
+}: {
+  id?: string;
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) => (
+  <section id={id} className="pf-section" style={{ padding: "0 40px 56px", ...style }}>
     {children}
-  </h2>
+  </section>
 );
 
 /* ─── Hero ───────────────────────────────────────────── */
-const Hero = () => (
-  <section className="py-10 md:py-20">
-    <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
-      {/* Photo — above text on mobile */}
-      <div className="shrink-0 md:order-last">
-        <div
-          className="w-44 h-52 sm:w-52 sm:h-60 md:w-64 md:h-72 rounded-3xl overflow-hidden"
-          style={{ background: "var(--ds-surface)" }}
-        >
-          <Image
-            src="/images/me-1.jpg"
-            alt="Aimen Boudjelida"
-            width={256}
-            height={288}
-            sizes="(max-width: 640px) 176px, (max-width: 768px) 208px, 256px"
-            className="w-full h-full object-cover"
-            priority
-          />
-        </div>
-      </div>
-
-      {/* Text */}
-      <div className="flex-1 space-y-5">
-        <div
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium"
-          style={{ background: "#ECFDF5", borderColor: "#A7F3D0", color: "#065F46" }}
-        >
-          <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#10B981" }} />
-          Accepting New Clients
-        </div>
-
-        <h1
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight"
-          style={{ color: "var(--ds-text)" }}
-        >
-          I Build Products That Users Will{" "}
-          <span style={{ color: "var(--ds-text-muted)" }}>Love and Remember.</span>
-        </h1>
-
-        <p className="text-base md:text-lg leading-relaxed max-w-lg" style={{ color: "var(--ds-text-muted)" }}>
-          Over two years of crafting scalable applications with startups and
-          companies. Based in Algeria — focused on clean architecture and great
-          user experiences.
-        </p>
-
-        <div className="flex flex-wrap gap-3 pt-1">
-          <a href="mailto:aymene16boudjelida@gmail.com" className="btn-primary">
-            Start a Project
-          </a>
-          <Link href="/about" className="btn-secondary">About Me</Link>
-        </div>
-      </div>
-    </div>
-  </section>
+const StickerBadge = ({
+  label,
+  bg,
+  color = "#141414",
+  rot,
+  pos,
+}: {
+  label: string;
+  bg: string;
+  color?: string;
+  rot: number;
+  pos: React.CSSProperties;
+}) => (
+  <span style={{ position: "absolute", ...pos }}>
+    <span
+      style={{
+        display: "inline-block",
+        transform: `rotate(${rot}deg)`,
+        background: bg,
+        color,
+        borderRadius: 999,
+        padding: "10px 18px",
+        fontSize: 13,
+        fontWeight: 800,
+        letterSpacing: "0.06em",
+        boxShadow: "0 8px 20px rgba(0,0,0,0.18)",
+      }}
+    >
+      {label}
+    </span>
+  </span>
 );
 
-/* ─── Featured Work ──────────────────────────────────── */
-const FeaturedWork = () => {
-  const featured = projects.filter((p) => p.featured).slice(0, 3);
-
-  return (
-    <section className="py-12 border-t" style={{ borderColor: "var(--ds-border)" }}>
-      <div className="flex items-center justify-between mb-8">
-        <SectionHeading>Featured Work</SectionHeading>
-        <Link
-          href="/projects"
-          className="text-sm font-medium flex items-center gap-1 hover:underline"
-          style={{ color: "var(--ds-text-muted)" }}
+const Hero = () => (
+  <Section style={{ padding: "16px 40px 32px" }}>
+    <div
+      className="pf-hero-grid"
+      style={{
+        background: "#161616",
+        border: "1px solid var(--border)",
+        borderRadius: 16,
+        padding: "56px 48px",
+      }}
+    >
+      <div>
+        <div
+          className="pf-mono"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            background: "rgba(31,215,192,0.14)",
+            color: "#1FD7C0",
+            borderRadius: 999,
+            padding: "9px 18px",
+            fontSize: 12,
+            fontWeight: 600,
+            letterSpacing: "0.12em",
+          }}
         >
-          View All <ArrowUpRight size={14} />
+          <span
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
+              background: "#1FD7C0",
+              display: "inline-block",
+            }}
+          />
+          AVAILABLE FOR WORK
+        </div>
+        <h1
+          className="pf-display"
+          style={{
+            fontWeight: 400,
+            fontSize: "clamp(60px, 6.5vw, 104px)",
+            lineHeight: 0.96,
+            letterSpacing: "0.01em",
+            color: "#F2EFE9",
+            textTransform: "uppercase",
+            margin: "28px 0 0",
+          }}
+        >
+          Full-stack developer
+        </h1>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 24,
+            marginTop: 32,
+            maxWidth: 520,
+          }}
+        >
+          <p style={{ fontSize: 14, lineHeight: 1.65, color: "#A39E94", margin: 0 }}>
+            I&apos;m Aimen Boudjelida, a developer based in Algiers shipping web
+            products end to end.
+          </p>
+          <p style={{ fontSize: 14, lineHeight: 1.65, color: "#A39E94", margin: 0 }}>
+            Node.js &amp; TypeScript from API to UI — built fast, tested, and
+            deployed to production.
+          </p>
+        </div>
+        <Link
+          href="/#contact"
+          className="pf-mono"
+          style={{
+            display: "inline-block",
+            marginTop: 36,
+            textDecoration: "none",
+            color: "#F2EFE9",
+            fontSize: 13,
+            fontWeight: 600,
+            letterSpacing: "0.14em",
+            borderBottom: "2px solid #1FD7C0",
+            paddingBottom: 4,
+          }}
+        >
+          GET IN TOUCH →
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {featured.map((project, i) => (
-          <Link
-            key={project.id}
-            href={`/projects/${project.id}`}
-            className={`card group block overflow-hidden ${i === 0 ? "md:col-span-2" : ""}`}
+      <div
+        style={{
+          position: "relative",
+          background: "#E9E5DC",
+          borderRadius: 12,
+          minHeight: 480,
+          overflow: "hidden",
+          backgroundImage:
+            "linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            right: -54,
+            top: "16%",
+            width: 120,
+            height: 260,
+            borderRadius: 999,
+            background: "#1FD7C0",
+          }}
+        />
+        <Image
+          src="/images/portrait.png"
+          alt="Portrait of Aimen Boudjelida"
+          width={520}
+          height={620}
+          priority
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+            height: "86%",
+            width: "72%",
+            objectFit: "cover",
+            objectPosition: "50% 20%",
+            borderRadius: "10px 10px 0 0",
+            filter: "grayscale(1) contrast(1.08)",
+          }}
+        />
+        <StickerBadge label="NODE.JS" bg="#FFD23F" rot={-8} pos={{ top: 26, left: 22 }} />
+        <StickerBadge label="TYPESCRIPT" bg="#FF4D6D" rot={6} pos={{ top: "34%", right: 18 }} />
+        <StickerBadge label="API DESIGN" bg="#1FD7C0" rot={-5} pos={{ bottom: "26%", left: 14 }} />
+        <StickerBadge label="SHIPS FAST →" bg="#F2EFE9" rot={4} pos={{ bottom: 30, right: 26 }} />
+        <span style={{ position: "absolute", top: 16, right: "36%" }}>
+          <span
+            className="pf-mono"
+            style={{
+              display: "grid",
+              placeItems: "center",
+              transform: "rotate(8deg)",
+              width: 86,
+              height: 86,
+              borderRadius: "50%",
+              background: "#141414",
+              color: "#F2EFE9",
+              textAlign: "center",
+              fontSize: 9,
+              letterSpacing: "0.1em",
+              lineHeight: 1.6,
+              boxShadow: "0 8px 20px rgba(0,0,0,0.22)",
+            }}
           >
-            {/* Image */}
-            <div
-              className="w-full overflow-hidden relative"
+            EST. 2019
+            <br />
+            ALGIERS
+          </span>
+        </span>
+      </div>
+    </div>
+  </Section>
+);
+
+/* ─── Mission band + stats ───────────────────────────── */
+const Mission = () => (
+  <Section style={{ padding: "24px 40px 40px" }}>
+    <div
+      className="pf-reveal"
+      style={{ background: "var(--band)", borderRadius: 16, padding: "64px 48px 48px", textAlign: "center" }}
+    >
+      <p
+        style={{
+          color: "#FFFFFF",
+          fontSize: "clamp(26px, 3vw, 38px)",
+          fontWeight: 700,
+          letterSpacing: "-0.02em",
+          lineHeight: 1.25,
+          maxWidth: 820,
+          margin: "0 auto",
+        }}
+      >
+        My mission is to ship web products that are fast, reliable and accessible
+        — code that holds up in production, not just in the demo.
+      </p>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 36,
+          flexWrap: "wrap",
+          marginTop: 48,
+        }}
+      >
+        {["Node.js", "TypeScript", "Express", "NestJS", "PostgreSQL", "Docker", "AWS"].map(
+          (t) => (
+            <span
+              key={t}
               style={{
-                height: i === 0 ? "280px" : "200px",
-                background: "var(--ds-surface-2)",
+                color: "rgba(255,255,255,0.75)",
+                fontWeight: 800,
+                fontSize: 19,
+                letterSpacing: "-0.02em",
               }}
             >
-              {project.images && project.images[0] ? (
-                <Image
-                  src={project.images[0]}
-                  alt={project.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              ) : (
-                <div
-                  className="w-full h-full flex items-center justify-center text-4xl font-black opacity-10"
-                  style={{ color: "var(--ds-text)" }}
-                >
-                  {project.name[0]}
-                </div>
-              )}
-            </div>
-
-            {/* Info */}
-            <div className="p-6">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p
-                    className="text-xs font-semibold uppercase tracking-widest mb-1"
-                    style={{ color: "var(--ds-text-muted)" }}
-                  >
-                    {project.category}
-                  </p>
-                  <h3
-                    className="text-lg font-bold leading-snug group-hover:opacity-70 transition-opacity"
-                    style={{ color: "var(--ds-text)" }}
-                  >
-                    {project.name}
-                  </h3>
-                </div>
-                <ArrowUpRight
-                  size={18}
-                  className="shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{ color: "var(--ds-text-muted)" }}
-                />
-              </div>
-              <p
-                className="text-sm mt-2 leading-relaxed"
-                style={{ color: "var(--ds-text-muted)" }}
-              >
-                {project.shortDescription}
-              </p>
-            </div>
-          </Link>
-        ))}
+              {t}
+            </span>
+          )
+        )}
       </div>
-    </section>
-  );
-};
+    </div>
+    <StatsBand />
+  </Section>
+);
 
-/* ─── Process ────────────────────────────────────────── */
-const processSteps = [
+/* ─── Services ───────────────────────────────────────── */
+const services = [
   {
+    icon: "</>",
     num: "01",
-    title: "Discover",
-    desc: "Understand the problem, research requirements, and define the project scope and goals clearly.",
+    title: "Web Apps",
+    desc: "Full-stack web applications in TypeScript — auth, dashboards, billing — designed, built and shipped end to end.",
   },
   {
+    icon: "{ }",
     num: "02",
-    title: "Design",
-    desc: "Architect the solution, plan the tech stack, and create a clear technical specification.",
+    title: "Mobile Apps",
+    desc: "Cross-platform mobile apps with React Native — sharing one TypeScript codebase with your web product.",
   },
   {
+    icon: ">_",
     num: "03",
-    title: "Build",
-    desc: "Develop with clean, maintainable code. Test continuously and iterate based on feedback.",
+    title: "Automation",
+    desc: "Bots, scrapers, integrations and internal tools that remove the busywork — wired into the services you already use.",
   },
   {
+    icon: "?",
     num: "04",
-    title: "Ship",
-    desc: "Deploy to production, monitor performance, optimize, and provide ongoing support.",
+    title: "Consulting",
+    desc: "Architecture reviews, code audits and technical roadmaps — a senior pair of eyes before you commit.",
   },
 ];
 
-const Process = () => (
-  <section className="py-12 border-t" style={{ borderColor: "var(--ds-border)" }}>
-    <SectionHeading>My Process</SectionHeading>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {processSteps.map((step) => (
-        <div
-          key={step.num}
-          className="card p-6 flex flex-col gap-4"
-          style={{ background: "var(--ds-surface)" }}
-        >
-          <span
-            className="text-xs font-bold tracking-widest"
-            style={{ color: "var(--ds-text-muted)" }}
-          >
-            {step.num}
-          </span>
-          <h3 className="text-base font-bold" style={{ color: "var(--ds-text)" }}>
-            {step.title}
-          </h3>
-          <p className="text-sm leading-relaxed" style={{ color: "var(--ds-text-muted)" }}>
-            {step.desc}
-          </p>
-        </div>
-      ))}
+const Services = () => (
+  <Section id="services" style={{ padding: "40px 40px 56px" }}>
+    <div className="pf-reveal" style={{ textAlign: "center", marginBottom: 44 }}>
+      <div
+        className="pf-mono"
+        style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.14em", color: "var(--teal-ink)" }}
+      >
+        SERVICES
+      </div>
+      <h2
+        style={{
+          fontSize: "clamp(36px, 4.5vw, 56px)",
+          fontWeight: 800,
+          letterSpacing: "-0.03em",
+          margin: "12px 0 0",
+        }}
+      >
+        How can I help you ship?
+      </h2>
     </div>
-  </section>
-);
-
-/* ─── Skills ─────────────────────────────────────────── */
-const skills = [
-  "JavaScript",
-  "TypeScript",
-  "React.js",
-  "Next.js",
-  "Node.js",
-  "Express.js",
-  "Tailwind CSS",
-  "PostgreSQL",
-  "MongoDB",
-  "Supabase",
-  "Git",
-  "Flutter",
-  "REST APIs",
-  "Cybersecurity",
-  "Penetration Testing",
-  "Network Security",
-  "Docker",
-  "UI/UX",
-  "+ More",
-];
-
-const Skills = () => (
-  <section className="py-12 border-t" style={{ borderColor: "var(--ds-border)" }}>
-    <SectionHeading>Skills &amp; Technologies</SectionHeading>
-    <div className="flex flex-wrap gap-2">
-      {skills.map((skill) => (
-        <span key={skill} className="skill-tag">
-          {skill}
-        </span>
-      ))}
-    </div>
-  </section>
-);
-
-/* ─── Experience ─────────────────────────────────────── */
-const Experience = () => (
-  <section className="py-12 border-t" style={{ borderColor: "var(--ds-border)" }}>
-    <SectionHeading>Experience</SectionHeading>
-    <div className="space-y-0">
-      {experiences.map((role, i) => (
+    <div className="pf-grid-2">
+      {services.map((s) => (
         <div
-          key={role.company}
-          className="flex flex-col md:flex-row gap-2 md:gap-12 py-6"
+          key={s.num}
+          className="pf-reveal pf-lift"
           style={{
-            borderTop: i > 0 ? `1px solid var(--ds-border)` : undefined,
+            background: "var(--surface)",
+            borderRadius: 12,
+            padding: 32,
+            display: "flex",
+            flexDirection: "column",
+            gap: 48,
           }}
         >
-          <div
-            className="text-sm md:w-48 shrink-0"
-            style={{ color: "var(--ds-text-muted)" }}
-          >
-            {role.range}
-          </div>
-          <div className="flex-1">
-            <div className="flex flex-wrap items-center gap-2 mb-2">
-              <h3
-                className="font-bold text-base"
-                style={{ color: "var(--ds-text)" }}
-              >
-                {role.role}
-              </h3>
-              <span
-                className="text-sm px-2.5 py-0.5 rounded-full font-medium"
-                style={{
-                  background: "var(--ds-surface)",
-                  color: "var(--ds-text-muted)",
-                }}
-              >
-                {role.company}
-              </span>
-            </div>
-            <p
-              className="text-sm leading-relaxed"
-              style={{ color: "var(--ds-text-muted)" }}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div
+              className="pf-mono"
+              style={{
+                width: 52,
+                height: 52,
+                borderRadius: "50%",
+                background: "var(--btn)",
+                color: "var(--inv)",
+                display: "grid",
+                placeItems: "center",
+                fontSize: 15,
+              }}
             >
-              {role.description}
-            </p>
+              {s.icon}
+            </div>
+            <div style={{ fontSize: 56, fontWeight: 800, color: "var(--num)", letterSpacing: "-0.04em", lineHeight: 1 }}>
+              {s.num}
+            </div>
+          </div>
+          <div>
+            <h3 style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 8px" }}>
+              {s.title}
+            </h3>
+            <p style={{ fontSize: 15, color: "var(--muted)", lineHeight: 1.6, margin: 0 }}>{s.desc}</p>
           </div>
         </div>
       ))}
     </div>
-  </section>
+  </Section>
 );
 
-/* ─── Currently ──────────────────────────────────────── */
-const SpotifyCard = async () => {
-  const { data: song } = await getNowPlaying();
+/* ─── Selected work ──────────────────────────────────── */
+const techChips = (techs: string[], n = 2) =>
+  techs.slice(0, n).map((t) => (
+    <span key={t} className="pf-chip">
+      {t}
+    </span>
+  ));
 
-  const recent = (song.is_playing && song.item) ? song.item : song.items?.[0]?.track;
-  if (!recent) return null;
+const StatusBadge = ({ status }: { status: string }) => (
+  <span
+    className="pf-mono"
+    style={{ fontSize: 12, color: "var(--soft)" }}
+  >
+    {status}
+  </span>
+);
 
-  const filter = new Filter();
-  const track = {
-    title: (() => { try { return filter.clean(recent.name); } catch { return recent.name; } })(),
-    artist: recent.artists?.map((_a: { name: string }) => _a.name).shift() as string,
-    songUrl: recent.external_urls?.spotify as string,
-    coverArt: recent.album?.images?.[0]?.url as string,
-    previewUrl: recent.preview_url as string | undefined,
-    isLive: !!(song.is_playing && song.item),
-  };
+const ProjectThumb = ({
+  project,
+  height,
+}: {
+  project: (typeof projects)[number];
+  height: number;
+}) => (
+  <Link
+    href={`/projects/${project.id}`}
+    style={{
+      display: "block",
+      position: "relative",
+      height,
+      borderRadius: 8,
+      overflow: "hidden",
+      textDecoration: "none",
+      background:
+        "repeating-linear-gradient(45deg, var(--stripe1), var(--stripe1) 14px, var(--stripe2) 14px, var(--stripe2) 28px)",
+    }}
+  >
+    {project.images && project.images[0] ? (
+      <Image
+        src={project.images[0]}
+        alt={project.name}
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        style={{ objectFit: "cover" }}
+      />
+    ) : (
+      <span
+        className="pf-mono"
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "grid",
+          placeItems: "center",
+          fontSize: 12,
+          color: "var(--soft)",
+        }}
+      >
+        {project.name}
+      </span>
+    )}
+  </Link>
+);
+
+const SelectedWork = () => {
+  const featured = projects.filter((p) => p.featured);
+  const grid = featured.slice(0, Math.max(0, featured.length - 1));
+  const hero = featured[featured.length - 1];
 
   return (
-    <div className="card p-5 flex flex-col gap-4">
-      <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: "1/1" }}>
-        {track.coverArt ? (
-          <Image src={track.coverArt} alt={track.title} fill className="object-cover" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center" style={{ background: "var(--ds-surface-2)" }}>
-            <span className="text-3xl">🎵</span>
+    <Section id="work" style={{ padding: "8px 40px 56px" }}>
+      <div
+        className="pf-reveal"
+        style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 36 }}
+      >
+        <h2 style={{ fontSize: "clamp(36px, 4.5vw, 56px)", fontWeight: 800, letterSpacing: "-0.03em", margin: 0 }}>
+          Selected work
+        </h2>
+        <Link href="/projects" className="pf-btn-outline" style={{ fontSize: 14, padding: "12px 24px" }}>
+          See all →
+        </Link>
+      </div>
+
+      <div className="pf-grid-2">
+        {grid.map((project) => (
+          <div
+            key={project.id}
+            className="pf-reveal pf-lift"
+            style={{ border: "1px solid var(--border)", borderRadius: 12, padding: "14px 14px 22px" }}
+          >
+            <ProjectThumb project={project} height={300} />
+            <div style={{ padding: "18px 8px 0" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <Link href={`/projects/${project.id}`} style={{ textDecoration: "none", color: "var(--ink)" }}>
+                  <h3 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.02em", margin: 0 }}>
+                    {project.name}
+                  </h3>
+                </Link>
+                <StatusBadge status={project.status} />
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 14, alignItems: "center" }}>
+                {techChips(project.technologies)}
+                <span style={{ flex: 1 }} />
+                <Link href={`/projects/${project.id}`} className="pf-btn" style={{ fontSize: 12, padding: "6px 13px" }}>
+                  Case study →
+                </Link>
+                {project.links.github ? (
+                  <a
+                    href={project.links.github}
+                    target="_blank"
+                    className="pf-btn-outline"
+                    style={{ fontSize: 12, padding: "6px 13px", borderWidth: 1.5 }}
+                  >
+                    GitHub ↗
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {hero && (
+          <div
+            className="pf-reveal pf-lift"
+            style={{
+              gridColumn: "1 / -1",
+              border: "1px solid var(--border)",
+              borderRadius: 12,
+              padding: 14,
+              display: "grid",
+              gridTemplateColumns: "1.2fr 1fr",
+              gap: 24,
+              alignItems: "center",
+            }}
+          >
+            <ProjectThumb project={hero} height={280} />
+            <div style={{ padding: "12px 18px 12px 0" }}>
+              <div
+                className="pf-mono"
+                style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--teal-ink)", marginBottom: 10 }}
+              >
+                FEATURED
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12 }}>
+                <Link href={`/projects/${hero.id}`} style={{ textDecoration: "none", color: "var(--ink)" }}>
+                  <h3 style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-0.02em", margin: 0 }}>{hero.name}</h3>
+                </Link>
+                <StatusBadge status={hero.status} />
+              </div>
+              <p style={{ fontSize: 15, color: "var(--muted)", lineHeight: 1.6, margin: "12px 0 0" }}>
+                {hero.shortDescription}
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 18, alignItems: "center" }}>
+                {techChips(hero.technologies, 3)}
+                <span style={{ flex: 1 }} />
+                <Link href={`/projects/${hero.id}`} className="pf-btn" style={{ fontSize: 12, padding: "6px 13px" }}>
+                  Case study →
+                </Link>
+                {hero.links.live ? (
+                  <a
+                    href={hero.links.live}
+                    target="_blank"
+                    className="pf-btn-outline"
+                    style={{ fontSize: 12, padding: "6px 13px", borderWidth: 1.5 }}
+                  >
+                    Live ↗
+                  </a>
+                ) : null}
+              </div>
+            </div>
           </div>
         )}
       </div>
-      <div>
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>
-            {track.isLive ? (
-              <span className="flex items-center gap-1.5">
-                <span
-                  className="w-1.5 h-1.5 rounded-full animate-pulse inline-block"
-                  style={{ background: "#22c55e" }}
-                />
-                Now Playing
-              </span>
-            ) : "Last Played"}
-          </span>
-        </div>
-        <p className="font-bold text-base leading-snug" style={{ color: "var(--ds-text)" }}>{track.title}</p>
-        <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>{track.artist}</p>
-      </div>
-      <MusicCard {...track}>
-        <LinkPrimitive href={track.songUrl} external popover>
-          {track.title}
-        </LinkPrimitive>
-      </MusicCard>
-    </div>
+    </Section>
   );
 };
 
-const WatchingCard = () => (
-  <div className="card p-5 flex flex-col gap-4">
-    <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: "1/1" }}>
-      <Image src="/images/bcs.jpg" alt="Better Call Saul" fill className="object-cover object-top" />
+/* ─── Currently ──────────────────────────────────────── */
+const CurrentlyCard = ({
+  image,
+  imageAlt,
+  objectPosition,
+  label,
+  title,
+  subtitle,
+  linkLabel,
+  href,
+}: {
+  image: string;
+  imageAlt: string;
+  objectPosition?: string;
+  label: string;
+  title: string;
+  subtitle: string;
+  linkLabel: string;
+  href: string;
+}) => (
+  <div className="pf-reveal pf-lift" style={{ background: "var(--surface)", borderRadius: 12, padding: "14px 14px 20px" }}>
+    <div style={{ position: "relative", width: "100%", height: 240, borderRadius: 8, overflow: "hidden" }}>
+      <Image src={image} alt={imageAlt} fill sizes="(max-width: 768px) 100vw, 33vw" style={{ objectFit: "cover", objectPosition }} />
     </div>
-    <div>
-      <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>Watching</span>
-      <p className="font-bold text-base mt-1" style={{ color: "var(--ds-text)" }}>Better Call Saul</p>
-      <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>Vince Gilligan</p>
+    <div style={{ padding: "16px 6px 0" }}>
+      <div className="pf-mono" style={{ fontSize: 10, letterSpacing: "0.16em", color: "var(--soft)" }}>{label}</div>
+      <div style={{ fontWeight: 800, fontSize: 17, marginTop: 6 }}>{title}</div>
+      <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{subtitle}</div>
+      <a
+        href={href}
+        target="_blank"
+        className="pf-mono"
+        style={{
+          display: "inline-block",
+          marginTop: 14,
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: "0.08em",
+          color: "var(--ink)",
+          textDecoration: "none",
+          borderBottom: "1.5px solid var(--teal)",
+          paddingBottom: 2,
+        }}
+      >
+        {linkLabel}
+      </a>
     </div>
-    <a
-      href="https://www.imdb.com/title/tt3032476/"
-      target="_blank"
-      className="btn-secondary w-full justify-center text-xs"
-    >
-      View on IMDb
-    </a>
   </div>
 );
 
-const PlayingCard = () => (
-  <div className="card p-5 flex flex-col gap-4">
-    <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: "1/1" }}>
-      <Image src="/images/witcher3.jpg" alt="The Witcher 3" fill className="object-cover object-center" />
+const SpotifyCard = async () => {
+  const { data: song } = await getNowPlaying();
+  const recent = song.is_playing && song.item ? song.item : song.items?.[0]?.track;
+  if (!recent) return null;
+
+  const filter = new Filter();
+  const title = (() => {
+    try {
+      return filter.clean(recent.name);
+    } catch {
+      return recent.name;
+    }
+  })();
+  const artist = recent.artists?.map((a: { name: string }) => a.name).shift() as string;
+  const songUrl = recent.external_urls?.spotify as string;
+  const coverArt = recent.album?.images?.[0]?.url as string;
+  const isLive = !!(song.is_playing && song.item);
+
+  return (
+    <CurrentlyCard
+      image={coverArt || "/images/wildflower.jpg"}
+      imageAlt={title}
+      label={isLive ? "NOW PLAYING" : "LAST PLAYED"}
+      title={title}
+      subtitle={artist}
+      linkLabel="VIEW ON SPOTIFY"
+      href={songUrl || "https://open.spotify.com"}
+    />
+  );
+};
+
+const SpotifySkeleton = () => (
+  <div style={{ background: "var(--surface)", borderRadius: 12, padding: "14px 14px 20px" }}>
+    <Skeleton className="w-full rounded-lg" style={{ height: 240, borderRadius: 8 }} />
+    <div className="space-y-2" style={{ padding: "16px 6px 0" }}>
+      <Skeleton className="h-3 rounded-full" style={{ width: "40%" }} />
+      <Skeleton className="h-4 rounded-full" style={{ width: "70%" }} />
+      <Skeleton className="h-3 rounded-full" style={{ width: "50%" }} />
     </div>
-    <div>
-      <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--ds-text-muted)" }}>Playing</span>
-      <p className="font-bold text-base mt-1" style={{ color: "var(--ds-text)" }}>The Witcher 3</p>
-      <p className="text-sm mt-0.5" style={{ color: "var(--ds-text-muted)" }}>CD Projekt Red</p>
-    </div>
-    <a
-      href="https://store.steampowered.com/app/292030"
-      target="_blank"
-      className="btn-secondary w-full justify-center text-xs"
-    >
-      View on Steam
-    </a>
   </div>
 );
 
 const Currently = () => (
-  <section className="py-16 border-t" style={{ borderColor: "var(--ds-border)" }}>
-    <div className="mb-10">
-      <SectionHeading>Currently</SectionHeading>
-      <p className="text-sm -mt-4" style={{ color: "var(--ds-text-muted)" }}>
-        What I&apos;m into right now
-      </p>
+  <Section style={{ padding: "0 40px 56px" }}>
+    <div
+      className="pf-reveal"
+      style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32, gap: 16, flexWrap: "wrap" }}
+    >
+      <div>
+        <h2 style={{ fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 800, letterSpacing: "-0.03em", margin: 0 }}>
+          Currently
+        </h2>
+        <p style={{ fontSize: 15, color: "var(--muted)", margin: "8px 0 0" }}>What I&apos;m into right now</p>
+      </div>
+      <Link href="/about" className="pf-btn-outline" style={{ fontSize: 14, padding: "12px 24px" }}>
+        More about me →
+      </Link>
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-      <Suspense
-        fallback={
-          <div className="card p-5 flex flex-col gap-4">
-            <Skeleton className="w-full rounded-xl" style={{ aspectRatio: "1/1" }} />
-            <div className="space-y-2 mt-1">
-              <Skeleton className="w-1/2 h-3 rounded-full" />
-              <Skeleton className="w-3/4 h-4 rounded-full" />
-              <Skeleton className="w-1/2 h-3 rounded-full" />
-            </div>
-          </div>
-        }
-      >
+    <div className="pf-grid-3">
+      <Suspense fallback={<SpotifySkeleton />}>
         <SpotifyCard />
       </Suspense>
-      <WatchingCard />
-      <PlayingCard />
+      <CurrentlyCard
+        image="/images/bcs.jpg"
+        imageAlt="Better Call Saul"
+        objectPosition="50% 20%"
+        label="WATCHING"
+        title="Better Call Saul"
+        subtitle="Vince Gilligan"
+        linkLabel="VIEW ON IMDB"
+        href="https://www.imdb.com/title/tt3032476/"
+      />
+      <CurrentlyCard
+        image="/images/witcher3.jpg"
+        imageAlt="The Witcher 3"
+        label="PLAYING"
+        title="The Witcher 3"
+        subtitle="CD Projekt Red"
+        linkLabel="VIEW ON STEAM"
+        href="https://store.steampowered.com/app/292030"
+      />
     </div>
-  </section>
+  </Section>
+);
+
+/* ─── Experience ─────────────────────────────────────── */
+const Experience = () => (
+  <Section id="experience" style={{ padding: "0 40px 56px" }}>
+    <div className="pf-reveal pf-exp-grid">
+      <div
+        style={{
+          background: "var(--btn)",
+          borderRadius: 12,
+          padding: 40,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          gap: 32,
+        }}
+      >
+        <h2
+          style={{
+            color: "var(--inv)",
+            fontSize: "clamp(30px, 3.5vw, 44px)",
+            fontWeight: 800,
+            letterSpacing: "-0.03em",
+            margin: 0,
+            lineHeight: 1.1,
+          }}
+        >
+          Wanna see my experience?
+        </h2>
+        <div>
+          <a
+            href={CV_LINK}
+            target="_blank"
+            style={{
+              display: "inline-block",
+              textDecoration: "none",
+              background: "var(--inv)",
+              color: "var(--ink)",
+              fontSize: 14,
+              fontWeight: 700,
+              padding: "13px 26px",
+              borderRadius: 999,
+            }}
+          >
+            Download résumé ↓
+          </a>
+        </div>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14 }}>
+        {experiences.map((role) => (
+          <div
+            key={role.company}
+            className="pf-lift"
+            style={{
+              border: "1px solid var(--border)",
+              borderRadius: 12,
+              padding: "22px 26px",
+              display: "flex",
+              alignItems: "center",
+              gap: 18,
+            }}
+          >
+            <div
+              style={{
+                width: 46,
+                height: 46,
+                borderRadius: "50%",
+                background: "var(--chip)",
+                display: "grid",
+                placeItems: "center",
+                fontWeight: 800,
+                fontSize: 14,
+                color: "var(--muted)",
+                flexShrink: 0,
+              }}
+            >
+              {role.company[0]}
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 800, fontSize: 16 }}>{role.role}</div>
+              <div style={{ fontSize: 13, color: "var(--soft)", marginTop: 2 }}>{role.company}</div>
+            </div>
+            <div className="pf-mono" style={{ fontSize: 12, color: "var(--soft)", whiteSpace: "nowrap" }}>
+              {role.range}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Section>
+);
+
+/* ─── Contact ────────────────────────────────────────── */
+const Contact = () => (
+  <Section id="contact" style={{ padding: "0 40px 56px" }}>
+    <div
+      className="pf-reveal pf-contact-grid"
+      style={{
+        background: "linear-gradient(180deg, var(--lav1) 0%, var(--lav2) 100%)",
+        border: "1px solid var(--border)",
+        borderRadius: 16,
+        padding: "64px 48px",
+      }}
+    >
+      <div>
+        <h2
+          style={{
+            fontSize: "clamp(36px, 4.5vw, 56px)",
+            fontWeight: 800,
+            letterSpacing: "-0.03em",
+            margin: 0,
+            lineHeight: 1.05,
+          }}
+        >
+          Let&apos;s build something that ships
+        </h2>
+        <p style={{ fontSize: 17, color: "var(--muted)", lineHeight: 1.6, margin: "20px 0 0", maxWidth: 400 }}>
+          Tell me about your project and I&apos;ll get back to you within 24 hours
+          with a plan and an estimate.
+        </p>
+      </div>
+      <ContactForm />
+    </div>
+  </Section>
 );
 
 /* ─── Footer ─────────────────────────────────────────── */
-const FooterDate = async () => {
-  try {
-    const data = await fetch(
-      "https://api.github.com/repos/spinpah/spinpah/commits",
-      { method: "GET", headers: { Accept: "application/vnd.github.v3+json" } }
-    ).then((r) => r.json());
-
-    if (data.message || !data[0]) return <span>2025</span>;
-
-    return (
-      <a
-        href={data[0].html_url}
-        target="_blank"
-        className="underline underline-offset-2"
-      >
-        {new Date(data[0].commit.committer.date).toLocaleDateString()}
-      </a>
-    );
-  } catch (err) {
-    return <span>2025</span>;
-  }
-};
-
 const Footer = () => (
-  <footer
-    className="relative mt-16 overflow-hidden py-24 text-center"
-    style={{
-      width: "100vw",
-      marginLeft: "calc(50% - 50vw)",
-      background:
-        "linear-gradient(135deg, #0a0018 0%, #110730 25%, #0d1545 55%, #060d22 80%, #020008 100%)",
-      color: "#ffffff",
-    }}
-  >
-    {/* Radial glow blobs */}
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0"
-      style={{
-        background:
-          "radial-gradient(ellipse 55% 50% at 15% 65%, rgba(120,60,255,0.2) 0%, transparent 70%)," +
-          "radial-gradient(ellipse 45% 40% at 82% 25%, rgba(30,100,255,0.15) 0%, transparent 65%)," +
-          "radial-gradient(ellipse 40% 35% at 58% 90%, rgba(200,80,255,0.12) 0%, transparent 60%)",
-      }}
-    />
-
-    {/* Animated stars */}
-    <StarField count={80} />
-
-    {/* Content */}
-    <div className="relative z-10 max-w-2xl mx-auto px-6 space-y-7">
-      <p className="text-xs uppercase tracking-[0.25em] font-semibold opacity-40">
-        Get in touch
-      </p>
-
-      <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold leading-[1.1] tracking-tight">
-        Let&apos;s create something
-        <br />
-        <span
+  <footer className="pf-section" style={{ padding: "0 40px 40px" }}>
+    <div className="pf-reveal pf-footer-grid">
+      <div
+        style={{
+          background: "var(--surface)",
+          borderRadius: 16,
+          padding: 44,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          gap: 40,
+        }}
+      >
+        <h2
           style={{
-            background: "linear-gradient(90deg, #a78bfa 0%, #60a5fa 50%, #a78bfa 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            fontSize: "clamp(30px, 3.5vw, 44px)",
+            fontWeight: 800,
+            letterSpacing: "-0.03em",
+            margin: 0,
+            lineHeight: 1.1,
           }}
         >
-          remarkable together.
-        </span>
-      </h2>
-
-      <p className="text-sm leading-relaxed opacity-50 max-w-sm mx-auto">
-        Available for freelance projects and full-time opportunities.
-        Let&apos;s talk.
-      </p>
-
-      <a
-        href="mailto:aymene16boudjelida@gmail.com"
-        className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-sm transition-all duration-200 hover:scale-105"
-        style={{ background: "#ffffff", color: "#0a0018" }}
-      >
-        Start a Project <ArrowUpRight size={15} />
-      </a>
-
-      <div className="flex justify-center flex-wrap gap-8 pt-2 text-sm opacity-40">
-        {[
-          { label: "GitHub",    href: "https://github.com/spinpah" },
-          { label: "Instagram", href: "https://instagram.com/spinpah" },
-          { label: "CV",        href: "https://drive.google.com/file/d/1gh1p-ekzjdjCEayBVRA5BpMiOiEpNMss/view?usp=sharing" },
-        ].map(({ label, href }) => (
+          Let&apos;s connect and chat
+        </h2>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
           <a
-            key={label}
-            href={href}
-            target="_blank"
-            className="hover:opacity-100 transition-opacity flex items-center gap-1"
+            href="mailto:aymene16boudjelida@gmail.com"
+            style={{
+              textDecoration: "none",
+              color: "var(--ink)",
+              fontSize: 19,
+              fontWeight: 700,
+              letterSpacing: "-0.01em",
+              borderBottom: "2px solid var(--ink)",
+              paddingBottom: 2,
+              wordBreak: "break-all",
+            }}
           >
-            {label} <ArrowUpRight size={12} />
+            aymene16boudjelida@gmail.com
           </a>
-        ))}
+          <a
+            href="mailto:aymene16boudjelida@gmail.com"
+            style={{
+              width: 58,
+              height: 58,
+              borderRadius: "50%",
+              background: "var(--btn)",
+              color: "var(--inv)",
+              display: "grid",
+              placeItems: "center",
+              fontSize: 22,
+              textDecoration: "none",
+              flexShrink: 0,
+            }}
+          >
+            →
+          </a>
+        </div>
       </div>
-
-      <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs opacity-30">
-        <span>Boudjelida Aimen © {new Date().getFullYear()}</span>
-        <Suspense fallback={<span>...</span>}>
-          <span>
-            Last updated · <FooterDate />
-          </span>
-        </Suspense>
+      <SocialPills />
+    </div>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginTop: 28,
+        padding: "0 8px",
+        gap: 16,
+        flexWrap: "wrap",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <Image src="/favicon.ico" alt="Logo" width={34} height={34} style={{ borderRadius: 8, display: "block" }} />
+        <span className="pf-mono" style={{ fontSize: 12, color: "var(--soft)" }}>
+          ©&apos;19 — 2026 · AIMEN BOUDJELIDA
+        </span>
       </div>
+      <Link href="/#contact" className="pf-btn" style={{ fontSize: 13, padding: "11px 22px" }}>
+        Start a project →
+      </Link>
     </div>
   </footer>
 );
@@ -546,14 +900,15 @@ const Footer = () => (
 /* ─── Page ───────────────────────────────────────────── */
 export default function Home() {
   return (
-    <div className="select">
+    <>
       <Hero />
-      <FeaturedWork />
-      <Process />
-      <Skills />
-      <Experience />
+      <Mission />
+      <Services />
+      <SelectedWork />
       <Currently />
+      <Experience />
+      <Contact />
       <Footer />
-    </div>
+    </>
   );
 }

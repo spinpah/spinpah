@@ -1,15 +1,29 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Archivo, Anton, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import InvertedCursor from "@/components/inverted-cursor";
 
-const jakarta = Plus_Jakarta_Sans({
+const archivo = Archivo({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-jakarta",
+  weight: ["500", "600", "700", "800", "900"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+
+const anton = Anton({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-anton",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -40,7 +54,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(jakarta.variable, jakarta.className)}>
+      <body
+        className={cn(
+          archivo.variable,
+          anton.variable,
+          jetbrainsMono.variable,
+          archivo.className
+        )}
+      >
         <script
           dangerouslySetInnerHTML={{
             __html: `

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Anton&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #ECECEC; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    .pf-photos::-webkit-scrollbar { display: none; }
+    .pf-root {
+      --page: #ECECEC; --card: #FFFFFF; --surface: #F7F7F7; --chip: #F2F2F2;
+      --ink: #141414; --muted: #6E6E6E; --soft: #8A8A8A;
+      --border: #ECECEC; --border2: #DDDDDD;
+      --inv: #FFFFFF; --btn: #141414; --btn-h: #2B2B2B;
+      --stripe1: #F3F3F3; --stripe2: #EAEAEA;
+      --band: #12B5AE; --teal: #12B5AE; --teal-tint: #E7F8F6; --teal-ink: #0B8F88;
+      --shadowc: rgba(0,0,0,0.10);
+    }
+    .pf-root[data-theme="dark"] {
+      --page: #0F0F0F; --card: #191919; --surface: #222222; --chip: #2A2A2A;
+      --ink: #F2EFE9; --muted: #A39E94; --soft: #7E7A72;
+      --border: #2B2B2B; --border2: #3A3A3A;
+      --inv: #141414; --btn: #F2EFE9; --btn-h: #FFFFFF;
+      --stripe1: #242424; --stripe2: #2B2B2B;
+      --band: #0E8C86; --teal: #1FD7C0; --teal-tint: rgba(31,215,192,0.14); --teal-ink: #1FD7C0;
+      --shadowc: rgba(0,0,0,0.50);
+    }
+  </style>
+</helmet>
+
+<div class="pf-root" data-theme="{{ theme }}" style="min-height: 100vh; background: var(--page); padding: 24px 24px 48px; font-family: 'Archivo', 'Helvetica Neue', sans-serif; color: var(--ink); transition: background 0.35s;">
+  <div style="max-width: 1240px; margin: 0 auto; background: var(--card); border-radius: 24px; box-shadow: 0 24px 80px var(--shadowc); overflow: hidden; transition: background 0.35s;">
+
+    <!-- ===== NAV ===== -->
+    <nav data-screen-label="Nav" style="display: flex; align-items: center; justify-content: space-between; padding: 24px 40px; gap: 24px;">
+      <a href="Portfolio.dc.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink);">
+        <img src="assets/favicon.ico" alt="Logo" style="width: 42px; height: 42px; border-radius: 10px; display: block;">
+        <span style="font-weight: 800; font-size: 18px; letter-spacing: -0.02em;">Aimen Boudjelida</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <a href="Work.dc.html" style="text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 999px; transition: background 0.2s, color 0.2s;" style-hover="background: var(--chip); color: var(--ink);">Work</a>
+        <a href="About.dc.html" style="text-decoration: none; color: var(--ink); background: var(--chip); font-size: 14px; font-weight: 700; padding: 10px 16px; border-radius: 999px;">About</a>
+        <a href="Portfolio.dc.html#services" style="text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 999px; transition: background 0.2s, color 0.2s;" style-hover="background: var(--chip); color: var(--ink);">Services</a>
+        <a href="Portfolio.dc.html#experience" style="text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 999px; transition: background 0.2s, color 0.2s;" style-hover="background: var(--chip); color: var(--ink);">Experience</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button onClick="{{ toggleTheme }}" title="Toggle theme" style="background: transparent; border: 1.5px solid var(--border2); color: var(--ink); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; padding: 12px 18px; border-radius: 999px; transition: border-color 0.2s, background 0.2s;" style-hover="border-color: var(--ink); background: var(--chip);">{{ themeLabel }}</button>
+        <a href="Portfolio.dc.html#contact" style="text-decoration: none; background: var(--btn); color: var(--inv); font-size: 14px; font-weight: 700; padding: 13px 26px; border-radius: 999px; transition: transform 0.2s, background 0.2s;" style-hover="background: var(--btn-h); transform: translateY(-2px);">Let's build →</a>
+      </div>
+    </nav>
+
+    <!-- ===== ABOUT HEADER ===== -->
+    <section data-screen-label="About header" style="padding: 32px 40px 56px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: center;">
+      <div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; color: var(--teal-ink);">ABOUT ME</div>
+        <h1 style="font-size: clamp(44px, 5.5vw, 72px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.02; margin: 14px 0 0;">Developer by day, curious human the rest of the time</h1>
+        <p style="font-size: 17px; color: var(--muted); line-height: 1.65; margin: 24px 0 0; max-width: 540px; text-wrap: pretty;">I'm Aimen Boudjelida, a full-stack developer based in Algiers. I've been building for the web since 2019 — mostly Node.js and TypeScript, from quick automation scripts to production apps serving real users.</p>
+        <p style="font-size: 17px; color: var(--muted); line-height: 1.65; margin: 14px 0 0; max-width: 540px; text-wrap: pretty;">Off the keyboard you'll find me gaming, watching shows, and slowly working through the bucket list below.</p>
+      </div>
+      <div style="background: var(--surface); border-radius: 12px; padding: 12px;">
+        <img src="assets/portrait.png" alt="Portrait of Aimen" style="width: 100%; height: 380px; object-fit: cover; object-position: 50% 24%; border-radius: 8px; display: block; filter: grayscale(1) contrast(1.06);">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 6px 4px;">
+          <div style="font-weight: 700; font-size: 14px;">Aimen Boudjelida</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--soft); letter-spacing: 0.08em;">ALGIERS, DZ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BUCKET LIST ===== -->
+    <section data-screen-label="Bucket list" style="padding: 0 40px 56px;">
+      <div data-reveal="1" style="border-top: 1px solid var(--border); padding-top: 48px;">
+        <h2 style="font-size: clamp(30px, 3.5vw, 44px); font-weight: 800; letter-spacing: -0.03em; margin: 0 0 28px;">Bucket list</h2>
+        <div style="display: flex; flex-direction: column; gap: 16px; max-width: 560px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0;"></span>
+            <span style="font-size: 16px; font-weight: 600;">First bug bounty</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0;"></span>
+            <span style="font-size: 16px; font-weight: 600;">Contribute to a major open-source project</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: transparent; flex-shrink: 0;"></span>
+            <span style="font-size: 16px; color: var(--soft); text-decoration: line-through;">Land my first dev job</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: transparent; flex-shrink: 0;"></span>
+            <span style="font-size: 16px; color: var(--muted);">Speak at a tech conference</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: transparent; flex-shrink: 0;"></span>
+            <span style="font-size: 16px; color: var(--muted);">Finish Red Dead Redemption 2</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: transparent; flex-shrink: 0;"></span>
+            <span style="font-size: 16px; color: var(--soft); text-decoration: line-through;">Build my first side project</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0;"></span>
+            <span style="font-size: 16px; font-weight: 600;">Travel the world</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 18px; margin-top: 28px;">
+          <span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--soft);"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--teal); display: inline-block;"></span>IN PROGRESS</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--soft); text-decoration: line-through;">DONE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PHOTOS ===== -->
+    <section data-screen-label="Photos" style="padding: 0 40px 56px;">
+      <div data-reveal="1" style="border-top: 1px solid var(--border); padding-top: 48px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;">
+          <h2 style="font-size: clamp(30px, 3.5vw, 44px); font-weight: 800; letter-spacing: -0.03em; margin: 0;">Photos</h2>
+          <div style="display: flex; gap: 10px;">
+            <button onClick="{{ photosPrev }}" title="Previous" style="width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--border2); background: transparent; color: var(--ink); cursor: pointer; font-size: 18px; transition: background 0.2s, border-color 0.2s;" style-hover="background: var(--chip); border-color: var(--ink);">←</button>
+            <button onClick="{{ photosNext }}" title="Next" style="width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--border2); background: transparent; color: var(--ink); cursor: pointer; font-size: 18px; transition: background 0.2s, border-color 0.2s;" style-hover="background: var(--chip); border-color: var(--ink);">→</button>
+          </div>
+        </div>
+        <div class="pf-photos" ref="{{ photosRef }}" style="display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; scrollbar-width: none;">
+          <div style="flex-shrink: 0; scroll-snap-align: start;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo-1" shape="rounded" radius="10" placeholder="photo 1" style="width: 250px; height: 330px; display: block;" hint-size="250px,330px"></x-import></div>
+          <div style="flex-shrink: 0; scroll-snap-align: start;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo-2" shape="rounded" radius="10" placeholder="photo 2" style="width: 250px; height: 330px; display: block;" hint-size="250px,330px"></x-import></div>
+          <div style="flex-shrink: 0; scroll-snap-align: start;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo-3" shape="rounded" radius="10" placeholder="photo 3" style="width: 250px; height: 330px; display: block;" hint-size="250px,330px"></x-import></div>
+          <div style="flex-shrink: 0; scroll-snap-align: start;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo-4" shape="rounded" radius="10" placeholder="photo 4" style="width: 250px; height: 330px; display: block;" hint-size="250px,330px"></x-import></div>
+          <div style="flex-shrink: 0; scroll-snap-align: start;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo-5" shape="rounded" radius="10" placeholder="photo 5" style="width: 250px; height: 330px; display: block;" hint-size="250px,330px"></x-import></div>
+          <div style="flex-shrink: 0; scroll-snap-align: start;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo-6" shape="rounded" radius="10" placeholder="photo 6" style="width: 250px; height: 330px; display: block;" hint-size="250px,330px"></x-import></div>
+        </div>
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--soft); margin: 14px 0 0;">DRAG &amp; DROP YOUR PHOTOS ONTO THE FRAMES ABOVE</p>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER BAR ===== -->
+    <footer data-screen-label="Footer" style="padding: 0 40px 40px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 28px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="assets/favicon.ico" alt="Logo" style="width: 34px; height: 34px; border-radius: 8px; display: block;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--soft);">©'19 — 2026 · AIMEN BOUDJELIDA</span>
+        </div>
+        <a href="Portfolio.dc.html" style="text-decoration: none; background: var(--btn); color: var(--inv); font-size: 13px; font-weight: 700; padding: 11px 22px; border-radius: 999px; transition: background 0.2s;" style-hover="background: var(--btn-h);">← Back home</a>
+      </div>
+    </footer>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { theme: "light" };
+  photosRef = React.createRef();
+
+  componentDidMount() {
+    try {
+      const t = localStorage.getItem("ab-portfolio-theme");
+      if (t === "dark" || t === "light") this.setState({ theme: t });
+    } catch (e) {}
+    this._setupReveal();
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+  }
+
+  _setupReveal() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const els = Array.from(document.querySelectorAll("[data-reveal]"));
+    if (!els.length) return;
+    const io = new IntersectionObserver((entries) => {
+      const showing = entries.filter((en) => en.isIntersecting);
+      showing.forEach((en, i) => {
+        en.target.style.transitionDelay = (i * 90) + "ms";
+        en.target.style.opacity = "1";
+        en.target.style.transform = "translateY(0px) scale(1)";
+        io.unobserve(en.target);
+      });
+    }, { threshold: 0.12 });
+    els.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.9) return;
+      el.style.opacity = "0";
+      el.style.transform = "translateY(30px) scale(0.985)";
+      el.style.transition = "opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)";
+      io.observe(el);
+    });
+    this._io = io;
+  }
+
+  _scrollPhotos(dir) {
+    const el = this.photosRef.current;
+    if (el) el.scrollBy({ left: dir * 282, behavior: "smooth" });
+  }
+
+  renderVals() {
+    const { theme } = this.state;
+    const toggleTheme = () => {
+      const t = theme === "light" ? "dark" : "light";
+      this.setState({ theme: t });
+      try { localStorage.setItem("ab-portfolio-theme", t); } catch (e) {}
+    };
+    return {
+      theme, themeLabel: theme === "light" ? "☾ DARK" : "☀ LIGHT", toggleTheme,
+      photosRef: this.photosRef,
+      photosPrev: () => this._scrollPhotos(-1),
+      photosNext: () => this._scrollPhotos(1)
+    };
+  }
+}
+</script>
+</body>
+</html>
