@@ -79,7 +79,7 @@
     {
       "id": "gameshelf",
       "name": "GAMESHELF",
-      "shortDescription": "designed for gamers to discover, rate, and review their favorite games. Think of it as your personal gaming shelf — where every title you've played or plan to play has a place.",
+      "shortDescription": "designed for gamers to discover, rate, and review their favorite games. Think of it as your personal gaming shelf , where every title you've played or plan to play has a place.",
       "description": "GAMESHELF is a comprehensive gaming platform designed for gamers to discover, rate, and review their favorite games. Built with modern web technologies, it serves as your personal gaming shelf where every title you've played or plan to play has a dedicated place. The platform features user authentication, game search functionality, personal collections, and a review system that helps the gaming community make informed decisions about their next gaming experience.",
       "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Prisma", "PostgreSQL"],
       "category": "Web Development",

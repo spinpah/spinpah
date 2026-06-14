@@ -131,7 +131,7 @@ const Hero = () => (
             products end to end.
           </p>
           <p style={{ fontSize: 14, lineHeight: 1.65, color: "#A39E94", margin: 0 }}>
-            Node.js &amp; TypeScript from API to UI — built fast, tested, and
+            Node.js &amp; TypeScript from API to UI , built fast, tested, and
             deployed to production.
           </p>
         </div>
@@ -248,7 +248,7 @@ const Mission = () => (
         }}
       >
         My mission is to ship web products that are fast, reliable and accessible
-        — code that holds up in production, not just in the demo.
+        , code that holds up in production, not just in the demo.
       </p>
       <div
         style={{
@@ -287,25 +287,25 @@ const services = [
     icon: "</>",
     num: "01",
     title: "Web Apps",
-    desc: "Full-stack web applications in TypeScript — auth, dashboards, billing — designed, built and shipped end to end.",
+    desc: "Full-stack web applications in TypeScript , auth, dashboards, billing , designed, built and shipped end to end.",
   },
   {
     icon: "{ }",
     num: "02",
     title: "Mobile Apps",
-    desc: "Cross-platform mobile apps with React Native — sharing one TypeScript codebase with your web product.",
+    desc: "Cross-platform mobile apps with React Native , sharing one TypeScript codebase with your web product.",
   },
   {
     icon: ">_",
     num: "03",
     title: "Automation",
-    desc: "Bots, scrapers, integrations and internal tools that remove the busywork — wired into the services you already use.",
+    desc: "Bots, scrapers, integrations and internal tools that remove the busywork , wired into the services you already use.",
   },
   {
     icon: "?",
     num: "04",
     title: "Consulting",
-    desc: "Architecture reviews, code audits and technical roadmaps — a senior pair of eyes before you commit.",
+    desc: "Architecture reviews, code audits and technical roadmaps , a senior pair of eyes before you commit.",
   },
 ];
 
@@ -887,7 +887,7 @@ const Footer = () => (
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <Image src="/favicon.ico" alt="Logo" width={34} height={34} style={{ borderRadius: 8, display: "block" }} />
         <span className="pf-mono" style={{ fontSize: 12, color: "var(--soft)" }}>
-          ©&apos;19 — 2026 · AIMEN BOUDJELIDA
+          ©&apos;19 , 2026 · AIMEN BOUDJELIDA
         </span>
       </div>
       <Link href="/#contact" className="pf-btn" style={{ fontSize: 13, padding: "11px 22px" }}>

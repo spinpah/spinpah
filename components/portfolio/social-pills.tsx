@@ -301,7 +301,7 @@ export default function SocialPills() {
             pillRefs.current[p.key] = el;
           }}
           onPointerDown={onPointerDown(p.key)}
-          title={p.link ? "Drag me — or click to open" : "Drag me!"}
+          title={p.link ? "Drag me , or click to open" : "Drag me!"}
           className="pf-mono"
           style={{
             position: "absolute",

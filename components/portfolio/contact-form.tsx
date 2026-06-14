@@ -69,7 +69,7 @@ export default function ContactForm() {
         form:
           err instanceof Error
             ? err.message
-            : "Something went wrong — please email me directly.",
+            : "Something went wrong , please email me directly.",
       });
     } finally {
       setSending(false);
@@ -106,7 +106,7 @@ export default function ContactForm() {
           Message sent!
         </div>
         <p style={{ fontSize: 15, color: "var(--muted)", margin: "10px 0 0" }}>
-          Thanks — I&apos;ll reply within 24 hours.
+          Thanks , I&apos;ll reply within 24 hours.
         </p>
       </div>
     );

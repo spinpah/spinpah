@@ -139,7 +139,7 @@ export default function WorkPage() {
           Everything I&apos;ve shipped
         </h1>
         <p style={{ fontSize: 17, color: "var(--muted)", lineHeight: 1.65, margin: "18px 0 0", maxWidth: 520 }}>
-          {sorted.length} projects across web, mobile and security — click any card
+          {sorted.length} projects across web, mobile and security , click any card
           for the full story.
         </p>
       </section>
@@ -167,7 +167,7 @@ export default function WorkPage() {
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <Image src="/favicon.ico" alt="Logo" width={34} height={34} style={{ borderRadius: 8, display: "block" }} />
             <span className="pf-mono" style={{ fontSize: 12, color: "var(--soft)" }}>
-              ©&apos;19 — 2026 · AIMEN BOUDJELIDA
+              ©&apos;19 , 2026 · AIMEN BOUDJELIDA
             </span>
           </div>
           <Link href="/" className="pf-btn" style={{ fontSize: 13, padding: "11px 22px" }}>

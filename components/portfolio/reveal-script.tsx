@@ -42,7 +42,7 @@ export default function RevealScript() {
 
     els.forEach((el) => {
       const r = el.getBoundingClientRect();
-      // Already in view on load — show immediately, don't hide.
+      // Already in view on load , show immediately, don't hide.
       if (r.top < window.innerHeight * 0.9) {
         el.classList.add("pf-in");
         return;

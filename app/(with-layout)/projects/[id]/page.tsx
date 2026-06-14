@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = projects.find((p) => p.id === params.id);
   if (!project) return { title: "Not Found" };
   return {
-    title: `${project.name} — Aimen Boudjelida`,
+    title: `${project.name} , Aimen Boudjelida`,
     description: project.shortDescription,
     alternates: { canonical: `https://spinpah.com/projects/${project.id}` },
   };
@@ -320,7 +320,7 @@ export default function ProjectPage({ params }: Props) {
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <Image src="/favicon.ico" alt="Logo" width={34} height={34} style={{ borderRadius: 8, display: "block" }} />
             <span className="pf-mono" style={{ fontSize: 12, color: "var(--soft)" }}>
-              ©&apos;19 — 2026 · AIMEN BOUDJELIDA
+              ©&apos;19 , 2026 · AIMEN BOUDJELIDA
             </span>
           </div>
           <Link href="/#contact" className="pf-btn" style={{ fontSize: 13, padding: "11px 22px" }}>

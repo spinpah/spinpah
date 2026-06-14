@@ -161,7 +161,7 @@ export default function About() {
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <Image src="/favicon.ico" alt="Logo" width={34} height={34} style={{ borderRadius: 8, display: "block" }} />
             <span className="pf-mono" style={{ fontSize: 12, color: "var(--soft)" }}>
-              ©&apos;19 — 2026 · AIMEN BOUDJELIDA
+              ©&apos;19 , 2026 · AIMEN BOUDJELIDA
             </span>
           </div>
           <Link href="/" className="pf-btn" style={{ fontSize: 13, padding: "11px 22px" }}>

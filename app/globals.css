@@ -119,7 +119,7 @@
   --ds-accent:     #F0F0EE;
   --ds-accent-fg:  #111111;
 
-  /* New portfolio design tokens — dark */
+  /* New portfolio design tokens , dark */
   --page: #0F0F0F; --card: #191919; --surface: #222222; --chip: #2A2A2A;
   --ink: #F2EFE9; --muted: #A39E94; --soft: #7E7A72;
   --border: #2B2B2B; --border2: #3A3A3A;
@@ -264,7 +264,7 @@ input::placeholder, textarea::placeholder { color: var(--soft); }
 }
 
 /* ════════════════════════════════════════════════════
-   New portfolio design — animations & helpers
+   New portfolio design , animations & helpers
    ════════════════════════════════════════════════════ */
 @keyframes pfFadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pfPop { 0% { opacity: 0; scale: 0.5; } 70% { scale: 1.08; } 100% { opacity: 1; scale: 1; } }
