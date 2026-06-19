@@ -1,6 +1,47 @@
 {
   "projects": [
   {
+  "id": "hadin",
+  "name": "Hadin",
+  "shortDescription": "Marketing landing page for Hadin, a decision-intelligence platform that helps business operators rank the moves that protect their P&L.",
+  "description": "A polished, animated marketing landing page for Hadin — a 'decision intelligence' platform built for business operators. The page introduces Hadin's AI Co-Advisor and core product around a UAE consumer-goods scenario (tracking margins, promotions, and working capital in AED). It walks visitors through the product story: a starfield hero that frames the value proposition, an interactive product dashboard mockup showing the recoverable-value decision queue, a strategy section with an effort-vs-impact portfolio map, and a Co-Advisor showcase that demonstrates conversational, evidence-grounded answers. The design leans on a dark, editorial aesthetic with serif/sans type mixing, smooth scroll reveals, and trust signals (SOC 2 Type II, UAE data residency, tenant isolation, audit logging).",
+  "technologies": [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Framer Motion"
+  ],
+  "category": "Landing Page",
+  "status": "Completed",
+  "featured": true,
+  "images": [
+    "/projects/hadin/hero.png",
+    "/projects/hadin/dashboard.png",
+    "/projects/hadin/strategy.png",
+    "/projects/hadin/co-advisor.png"
+  ],
+  "links": {
+    "live": "https://hadin.ai/"
+  },
+  "features": [
+    "Animated starfield hero communicating the core value proposition",
+    "Interactive product dashboard mockup with the recoverable-value decision queue",
+    "Strategy section with an effort-vs-impact portfolio trade-off map",
+    "Co-Advisor showcase demonstrating evidence-grounded, conversational answers",
+    "Dark editorial design system with serif/sans type pairing and scroll reveals",
+    "Trust and compliance signals (SOC 2 Type II, UAE data residency, tenant isolation)",
+    "Fully responsive across desktop, tablet and mobile"
+  ],
+  "challenges": [
+    "Translating a dense, multi-section enterprise product into a clear marketing narrative",
+    "Building performant scroll animations and data visualizations without hurting load times",
+    "Designing realistic dashboard and chart mockups that feel like the real product"
+  ],
+  "dateCompleted": "2026-06-01"
+}
+,
+  {
   "id": "Spinrates",
   "name": "SPINRATES.com",
   "shortDescription": "A personal review platform where I write reviews on anything and users can read and comment.",
@@ -13,7 +54,7 @@
   ],
   "category": "Personal Website",
   "status": "In Progress",
-  "featured": true,
+  "featured": false,
   "images": [
     "/projects/spinrates/spinrates-home.png",
     "/projects/spinrates/spinrates-featured.png",
@@ -50,7 +91,7 @@
   ],
   "category": "Corporate Website",
   "status": "Completed",
-  "featured": true,
+  "featured": false,
   "images": [
     "/projects/vane/home.png",
     "/projects/vane/1.png",
@@ -76,39 +117,6 @@
   "dateCompleted": "2025-07-20"
 }
 ,
-    {
-      "id": "gameshelf",
-      "name": "GAMESHELF",
-      "shortDescription": "designed for gamers to discover, rate, and review their favorite games. Think of it as your personal gaming shelf , where every title you've played or plan to play has a place.",
-      "description": "GAMESHELF is a comprehensive gaming platform designed for gamers to discover, rate, and review their favorite games. Built with modern web technologies, it serves as your personal gaming shelf where every title you've played or plan to play has a dedicated place. The platform features user authentication, game search functionality, personal collections, and a review system that helps the gaming community make informed decisions about their next gaming experience.",
-      "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Prisma", "PostgreSQL"],
-      "category": "Web Development",
-      "status": "In Progress",
-      "featured": true,
-      "images": [
-        "/projects/gameshelf/home.png",
-        "/projects/gameshelf/games.png",
-        "/projects/gameshelf/login.png"
-      ],
-      "links": {
-        "live": "https://sgameshelf.vercel.app",
-        "github": "https://github.com/spinpah/gameshelf"
-      },
-      "features": [
-        "User authentication and profiles",
-        "Game discovery and search",
-        "Personal game collections",
-        "Rating and review system",
-        "Responsive design",
-        "Real-time updates"
-      ],
-      "challenges": [
-        "Implementing efficient search algorithms",
-        "Managing large datasets of games",
-        "Creating intuitive user experience"
-      ],
-      "dateCompleted": ""
-    },
     {
       "id": "penetration-testing-audit",
       "name": "Penetration Testing and Security Audit Report",

@@ -21,6 +21,11 @@ const errStyle: React.CSSProperties = {
   paddingLeft: 6,
 };
 
+// Web3Forms access key (public by design — safe to ship client-side).
+const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+  "1554e564-f018-465d-a6bf-bde2cf785041";
+
 export default function ContactForm() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -54,14 +59,24 @@ export default function ContactForm() {
     setErrors({});
     setSending(true);
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message: desc }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          name,
+          email,
+          message: desc,
+          subject: `New project inquiry from ${name}`,
+          from_name: "Portfolio contact form",
+        }),
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data?.error || "Failed to send");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.message || "Failed to send");
       }
       setSent(true);
     } catch (err) {
@@ -69,7 +84,7 @@ export default function ContactForm() {
         form:
           err instanceof Error
             ? err.message
-            : "Something went wrong , please email me directly.",
+            : "Something went wrong — please email me directly.",
       });
     } finally {
       setSending(false);

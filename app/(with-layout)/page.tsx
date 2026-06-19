@@ -439,9 +439,16 @@ const ProjectThumb = ({
 );
 
 const SelectedWork = () => {
-  const featured = projects.filter((p) => p.featured);
-  const grid = featured.slice(0, Math.max(0, featured.length - 1));
-  const hero = featured[featured.length - 1];
+  const hero = projects.find((p) => p.featured);
+  const latest = [...projects]
+    .sort(
+      (a, b) =>
+        new Date(b.dateCompleted || 0).getTime() -
+        new Date(a.dateCompleted || 0).getTime()
+    )
+    .filter((p) => p.id !== hero?.id)
+    .slice(0, 2);
+  const grid = latest;
 
   return (
     <Section id="work" style={{ padding: "8px 40px 56px" }}>
@@ -450,7 +457,7 @@ const SelectedWork = () => {
         style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 36 }}
       >
         <h2 style={{ fontSize: "clamp(36px, 4.5vw, 56px)", fontWeight: 800, letterSpacing: "-0.03em", margin: 0 }}>
-          Selected work
+          Latest work
         </h2>
         <Link href="/projects" className="pf-btn-outline" style={{ fontSize: 14, padding: "12px 24px" }}>
           See all →
@@ -748,10 +755,12 @@ const Experience = () => (
           >
             <div
               style={{
+                position: "relative",
                 width: 46,
                 height: 46,
                 borderRadius: "50%",
                 background: "var(--chip)",
+                overflow: "hidden",
                 display: "grid",
                 placeItems: "center",
                 fontWeight: 800,
@@ -760,7 +769,17 @@ const Experience = () => (
                 flexShrink: 0,
               }}
             >
-              {role.company[0]}
+              {"logo" in role && role.logo ? (
+                <Image
+                  src={role.logo}
+                  alt={`${role.company} logo`}
+                  fill
+                  sizes="46px"
+                  style={{ objectFit: "cover" }}
+                />
+              ) : (
+                role.company[0]
+              )}
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ fontWeight: 800, fontSize: 16 }}>{role.role}</div>

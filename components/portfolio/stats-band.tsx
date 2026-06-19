@@ -5,9 +5,9 @@ import React from "react";
 type Stat = { target: number; decimals: number; suffix: string; label: string };
 
 const STATS: Stat[] = [
-  { target: 6, decimals: 0, suffix: "+", label: "YEARS OF EXPERIENCE" },
-  { target: 48, decimals: 0, suffix: "", label: "PROJECTS SHIPPED" },
-  { target: 30, decimals: 0, suffix: "+", label: "CLIENTS WORLDWIDE" },
+  { target: 2, decimals: 0, suffix: "+", label: "YEARS OF EXPERIENCE" },
+  { target: 10, decimals: 0, suffix: "+", label: "PROJECTS SHIPPED" },
+  { target: 10, decimals: 0, suffix: "+", label: "CLIENTS WORLDWIDE" },
   { target: 99.9, decimals: 1, suffix: "%", label: "UPTIME MAINTAINED" },
 ];
 
