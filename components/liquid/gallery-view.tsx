@@ -7,11 +7,11 @@ import { usePrefs } from "./prefs";
 
 // Size of the centre box as a share of the screen, and how many pictures to
 // draw on each side of the current one.
-const BOX_W = 0.85;
-const BOX_H = 0.8;
+const BOX_W = 0.92;
+const BOX_H = 0.88;
 const SPAN = 2;
-// The box is 85vw wide; every copy of a photo uses this so they share one download.
-const PHOTO_SIZES = "85vw";
+// The box is 92vw wide; every copy of a photo uses this so they share one download.
+const PHOTO_SIZES = "92vw";
 
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 

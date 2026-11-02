@@ -503,13 +503,13 @@ input::placeholder, textarea::placeholder { color: var(--soft); }
 @keyframes lg-reel-in { from { opacity: 0; } to { opacity: 1; } }
 .lg-reel-ambient {
   position: absolute; inset: -10%; transition: opacity .8s ease;
-  filter: blur(60px) brightness(.45) saturate(1.2); transform: scale(1.15);
+  filter: blur(26px) brightness(.8) saturate(1.45); transform: scale(1.15);
 }
 .lg-reel-stage { position: absolute; inset: 0; perspective-origin: 50% 50%; overflow: hidden; }
 .lg-reel-face { position: absolute; overflow: hidden; }
 .lg-reel-cell { position: absolute; left: 0; width: 100%; }
 /* ceiling and floor: the previous and next pictures, out of focus */
-.lg-reel-side { filter: blur(6px) brightness(.62); }
+.lg-reel-side { filter: blur(5px) brightness(.85) saturate(1.2); }
 /* the fixed centre box, with a thin glass edge drawn over the picture */
 .lg-reel-box { background: #000; }
 .lg-reel-box::after {
