@@ -11,6 +11,7 @@ import { usePrefs } from "./prefs";
 const TABS = [
   { key: "work", href: "/" },
   { key: "about", href: "/about" },
+  { key: "gallery", href: "/gallery" },
 ] as const;
 
 const MoonIcon = () => (
@@ -29,11 +30,11 @@ const SunIcon = () => (
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { t, lang, setLang, theme, toggleTheme } = usePrefs();
-  const tab = pathname.startsWith("/about") ? "about" : "work";
+  const tab = pathname.startsWith("/about") ? "about" : pathname.startsWith("/gallery") ? "gallery" : "work";
 
   return (
     // The home page is a single full-screen view; other pages scroll normally.
-    <div className={`lg-shell select${pathname === "/" ? " lg-fit" : ""}`}>
+    <div className={`lg-shell select${pathname === "/" || pathname === "/gallery" ? " lg-fit" : ""}`}>
       <header className="lg-wrap lg-header">
         <div className="lg-brand">
           <Link href="/" style={{ opacity: 1 }}>

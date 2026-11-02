@@ -4,7 +4,7 @@ export type Lang = (typeof LANGS)[number];
 const en = {
     tagline1: "Full-stack Developer,",
     tagline2: "AI & Data Engineering student in Pisa.",
-    work: "Work", about: "About",
+    work: "Work", about: "About", gallery: "Gallery", enter: "Enter", photos: "photos", galleryHint: "Scroll to roll the film",
     websites: "Websites", apps: "Apps", security: "Security",
     open: "Open case study", live: "See it live", back: "Back",
     projects: "projects", project: "project",
@@ -27,7 +27,7 @@ export const T: Record<Lang, Dict> = {
   fr: {
     tagline1: "Développeur Full-stack,",
     tagline2: "étudiant en IA & Data Engineering à Pise.",
-    work: "Projets", about: "À propos",
+    work: "Projets", about: "À propos", gallery: "Galerie", enter: "Entrer", photos: "photos", galleryHint: "Faites défiler pour dérouler la pellicule",
     websites: "Sites web", apps: "Applications", security: "Sécurité",
     open: "Voir le projet", live: "Voir en ligne", back: "Retour",
     projects: "projets", project: "projet",
@@ -45,7 +45,7 @@ export const T: Record<Lang, Dict> = {
   it: {
     tagline1: "Sviluppatore Full-stack,",
     tagline2: "studente di IA & Data Engineering a Pisa.",
-    work: "Lavori", about: "Chi sono",
+    work: "Lavori", about: "Chi sono", gallery: "Galleria", enter: "Entra", photos: "foto", galleryHint: "Scorri per far girare la pellicola",
     websites: "Siti web", apps: "App", security: "Sicurezza",
     open: "Apri il progetto", live: "Guarda dal vivo", back: "Indietro",
     projects: "progetti", project: "progetto",

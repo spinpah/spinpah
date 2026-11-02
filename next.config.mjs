@@ -47,6 +47,13 @@ const config = {
         port: "",
         hostname: "assets.literal.club",
       },
+      {
+        // gallery photos from the public Google Drive folder (see lib/gallery.ts)
+        protocol: "https",
+        port: "",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/d/**",
+      },
     ],
   },
 };
