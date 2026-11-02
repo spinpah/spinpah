@@ -13,5 +13,19 @@
       "Bash(grep -r \"NEXT_PUBLIC_SUPABASE\\\\|SPOTIFY\" .env*)",
       "Bash(ls .env*)"
     ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"$env:CLAUDE_PROJECT_DIR\\.claude\\hooks\\notify.ps1\"",
+            "async": true
+          }
+        ]
+      }
+    ]
   }
 }

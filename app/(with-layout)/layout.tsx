@@ -1,19 +1,18 @@
 import type { Viewport } from "next";
-import Nav from "@/components/portfolio/nav";
-import RevealScript from "@/components/portfolio/reveal-script";
+import { PrefsProvider } from "@/components/liquid/prefs";
+import SiteShell from "@/components/liquid/site-shell";
 
 export const viewport: Viewport = {
-  themeColor: "#ECECEC",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#eceae7" },
+    { media: "(prefers-color-scheme: dark)", color: "#24221f" },
+  ],
 };
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
-  <div className="pf-page select">
-    <div className="pf-card">
-      <Nav />
-      {children}
-    </div>
-    <RevealScript />
-  </div>
+  <PrefsProvider>
+    <SiteShell>{children}</SiteShell>
+  </PrefsProvider>
 );
 
 export default Layout;

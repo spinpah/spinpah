@@ -1,29 +1,14 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { Archivo, Anton, JetBrains_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import InvertedCursor from "@/components/inverted-cursor";
 
-const archivo = Archivo({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800", "900"],
-  variable: "--font-archivo",
-  display: "swap",
-});
-
-const anton = Anton({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-anton",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-mono",
+const outfit = Outfit({
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500"],
+  variable: "--font-outfit",
   display: "swap",
 });
 
@@ -34,11 +19,11 @@ export const metadata: Metadata = {
     default: "Boudjelida Aimen Mohamed Said / @spinpah",
   },
   description:
-    "Software Engineer based in Algeria, specializing in building modern, scalable, and secure applications. Full-stack web and mobile development with a focus on clean architecture.",
+    "Software Engineer based in Pisa, Italy, specializing in building modern, scalable, and secure applications. Full-stack web and mobile development, studying AI and Data Engineering at the University of Pisa.",
   openGraph: {
     title: "Boudjelida Aimen Mohamed Said",
     description:
-      "Software Engineer based in Algeria, specializing in building modern, scalable, and secure applications.",
+      "Software Engineer based in Pisa, Italy, specializing in building modern, scalable, and secure applications.",
     images: "/og-2.png",
     url: "https://spinpah.com",
   },
@@ -55,12 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(
-          archivo.variable,
-          anton.variable,
-          jetbrainsMono.variable,
-          archivo.className
-        )}
+        className={cn(outfit.variable, outfit.className)}
       >
         <script
           dangerouslySetInnerHTML={{
@@ -78,7 +58,6 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
-        <InvertedCursor />
       </body>
     </html>
   );

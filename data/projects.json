@@ -1,6 +1,49 @@
 {
   "projects": [
   {
+  "id": "b64",
+  "name": "B64",
+  "shortDescription": "Landing page for B64, a software studio that turns AI ideas into live products, from language agents and computer vision to forecasting and product platforms.",
+  "description": "Design and development of the landing page for B64, a software studio whose promise is \"ambition, translated into production\": taking an idea out of the deck and the strategy out of a client's data, then shipping a product that is live, measured and owned by the client. The page leans into the studio's name with a base64 motif: each section label is encoded in base64 next to its plain-English title, and an animated stream of encoded text runs behind a deep-blue hero set in large editorial serif type. It presents the four practices (language and agentic systems, computer vision, forecasting and decision models, data and product platforms), each tied to a live product as proof; the five engagement stages from idea to operation; an interactive \"one frame, six readings\" computer-vision demo (detect, segment, track, read, measure, describe); a Waysights case study; the three ways to work with the studio (Assess, Build, Run); an FAQ and a contact section covering its offices in Doha, Dubai, Algiers and Paris.",
+  "technologies": [
+    "Next.js",
+    "React",
+    "TypeScript"
+  ],
+  "category": "Landing Page",
+  "status": "Completed",
+  "featured": true,
+  "images": [
+    "/projects/B64/Home.png",
+    "/projects/B64/3.png",
+    "/projects/B64/vAi.png",
+    "/projects/B64/2.png",
+    "/projects/B64/4.png",
+    "/projects/B64/5.png"
+  ],
+  "video": "/projects/B64/b64.mp4",
+  "cover": "/projects/B64/Home - Cropped.png",
+  "links": {
+    "live": "https://b64.remachemounir.com/"
+  },
+  "features": [
+    "Deep-blue hero with large editorial serif type over an animated stream of base64 text",
+    "Section labels encoded in base64 beside their plain-English titles, echoing the studio's name",
+    "Four practice cards, each linked to a live product as proof",
+    "Five-step engagement path from idea to operation",
+    "Interactive computer-vision demo: one frame, six readings (detect, segment, track, read, measure, describe)",
+    "Case study, engagement models (Assess, Build, Run), FAQ and contact section",
+    "Fully responsive across desktop, tablet and mobile"
+  ],
+  "challenges": [
+    "Explaining a broad AI offering clearly without drowning visitors in jargon",
+    "Turning the base64 idea into a visual identity that stays readable",
+    "Keeping the animated background and interactive demo smooth on every device"
+  ],
+  "dateCompleted": "2026-10-01"
+}
+,
+  {
   "id": "hadin",
   "name": "Hadin",
   "shortDescription": "Marketing landing page for Hadin, a decision-intelligence platform that helps business operators rank the moves that protect their P&L.",
@@ -21,6 +64,7 @@
     "/projects/hadin/strategy.png",
     "/projects/hadin/co-advisor.png"
   ],
+  "video": "/projects/hadin/hadin.webm",
   "links": {
     "live": "https://hadin.ai/"
   },
@@ -42,43 +86,6 @@
 }
 ,
   {
-  "id": "Spinrates",
-  "name": "SPINRATES.com",
-  "shortDescription": "A personal review platform where I write reviews on anything and users can read and comment.",
-  "description": "MyGameCritics is a personal web platform designed to share my reviews on a variety of topics, from games and tech to movies and more. Users can browse my reviews, leave comments, and engage in discussions. The site is built with a focus on readability, responsive design, and smooth navigation. It features a clean, modern interface that makes it easy for visitors to explore content and interact with the reviews.",
-  "technologies": [
-    "Next.js",
-    "Supabase",
-    "Tailwind CSS",
-    "TypeScript"
-  ],
-  "category": "Personal Website",
-  "status": "In Progress",
-  "featured": false,
-  "images": [
-    "/projects/spinrates/spinrates-home.png",
-    "/projects/spinrates/spinrates-featured.png",
-    "/projects/spinrates/spinrates-allreviews.png"
-  ],
-  "links": {
-    "live": "https://spinrates.vercel.app/"
-  },
-  "features": [
-    "Write and publish personal reviews on any topic",
-    "Users can read, comment, and engage with reviews",
-    "Responsive design for desktop and mobile",
-    "Search and filter reviews by topic",
-    "Clean and modern UI with smooth animations"
-  ],
-  "challenges": [
-    "Creating an intuitive platform for reading and writing reviews",
-    "Implementing comment functionality and user interaction",
-    "Ensuring responsive performance across devices"
-  ],
-  "dateCompleted": "2025-10-09"
-}
-
-    ,{
   "id": "vane-solutions",
   "name": "Vane Solutions",
   "shortDescription": "Corporate website for Vane Solutions, an IT services company specializing in web, mobile, and cloud solutions.",
@@ -98,6 +105,7 @@
     "/projects/vane/2.png",
     "/projects/vane/3.png"
   ],
+  "video": "/projects/vane/vane.webm",
   "links": {
     "live": "https://vane-solutions.com",
     "github": ""
